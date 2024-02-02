@@ -32,5 +32,16 @@ Users:
     able to see tasks that are due this month
     calendar implementation
 
+One user: Student
+
+Student Model: 
+    has a: 
+        username
+        email
+        password
+        profile picture
+        contact info
+
+
 
 can deploy with heroku?
