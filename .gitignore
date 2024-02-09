@@ -1,0 +1,12 @@
+# Ignore virtual environment directory
+myenv/
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore SQLite database file
+db.sqlite3
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
