@@ -2,7 +2,8 @@ from django.db import models
 
 class Course(models.Model):
     course_name = models.CharField(max_length=255)
-    course_code = models.CharField(max_length=20)
+    course_code = models.IntegerField(max_length=20)
+    crn = models.IntegerField(max_length=10)
     department = models.CharField(max_length=255)
-    credit_hours = models.IntegerField()
+    credit_hours = models.IntegerField(max_length=1)
     description = models.TextField()
