@@ -8,7 +8,6 @@ class Friend(models.Model):
         ('requested', 'Requested'),
         ('accepted', 'Accepted'),
         ('declined', 'Declined'),
-        ('blocked', 'Blocked'),
     )
     
     user1 = models.ForeignKey(User, related_name='friendship_creator', on_delete=models.CASCADE)
@@ -24,11 +23,20 @@ class Friend(models.Model):
     def __str__(self):
         return f"{self.user1.username} & {self.user2.username} - {self.status}"
 
-# Optional: Signal to create a reciprocal friendship relation automatically
-# This approach might not fit all use cases, especially with statuses like "requested" or "blocked"
 @receiver(post_save, sender=Friend)
 def create_reciprocal_friendship(sender, instance, created, **kwargs):
-    if created:
-        # Check if the reciprocal relationship exists to avoid infinite loops
-        if not Friend.objects.filter(user1=instance.user2, user2=instance.user1).exists():
-            Friend.objects.create(user1=instance.user2, user2=instance.user1, status=instance.status)
+    # This function is triggered every time a Friend instance is saved.
+    
+    # Check if the friendship status is 'accepted'.
+    if instance.status == 'accepted':
+        # Check for the existence of a reciprocal relationship.
+        reciprocal, created = Friend.objects.get_or_create(
+            user1=instance.user2, 
+            user2=instance.user1,
+            defaults={'status': 'accepted'}  # This ensures the default status is set to 'accepted' when creating.
+        )
+        
+        # If the reciprocal relationship already existed but was not in the 'accepted' status, update it.
+        if not created and reciprocal.status != 'accepted':
+            reciprocal.status = 'accepted'
+            reciprocal.save()

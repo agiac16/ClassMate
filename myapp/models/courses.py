@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User 
 
 class Course(models.Model):
     course_name = models.CharField(max_length=255)
@@ -7,3 +8,5 @@ class Course(models.Model):
     department = models.CharField(max_length=255)
     credit_hours = models.IntegerField(max_length=1)
     description = models.TextField()
+    enrolled_students = models.ManyToManyField(User, related_name='enrolled_courses')
+
