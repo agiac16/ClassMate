@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <!-- Consider including CSS for styling and JavaScript for interactive elements here -->
+    <style>
+        /* Example CSS for demonstration */
+        .profile-menu:hover .submenu {
+            display: block; /* Show submenu on hover */
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+        .profile-menu, .submenu a {
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Navigation banner with links and profile submenu -->
+        <nav>
+            <a href="/academic-schedule-builder/">Academic Schedule Builder</a>
+            <a href="/daily-schedule-builder/">Daily Schedule Builder</a>
+            <a href="/tutoring/">Tutoring</a>
+            <div class="profile-menu">
+                <img src="path/to/profile/logo.png" alt="Profile">
+                <div class="submenu">
+                    <a href="/profile/">Profile</a>
+                    <a href="/logout/">Log Out</a>
+                    <!-- Additional submenu items can be added here -->
+                </div>
+            </div>
+        </nav>
+        <!-- Add Class and Add Assignment Buttons -->
+        <button onclick="location.href='/add-course/'">Add a Course</button>
+        <button onclick="location.href='/add-assignment/'">Add an Assignment</button>
+    </header>
+
+    <main>
+        <h2>Upcoming Assignments</h2>
+        <!-- Dynamically list upcoming assignments by day -->
+        {% for day, assignments in assignments_by_day %}
+            <h3>{{ day }}</h3>
+            <ul>
+                {% for assignment in assignments %}
+                    <li>{{ assignment.title }} - Due: {{ assignment.due_date }}</li>
+                {% empty %}
+                    <li>No assignments for this day.</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </main>
+    <script>
+        // Example JavaScript for submenu hover behavior
+        // This could be extended or modified based on specific requirements
+    </script>
+</body>
+</html>
