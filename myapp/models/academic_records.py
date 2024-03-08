@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .class_schedules import ClassSchedule
 
 class AcademicRecord(models.Model):
-    class_schedule = models.ForeignKey(ClassSchedule, on_delete=models.CASCADE)
+    class_schedule = models.ForeignKey(ClassSchedule, on_delete=models.CASCADE, null=True)
     grade = models.CharField(max_length=2)
 
     class Meta:
