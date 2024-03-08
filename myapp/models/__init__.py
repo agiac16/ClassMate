@@ -4,3 +4,8 @@ from .courses import Course
 from .class_schedules import ClassSchedule
 from .assignments import Assignment
 from .friends import Friend
+from .additional_activities import AdditionalActivity
+from .forum_posts import ForumPost
+from .forum_threads import ForumThread
+from .student import Student
+from django.contrib.auth.models import User
