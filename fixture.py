@@ -8,15 +8,15 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ClassMate.settings')
 django.setup()
 
 from django.contrib.auth.models import User
-from myapp.models.student import Student
-from myapp.models.friends import Friend
-from myapp.models.courses import Course
-from myapp.models.forum_threads import ForumThread
-from myapp.models.forum_posts import ForumPost
-from myapp.models.class_schedules import ClassSchedule
-from myapp.models.assignments import Assignment
-from myapp.models.additional_activities import AdditionalActivity
-from myapp.models.academic_records import AcademicRecord
+from users.models import Student
+from friends.models import Friend
+from courses.models import Course
+from forum.models import ForumThread
+from forum.models import ForumPost
+from courses.models import ClassSchedule
+from assignments.models import Assignment
+from courses.models import AdditionalActivity
+from courses.models import AcademicRecord
 
 fake = Faker()
 
@@ -48,22 +48,22 @@ students = [Student.objects.create(
     expected_graduation_year=random.randint(2023, 2027)
 ) for _ in range(20)]
 
-# Create and save friends
-for student_obj in students:
-    friend_student = random.choice(students)
-    if student_obj != friend_student:
-        Friend.objects.create(
-            user1=student_obj.account,
-            user2=friend_student.account,
-            status=random.choice(['requested', 'accepted', 'declined'])
-        )
+# # Create and save friends
+# for student_obj in students:
+#     friend_student = random.choice(students)
+#     if student_obj != friend_student:
+#         Friend.objects.create(
+#             user1=student_obj.account,
+#             user2=friend_student.account,
+#             status=random.choice(['requested', 'accepted', 'declined'])
+#         )
 
 # Create and save forum posts and threads
 
 
 # Create and save class schedules
 schedules = [ClassSchedule.objects.create(
-    user=student_obj.account,
+    student=student_obj,
     course=random.choice(course_objects),
     semester=random.choice(['Fall', 'Spring', 'Summer']),
     year=random.randint(2021, 2024),
@@ -76,7 +76,7 @@ schedules = [ClassSchedule.objects.create(
 for student_obj in students:
     for course in course_objects:
         Assignment.objects.create(
-            user=student_obj.account,
+            student=student_obj,
             course=course,
             title=fake.sentence(),
             description=fake.text(),
@@ -101,10 +101,10 @@ print("Example Queries:")
 ee_students = Student.objects.filter(major="Electrical Engineering")
 print(f"\nStudents majoring in Electrical Engineering: {[student_obj.full_name for student_obj in ee_students]}")
 
-# Friends of a specific student
-student = students[0]
-friends = Friend.objects.filter(user1=student.account, status='accepted')
-print(f"\nFriends of {student.full_name}: {[User.objects.get(id=friend.user2_id).username for friend in friends]}")
+# # Friends of a specific student
+# student = students[0]
+# friends = Friend.objects.filter(user1=student.account, status='accepted')
+# print(f"\nFriends of {student.full_name}: {[User.objects.get(id=friend.user2_id).username for friend in friends]}")
 
 # Class schedules for Spring semester
 spring_schedules = ClassSchedule.objects.filter(semester="Spring")
