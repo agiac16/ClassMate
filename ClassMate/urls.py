@@ -18,15 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('home.urls')), #homepage
     path('admin/', admin.site.urls),
-    path('course', include('courses.urls')),  # access into a specific course.. url.com/course/courseNumber
-    path('friends', include('friends.urls')), # view friends... url.com/friends
-    path('assignments', include('assignments.urls')),  
+    path('course/', include('courses.urls')),  # access into a specific course.. url.com/course/courseNumber
+    path('friends/', include('friends.urls')), # view friends... url.com/friends
+    path('assignments/', include('assignments.urls')),  
     # view assignments... url.com/assignments to view all... or 
     # url.com/couese/courseNumber/assignments for specific
     
-    path('forum', include('forum.urls')),
+    path('forum/', include('forum.urls')),
     # view forum for course... urls.com/course/courseNumber/forum
     # urls.com/course/courseNumber/forum/postNumber to view a specific post
+
 
 ]

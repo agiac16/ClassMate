@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'forum',
     'friends',
     'users',
+    'home',
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
