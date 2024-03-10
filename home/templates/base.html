@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+</head>
+<body class="bg-slate-50">
+
+    <!-- CSRF token added to header for htmx requests -->
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    <div>
+
+        <div class="text-5xl font-bold h-screen flex flex-col items-center justify-center">
+            <p>test of the base template.. this should appear on any extended page.</p>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

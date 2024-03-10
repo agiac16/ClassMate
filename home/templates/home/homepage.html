@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassMate - Manage Your Classes & Assignments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    {% block content %}
+    <div class="text-5xl font-bold h-screen flex flex-col items-center justify-center">
+        <p>ClassMate</p>
+        <p>Homepage</p>
+        <button class="bg-violet-400 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded-full mt-3">click here</button>
+    </div>
+    {% endblock %}
+</body>
+</html>
