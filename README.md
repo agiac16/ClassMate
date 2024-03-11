@@ -1,6 +1,6 @@
 
 
-Setting Up and Running the Project 
+## Setting Up and Running the Project 
 
 
 
@@ -8,7 +8,7 @@ Setting Up and Running the Project
 
    - Clone your repository by running the following command in the terminal:
  
-     git clone https://github.com/yourusername/senior-project.git
+     git clone [https://github.com/yourusername/senior-project.git](https://github.com/agiac16/ClassMate.git)
    
    - Navigate to the project directory:
     
