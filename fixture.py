@@ -153,8 +153,6 @@ a_records = AcademicRecord.objects.filter(grade='A')
 print(f"\nAcademic records with grade 'A': {[record.class_schedule.course.course_name for record in a_records]}")
 
 
-# Example queries for ForumPost, ForumThread, and AdditionalActivity
-
 # Forum posts for a specific course
 course_name = "Introduction to Computer Science"
 course_posts = ForumPost.objects.filter(course__course_name=course_name)
@@ -170,10 +168,6 @@ student_name = students[0].full_name
 student_activities = AdditionalActivity.objects.filter(student__full_name=student_name)
 print(f"\nAdditional activities for {student_name}: {[activity.title for activity in student_activities]}")
 
-# Additional activities occurring in a specific location
-location = "Library"
-activities_in_location = AdditionalActivity.objects.filter(location__contains=location)
-print(f"\nAdditional activities occurring in {location}: {[activity.title for activity in activities_in_location]}")
 
 # Forum posts posted by students in a specific major
 major = "Computer Science"
