@@ -58,7 +58,27 @@ students = [Student.objects.create(
 #             status=random.choice(['requested', 'accepted', 'declined'])
 #         )
 
-# Create and save forum posts and threads
+
+from django.utils import timezone
+
+# Create and save forum posts and threads with timezone-aware datetime objects
+for student in students:
+    for course in course_objects:
+        post = ForumPost.objects.create(
+            title=fake.sentence(),
+            content=fake.text(),
+            posted_by=student,
+            course=course
+        )
+
+        for _ in range(random.randint(1, 5)):
+            ForumThread.objects.create(
+                parent_post=post,
+                content=fake.text(),
+                posted_by=random.choice(students),
+                timestamp=timezone.make_aware(fake.date_time())
+            )
+
 
 
 # Create and save class schedules
@@ -86,6 +106,20 @@ for student_obj in students:
         )
 
 # Create and save additional activities
+from django.utils import timezone
+
+# Create and save additional activities with timezone-aware datetime objects
+for student in students:
+    for _ in range(random.randint(1, 3)):
+        AdditionalActivity.objects.create(
+            student=student,
+            title=fake.sentence(),
+            description=fake.text(),
+            start_time=timezone.make_aware(fake.date_time()),
+            end_time=timezone.make_aware(fake.date_time()),
+            location=fake.address()
+        )
+
 
 
 # Create and save academic records
@@ -117,3 +151,32 @@ print(f"\nHigh priority assignments: {[assignment.title for assignment in high_p
 # Academic records with grade 'A'
 a_records = AcademicRecord.objects.filter(grade='A')
 print(f"\nAcademic records with grade 'A': {[record.class_schedule.course.course_name for record in a_records]}")
+
+
+# Example queries for ForumPost, ForumThread, and AdditionalActivity
+
+# Forum posts for a specific course
+course_name = "Introduction to Computer Science"
+course_posts = ForumPost.objects.filter(course__course_name=course_name)
+print(f"\nForum posts for {course_name}: {[post.title for post in course_posts]}")
+
+# Replies (threads) for a specific forum post
+post_title = course_posts.first().title if course_posts.exists() else "No posts available"
+post_threads = ForumThread.objects.filter(parent_post__title=post_title)
+print(f"\nReplies for forum post '{post_title}': {[thread.content for thread in post_threads]}")
+
+# Additional activities for a specific student
+student_name = students[0].full_name
+student_activities = AdditionalActivity.objects.filter(student__full_name=student_name)
+print(f"\nAdditional activities for {student_name}: {[activity.title for activity in student_activities]}")
+
+# Additional activities occurring in a specific location
+location = "Library"
+activities_in_location = AdditionalActivity.objects.filter(location__contains=location)
+print(f"\nAdditional activities occurring in {location}: {[activity.title for activity in activities_in_location]}")
+
+# Forum posts posted by students in a specific major
+major = "Computer Science"
+posts_by_major = ForumPost.objects.filter(posted_by__major=major)
+print(f"\nForum posts posted by students in {major}: {[post.title for post in posts_by_major]}")
+
