@@ -12,7 +12,7 @@
    
    - Navigate to the project directory:
     
-     cd senior-project
+     cd ClassMate
     
 
 2. Set up a virtual environment and install dependencies:
