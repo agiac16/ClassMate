@@ -7,26 +7,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClassMate - Manage Your Classes & Assignments</title>
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     {% block content %}      
-
         <!-- Hero Section -->
         <div class="h-screen bg-cover bg-center flex items-center justify-center">
             <div class="max-w-3xl mx-auto px-4 text-center -mt-20">
                 <h1 class="font-bold text-7xl text-gray-900">Organize your classes and assignments.</h1>
                 <p class="mt-4 text-gray-600">Manage your assignments, connect with others in your class, and reach your full potential.</p>
-                <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+                <a href="{% url 'signup' %}" class="mt-6 inline-block bg-yellow text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+
+                
+                <a href="#info"><img src="{% static 'downarrow.png' %}" class="flex animate-bounce w-12 h-12 justify-center items-center "></a>
+
+            </div>
+        </div>
+
+        
+        
+        <div class="flex flex-row md:mx-56 lg:mx-128" id="info">
+            <div class="flex flex-col  justify-center pr-32 w-full">
+                <p class="font-bold text-4xl text-gray-900 mb-2">General To-Do List</p>
+                <p class="text-gray-600">Get tasks out of your head and visualize them. With course-specific and a general task list, you can view all your tasks with ease.</p>
+            </div>
+            <div class="">
+                <img src="{% static 'testImage.png' %}" alt="" class="">
+            </div>
+        </div>
+
+        <!-- Section 2: Daily planner (show planner ss]) -->
+        <div class="flex flex-row md:mx-56 lg:mx-128 mt-32">
+            <div class="flex flex-col  justify-center pr-32 w-full">
+                <p class="font-bold text-4xl text-gray-900 mb-2">Plan Out Your Work and Life</p>
+                <p class="text-gray-600">A daily planner! Add all of your assignments and anything else in your life to stay on top.</p>
+            </div>
+            <div class="">
+                <img src="{% static 'testImage.png' %}" alt="" class="">
+            </div>
+        </div>
+
+        <!-- Section 3: Connect with Friends (show forum) -->
+        <div class="flex flex-row md:mx-56 lg:mx-128 mt-32">
+            <div class="flex flex-col  justify-center pr-32 w-full">
+                <p class="font-bold text-4xl text-gray-900 mb-2">Connect with Friends</p>
+                <p class="text-gray-600">Join classes and connect with everyone else who is taking it. Use the forums to chat with others and get help!</p>
+            </div>
+            <div class="">
+                <img src="{% static 'testImage.png' %}" alt="" class="">
             </div>
         </div>
 
 
+
+
     
     <!-- Footer Section -->
-    <footer class="bg-white py-8 mt-16">
-        <div class="max-w-6xl mx-auto px-4">
-        <p class="text-center text-gray-600">Footer Content</p>
+    <footer class="py-8 mt-16">
+        <div class="flex max-w-6xl mx-auto px-4 items-center justify-center">
+        <p class="text-center text-gray-600 space-x-24">
+            <a href="#">FAQs</a>
+            <a href="#">Contact Us</a>
+        </p>
         </div>
     </footer>
     
