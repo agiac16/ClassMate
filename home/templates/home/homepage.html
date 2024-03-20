@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +10,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    {% block content %}
-    <div class="text-5xl font-bold h-screen flex flex-col items-center justify-center">
-        <p>ClassMate</p>
-        <p>Homepage</p>
-        <button class="bg-violet-400 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded-full mt-3">click here</button>
-    </div>
+    {% block content %}      
+
+        <!-- Hero Section -->
+        <div class="h-screen bg-cover bg-center flex items-center justify-center">
+            <div class="max-w-3xl mx-auto px-4 text-center -mt-20">
+                <h1 class="font-bold text-7xl text-gray-900">Organize your classes and assignments.</h1>
+                <p class="mt-4 text-gray-600">Manage your assignments, connect with others in your class, and reach your full potential.</p>
+                <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+            </div>
+        </div>
+
+
+    
+    <!-- Footer Section -->
+    <footer class="bg-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-4">
+        <p class="text-center text-gray-600">Footer Content</p>
+        </div>
+    </footer>
+    
     {% endblock %}
 </body>
 </html>

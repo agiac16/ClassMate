@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,17 +11,30 @@
 
 </head>
 <body class="bg-slate-50">
+    <nav class="bg-slate-50 py-2">
+        <div class="flex items-center justify-between mx-auto px-4">
+          <!-- Logo and Primary Nav items -->
+          <div class="flex items-center">
+            <a href="{% url 'homepage' %}" class="flex items-center">
+              <img src="{% static 'classmate.png' %}" alt="logo" class="h-10 mr-4"> <!-- Adjust right margin as needed -->
+            </a>
+            <div class="hidden md:flex items-center space-x-4">
+              <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">item</a>
+              <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">item</a>
+            </div>
+          </div>
+            
+          <!-- Secondary Navbar items -->
+          <div class="flex items-center space-x-4">
+            <a href="{% url 'login' %}" class="py-2 px-3 text-gray-700 hover:text-gray-900">Login</a>
+            <a href="{% url 'signup' %}" class="py-2 px-3 bg-purple-400 text-purple-900 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+          </div>
+        </div>
+      </nav>
 
     <!-- CSRF token added to header for htmx requests -->
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-
-    <div>
-
-        <div class="text-5xl font-bold h-screen flex flex-col items-center justify-center">
-            <p>test of the base template.. this should appear on any extended page.</p>
-        </div>
         {% block content %}
         {% endblock %}
-    </div>
 </body>
 </html>
