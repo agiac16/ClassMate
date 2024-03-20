@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Student(models.Model):
     account = models.OneToOneField(User, on_delete=models.CASCADE)  # Use Django's built-in User model
-    full_name = models.CharField(max_length=255)
-    major = models.CharField(max_length=255)
-    enrollment_year = models.IntegerField()
-    expected_graduation_year = models.IntegerField()
+    full_name = models.CharField(max_length=255, null=True, blank=True)
+    major = models.CharField(max_length=255, null=True, blank=True)
+    enrollment_year = models.IntegerField(null=True, blank=True)
+    expected_graduation_year = models.IntegerField(null=True, blank=True)

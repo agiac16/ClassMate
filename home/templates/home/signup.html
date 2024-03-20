@@ -1,19 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassMate - Manage Your Classes & Assignments</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    {% block content %}      
-    
-    test sign up page
-    
-    {% endblock %}
-</body>
-</html>
+{% block content %}
+<div class="max-w-md mx-auto my-10 bg-white p-8 border border-gray-300 rounded-lg shadow-sm">
+    <h2 class="text-xl font-semibold text-gray-800 text-center">Sign Up</h2>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 focus:outline-none focus:bg-purple-600 transition duration-300">Sign Up</button>
+    </form>
+</div>
+{% endblock %}
