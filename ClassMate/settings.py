@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'friends',
     'users',
     'home',
+    'dashboard',
 ]
 
 

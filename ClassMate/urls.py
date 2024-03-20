@@ -30,5 +30,5 @@ urlpatterns = [
     # view forum for course... urls.com/course/courseNumber/forum
     # urls.com/course/courseNumber/forum/postNumber to view a specific post
 
-
+    path('dashboard/', include('dashboard.urls')),
 ]
