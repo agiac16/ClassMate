@@ -10,6 +10,7 @@
     <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </style>
 </head>
 <body>
     {% block content %}      
@@ -18,7 +19,7 @@
             <div class="max-w-3xl mx-auto px-4 text-center -mt-20">
                 <h1 class="font-bold text-6xl text-gray-900">Organize your classes and assignments.</h1>
                 <p class="mt-4 text-gray-600">Manage your assignments, connect with others in your class, and reach your full potential.</p>
-                <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+                <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer">Start for Free</a>
 
                 <!-- Downward Arrow Button -->
                 <div class="mt-8 flex justify-center">
@@ -30,6 +31,7 @@
                 </div>
             </div>
         </div>
+        
 
         <!-- General To-Do List Section -->
         <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40" id="info">

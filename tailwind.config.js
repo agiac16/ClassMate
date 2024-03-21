@@ -1,10 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    './templates/**/*.html',
+    'ClassMate/home/templates/home/homepage.html'
+  ],
   theme: {
-    colors: {
-      'purple': '#FFF491',
+    extend: {
     },
+  },
+  variants: {
     extend: {},
   },
   plugins: [],

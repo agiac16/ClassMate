@@ -13,20 +13,21 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')  # Redirect to the dashboard
+            return redirect('dashboard:dashboard')  # Redirect to the dashboard
     else:
         form = AuthenticationForm()
     return render(request, 'home/login.html', {'form': form})
 
+
+# need a custom form to get other info.
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            # Create a Student instance for the new user
-            Student.objects.create(account=user)
-            login(request, user)
-            return redirect('dashboard')
+            user = form.save(commit=False)  # Get a User instance without saving it to the database
+            user.save()  # Save the User instance to the database
+            Student.objects.create(account=user)  # Create a Student object for the new user
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'home/signup.html', {'form': form})

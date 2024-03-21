@@ -31,8 +31,14 @@
             
           <!-- Secondary Navbar items -->
           <div class="flex items-center space-x-4">
+
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="py-2 px-3 text-gray-700 hover:text-gray-900">Logout</a>
+            {% else %}
             <a href="{% url 'login' %}" class="py-2 px-3 text-gray-700 hover:text-gray-900">Login</a>
             <a href="{% url 'signup' %}" class="py-2 px-3 bg-purple-400 text-purple-900 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>
+            {% endif %}
+          
           </div>
         </div>
       </nav>

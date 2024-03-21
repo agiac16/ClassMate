@@ -25,6 +25,7 @@ def dashboard(request):
 
     user_courses = Course.objects.filter(enrolled_students=student)  # Adjusted to reference the student
 
+
     context = {
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,
@@ -68,7 +69,7 @@ def add_assignment(request):
             student = get_object_or_404(Student, account=request.user)
             assignment.student = student
             assignment.save()
-            return redirect(reverse('dashboard'))
+            return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(user=request.user)
     return render(request, 'dashboard/add_assignment.html', {'form': form})
@@ -84,7 +85,7 @@ def add_course(request):
             # Now that the course is saved and has an ID, we can add enrolled students
             new_course.enrolled_students.add(student)  # Add the student instance
             new_course.save()
-            return redirect(reverse('dashboard'))
+            return redirect(reverse('dashboard:dashboard'))
     else:
         form = CourseForm()
     return render(request, 'dashboard/add_course.html', {'form': form})
