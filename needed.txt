@@ -1,0 +1,47 @@
+template folder is for HTML docs, put inside the templates/appname folder
+static folder is for CSS, JS, images, put inside the static/appname folder
+
+this is so when django searches for a file within the 
+template/static folder, it doesnt pick an identical name
+it gets the correct one
+
+Class: 
+    a class has multiple users
+    users can be in multiple classes
+    allows for collaboration between users
+    shows class assignments? 
+
+Users:
+    able to create tasks
+    update tasks
+    delete tasks
+    able to see tasks
+    able to see classes
+    able to see other users within class
+    able to see other users tasks within class
+    able to add subtasks to a task 
+    add a description to a task 
+
+    sign in 
+    sign out
+    register
+    change password
+    add profile picture and contact info
+    able to see tasks that are due today
+    able to see tasks that are due this week
+    able to see tasks that are due this month
+    calendar implementation
+
+One user: Student
+
+Student Model: 
+    has a: 
+        username
+        email
+        password
+        profile picture
+        contact info
+
+
+
+can deploy with heroku?
