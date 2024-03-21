@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex">
+    <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
+        <div>
+            <!-- Logo or profile at the top -->
+            <div class="p-4 flex justify-center items-center">
+                <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10"> <!-- Logo size adjustable -->
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="space-y-2 py-4">
+                <!-- Profile -->
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+
+                <!-- Home -->
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+
+                <!-- Courses with submenu -->
+                <div class="group">
+                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+                    </a>
+                    <div id="courses-submenu" class="hidden group-hover:block bg-gray-700">
+                        <div class="pt-2">
+                            <!-- Dynamically populate course links here -->
+                            {% for course in user_courses %}
+                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-gray-600">{{ course.course_name }}</a>
+                            {% endfor %}
+                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-gray-600">Add Course</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Assignment -->
+                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-tasks"></i>
+                    <span>Add Assignment</span>
+                </a>
+
+                <!-- Planner -->
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Planner</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Fixed section at the bottom for the Forum or other important links -->
+        <div class="pb-4">
+            <!-- Forum -->
+            <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <i class="fas fa-comments"></i>
+                <span>Forum</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="flex-1 ml-64 h-screen overflow-auto flex justify-center">
+        <div class="bg-slate-100 p-5 rounded-md flex-col space-y-4 w-4/5 m-10">
+            <h1 class="text-2xl font-bold pb-2 border-b">Account Details</h1>
+    
+                            <div>
+                    <span>Email:</span>
+                    <span class="pl-3">email@email.com</span>
+                </div>
+                <div>
+                    <span>Name:</span>
+                    <span class="pl-3">firstName lastName</span>
+                </div>
+                <div>
+                    <span>Major:</span>
+                    <span class="pl-3">Computer Science</span>
+                </div>
+                <div>
+                    <span>Enrollment Year:</span>
+                    <span class="pl-3">2020</span>
+                </div>
+                <div>
+                    <span>Graduation Year:</span>
+                    <span class="pl-3">2024</span>
+                </div>        
+
+                <div class="flex-row space-x-6">
+                    <button class="mt-6 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 w-90">Update Information</button>
+                    <button class="mt-6 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 w-90">Reset Password</button>
+                </div>
+
+                <!-- Course Info -->
+                <h1 class="text-2xl font-bold pb-2 border-b">Courses:</h1>
+            
+
+                <div>
+                    {% for course in user_courses %}
+                        <p>{{ course.course_name }}</p>
+                    {% empty %}
+                        <p>No courses found.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="flex-row space-x-6">
+                    <button class="mt-6 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 w-90">Remove Course</button>
+                </div>
+
+
+            </div>
+
+    </div>
+</body>
+</html>

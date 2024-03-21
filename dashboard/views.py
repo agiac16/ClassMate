@@ -25,6 +25,7 @@ def dashboard(request):
 
     user_courses = Course.objects.filter(enrolled_students=student)  # Adjusted to reference the student
 
+
     context = {
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,

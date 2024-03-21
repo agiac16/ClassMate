@@ -69,17 +69,17 @@
 </head>
 <body>
     <div class="sidebar">
-        <a href="#">Profile</a>
+        <a href=" {% url 'user:viewProfile' %} ">Profile</a>        
         <a href="#">Home</a>
         <a href="javascript:void(0);" id="courses-btn">Courses</a>
         <div id="courses-submenu" style="display: none; flex-direction: column; padding-left: 20px;">
             <!-- Course links will be populated here -->
             {% for course in user_courses %}
-            <a href="{% url 'course_dashboard' course.id %}">{{ course.course_name }}</a>
+            <a href="{% url 'dashboard:course_dashboard' course.id %}">{{ course.course_name }}</a>
             {% endfor %}
-            <a href="{% url 'add_course' %}">Add Course</a>
+            <a href="{% url 'dashboard:add_course' %}">Add Course</a>
         </div>
-        <a href="{% url 'add_assignment' %}">Add Assignment</a>
+        <a href="{% url 'dashboard:add_assignment' %}">Add Assignment</a>
         <a href="#">Planner</a>
         <a href="#">Forum</a>
     </div>
