@@ -12,6 +12,9 @@ class Course(models.Model):
     description = models.TextField()
     enrolled_students = models.ManyToManyField(Student, related_name='enrolled_courses')
 
+    def __str__(self):
+        return self.course_name 
+    
 class ClassSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)  # Use Django's built-in User model
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

@@ -18,17 +18,17 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding: 10px 0;
+            padding: 10px 0; /* Added padding to top and bottom */
         }
         .sidebar a {
             color: white;
             text-decoration: none;
             padding: 15px 20px;
             display: block;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease; /* Smooth transition for hover effect */
         }
         .sidebar a:hover {
-            background-color: #34495e;
+            background-color: #34495e; /* Slightly lighter shade for hover effect */
         }
         .dashboard-container {
             margin-left: 250px;
@@ -96,8 +96,14 @@
     <div class="sidebar">
         <a href="#">Profile</a>
         <a href="{% url 'dashboard' %}">Home</a>
-        <a href="#">Courses</a> <!-- Add this back in -->
-        <!-- Remove the Add Assignment link since we're on this page -->
+        <a href="javascript:void(0);" id="courses-btn">Courses</a>
+        <div id="courses-submenu" style="display: none; flex-direction: column; padding-left: 20px;">
+            <!-- Course links will be populated here -->
+            {% for course in user_courses %}
+            <a href="{% url 'course_dashboard' course.id %}">{{ course.course_name }}</a>
+            {% endfor %}
+            <a href="{% url 'add_course' %}">Add Course</a>
+        </div>
         <a href="#">Planner</a>
         <a href="#">Forum</a>
     </div>
@@ -119,6 +125,12 @@
                 // Enhance the slider UI here
             }
         });
+    </script>
+    <script>
+        document.getElementById('courses-btn').onclick = function() {
+                var submenu = document.getElementById('courses-submenu');
+                submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
+        };
     </script>
 </body>
 </html>
