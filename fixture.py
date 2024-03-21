@@ -2,7 +2,7 @@ import os
 import django
 import random
 from faker import Faker
-from datetime import timedelta
+from datetime import date, timedelta
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ClassMate.settings')
 django.setup()
@@ -39,6 +39,7 @@ course_objects = [Course.objects.create(
     description=fake.text()
 ) for course in course_data]
 
+
 # Create and save students with associated user accounts
 students = [Student.objects.create(
     account=User.objects.create_user(username=fake.user_name(), email=fake.email(), password="password"),
@@ -48,6 +49,12 @@ students = [Student.objects.create(
     expected_graduation_year=random.randint(2023, 2027)
 ) for _ in range(20)]
 
+# Assign each course to a random student
+for course in course_objects:
+    student = random.choice(students)
+    course.enrolled_students.add(student)
+
+    
 # # Create and save friends
 # for student_obj in students:
 #     friend_student = random.choice(students)
@@ -100,7 +107,7 @@ for student_obj in students:
             course=course,
             title=fake.sentence(),
             description=fake.text(),
-            due_date=fake.date(),
+            due_date=date.today() + timedelta(days=random.randint(1,7)),
             priority=random.randint(1, 5),
             estimated_completion_time=timedelta(hours=random.randint(1, 5))
         )
