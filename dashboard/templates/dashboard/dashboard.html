@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,26 +11,7 @@
             height: 100vh;
             overflow: hidden;
         }
-        .sidebar {
-            background-color: #2C2F33;
-            color: white;
-            width: 250px;
-            position: fixed;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            padding: 10px 0; /* Added padding to top and bottom */
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 20px;
-            display: block;
-            transition: background 0.3s ease; /* Smooth transition for hover effect */
-        }
-        .sidebar a:hover {
-            background-color: #23272A; /* Slightly lighter shade for hover effect */
-        }
+        
         .dashboard-container {
             margin-left: 250px;
             width: calc(100% - 250px);
@@ -66,22 +48,71 @@
             padding: 10px;
         }
     </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <a href=" {% url 'user:viewProfile' %} ">Profile</a>        
-        <a href="#">Home</a>
-        <a href="javascript:void(0);" id="courses-btn">Courses</a>
-        <div id="courses-submenu" style="display: none; flex-direction: column; padding-left: 20px;">
-            <!-- Course links will be populated here -->
-            {% for course in user_courses %}
-            <a href="{% url 'dashboard:course_dashboard' course.id %}">{{ course.course_name }}</a>
-            {% endfor %}
-            <a href="{% url 'dashboard:add_course' %}">Add Course</a>
+    <!-- Sidebar -->
+    <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
+        <div>
+            <div class="p-4 flex justify-center items-center">
+                <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
+
+                <!-- Home -->
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+
+                <!-- Courses with submenu -->
+                <div class="group">
+                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+
+                    </a>
+                    <div id="courses-submenu" class="hidden group-hover:block bg-gray-700">
+                        <div class="pt-2">
+                            <!-- Dynamically populate course links here -->
+                            {% for course in user_courses %}
+                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-gray-600">{{ course.course_name }}</a>
+                            {% endfor %}
+                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-gray-600">Add Course</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Assignment -->
+                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-tasks"></i>
+                    <span>Add Assignment</span>
+                </a>
+
+                <!-- Forum -->  
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-comments"></i>
+                    <span>Forum</span>
+                </a>
+
+                <!-- Planner -->
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Planner</span>
+                </a>
+            </div>
         </div>
-        <a href="{% url 'dashboard:add_assignment' %}">Add Assignment</a>
-        <a href="#">Planner</a>
-        <a href="#">Forum</a>
+        
+        <!-- Profile Sticky to -->
+        <div class="pb-4">
+            <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
     </div>
 
     <div class="dashboard-container">

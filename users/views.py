@@ -1,33 +1,38 @@
-import curses
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from users.models import Student
 from courses.models import Course
 
-
-
-#  this will need to be tweaked to get a students ID rather than a users
-# since students are diff than user
-
-#no param pass means itll use id of current account
-#@login_required
+@login_required
 def viewProfile(request):
-    # Retrieve the logged-in student based on the user account.
     student = get_object_or_404(Student, account=request.user)
-    
-    # Fetch the courses the student is enrolled in.
     user_courses = Course.objects.filter(enrolled_students=student)
-    
-    # Pass the courses to the template.
     context = {
         'user_courses': user_courses,
     }
-    
     return render(request, 'users/profile.html', context)
 
-#@login_required
+@login_required
 def updateProfile(request):
-    # Now you can use user_id to update the user's profile
-    return render(request, 'users/updateProfile.html')
+    # if request.method == 'POST':
+    #     user = request.user
+    #     student = get_object_or_404(Student, user=user)
 
+    #     # Log or print to ensure data is received
+    #     print("Received data:", request.POST)
+
+    #     # Update process
+    #     user.email = request.POST.get('email', user.email)
+    #     user.first_name = request.POST.get('first_name', user.first_name)
+    #     user.last_name = request.POST.get('last_name', user.last_name)
+    #     user.save()
+
+    #     student.major = request.POST.get('major', student.major)
+    #     student.enrollment_year = request.POST.get('enrollment_year', student.enrollment_year)
+    #     student.graduation_year = request.POST.get('graduation_year', student.graduation_year)
+    #     student.save()
+
+    #     # Ensure this path is correct and only includes the necessary partial
+        return render(request, 'users/profile.html', {'user': user})
