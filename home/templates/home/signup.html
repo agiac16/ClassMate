@@ -2,12 +2,59 @@
 {% load static %}
 
 {% block content %}
-<div class="max-w-md mx-auto my-10 bg-white p-8 border border-gray-300 rounded-lg shadow-sm">
-    <h2 class="text-xl font-semibold text-gray-800 text-center">Sign Up</h2>
-    <form method="post" class="mt-4">
+<div class="max-w-md mx-auto my-10 bg-gray-100 p-8 border border-black-400 rounded-lg shadow-sm">
+    <h2 class="text-5xl font-semibold text-purple-400 text-center">Sign Up</h2>
+    <form method="POST" class="mt-6">
+
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="w-full bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 focus:outline-none focus:bg-purple-600 transition duration-300">Sign Up</button>
+        
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Username" required />
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="example@company.com" required />
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password1" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
+        </div>
+
+        <div>
+            <label for="rep-password">Repeat Password</label>
+            <input type="password" id="rep-password" name="password2" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
+        </div>
+
+        {% if form.errors %}
+
+            {% for field in form %}
+
+                {% for error in field.errors %}
+
+                    <div class="mt-2 mb-2 p-6 bg-red-200 text-center text-red-800 rounded-xl">
+                        <p>{{ error|escape }}</p>
+                    </div>
+
+                {% endfor %}
+
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+                
+                <div class="mt-2 mb-2 p-6 bg-red-200 text-center text-red-800 rounded-xl">
+                    <p>{{ error|escape }}</p>
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+        <div>
+            <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Sign Up</button>
+        </div>
     </form>
 </div>
 {% endblock %}
