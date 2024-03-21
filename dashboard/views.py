@@ -62,6 +62,10 @@ def course_dashboard(request, course_id):
 
 @login_required
 def add_assignment(request):
+
+    student = get_object_or_404(Student, account=request.user)
+    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
+
     if request.method == 'POST':
         form = AssignmentForm(request.POST, user=request.user)
         if form.is_valid():
@@ -72,11 +76,13 @@ def add_assignment(request):
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(user=request.user)
-    return render(request, 'dashboard/add_assignment.html', {'form': form})
+    
+    return render(request, 'dashboard/add_assignment.html', {'form': form, 'user_courses': user_courses})
 
 @login_required
 def add_course(request):
     student = get_object_or_404(Student, account=request.user)
+    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -88,4 +94,6 @@ def add_course(request):
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = CourseForm()
-    return render(request, 'dashboard/add_course.html', {'form': form})
+
+
+    return render(request, 'dashboard/add_course.html', {'form': form, 'user_courses': user_courses})

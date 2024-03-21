@@ -33,7 +33,5 @@ def signup_view(request):
     return render(request, 'home/signup.html', {'form': form})
 
 def logout_view(request):
-    if request.method == "POST":
         logout(request) # Logout the user
         return redirect('login') # Redirect to login
-    return render(request, 'home/logout.html')

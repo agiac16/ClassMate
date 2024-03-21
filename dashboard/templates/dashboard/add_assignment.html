@@ -87,43 +87,43 @@
             <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
 
                 <!-- Home -->
-                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-home"></i>
-                    <span>Home</span>
+                    <span>Dashboard</span>
                 </a>
 
                 <!-- Courses with submenu -->
                 <div class="group">
-                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                         <i class="fas fa-book"></i>
                         <span>Courses</span>
 
                     </a>
-                    <div id="courses-submenu" class="hidden group-hover:block bg-gray-700">
+                    <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
                         <div class="pt-2">
                             <!-- Dynamically populate course links here -->
                             {% for course in user_courses %}
-                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-gray-600">{{ course.course_name }}</a>
+                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
                             {% endfor %}
-                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-gray-600">Add Course</a>
+                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Add Assignment -->
-                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-600">
                     <i class="fas fa-tasks"></i>
                     <span>Add Assignment</span>
                 </a>
 
                 <!-- Forum -->  
-                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-comments"></i>
                     <span>Forum</span>
                 </a>
 
                 <!-- Planner -->
-                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
+                <a href="#" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Planner</span>
                 </a>
@@ -131,20 +131,30 @@
         </div>
         
         <!-- Profile Sticky to -->
-        <div class="pb-4">
-            <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-gray-700">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
+        <div class="pb-4 flex flex-row">
+            <div>
+                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </div>
     </div>
+
 
     <div class="dashboard-container">
         <h2>Add Assignment</h2>
         <form method="post" class="assignment-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer"">Submit</button>
+
         </form>
     </div>
 
@@ -156,12 +166,11 @@
                 // Enhance the slider UI here
             }
         });
-    </script>
-    <script>
         document.getElementById('courses-btn').onclick = function() {
                 var submenu = document.getElementById('courses-submenu');
                 submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
         };
+        
     </script>
 </body>
 </html>
