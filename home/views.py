@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from users.models import Student
 
@@ -30,3 +30,9 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'home/signup.html', {'form': form})
+
+def logout_view(request):
+    if request.method == "POST":
+        logout(request) # Logout the user
+        return redirect('login') # Redirect to login
+    return render(request, 'home/logout.html')
