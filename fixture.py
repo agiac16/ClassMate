@@ -36,7 +36,7 @@ course_objects = [Course.objects.create(
     crn=random.randint(10000, 99999),
     department=course["department"],
     credit_hours=course["credits"],
-    description=fake.text()
+    description=fake.text()[:16]
 ) for course in course_data]
 
 
@@ -49,10 +49,28 @@ students = [Student.objects.create(
     expected_graduation_year=random.randint(2023, 2027)
 ) for _ in range(20)]
 
-# Assign each course to a random student
+# Assign 3 random courses to each student
+for student in students:
+    courses_for_student = random.sample(course_objects, 3)
+    for course in courses_for_student:
+        course.enrolled_students.add(student)
+
+        # Create 2 assignments for each course
+        for _ in range(2):
+            Assignment.objects.create(
+                student=student,
+                course=course,
+                title=fake.sentence(),
+                description=fake.text()[:16],
+                due_date=date.today() + timedelta(days=random.randint(1,7)),
+                priority=random.randint(1, 5),
+                estimated_completion_time=timedelta(hours=random.randint(1, 5))
+            )
+
 for course in course_objects:
-    student = random.choice(students)
-    course.enrolled_students.add(student)
+    for _ in range(random.randint(1, 5)):  # Choose a random number of students for each course
+        student = random.choice(students)
+        course.enrolled_students.add(student)
 
     
 # # Create and save friends
@@ -99,18 +117,18 @@ schedules = [ClassSchedule.objects.create(
     end_time=fake.time()
 ) for student_obj in students for _ in range(3)]
 
-# Create and save assignments
-for student_obj in students:
-    for course in course_objects:
-        Assignment.objects.create(
-            student=student_obj,
-            course=course,
-            title=fake.sentence(),
-            description=fake.text(),
-            due_date=date.today() + timedelta(days=random.randint(1,7)),
-            priority=random.randint(1, 5),
-            estimated_completion_time=timedelta(hours=random.randint(1, 5))
-        )
+# # Create and save assignments
+# for student_obj in students:
+#     for course in course_objects:
+#         Assignment.objects.create(
+#             student=student_obj,
+#             course=course,
+#             title=fake.sentence(),
+#             description=fake.text()[:16],
+#             due_date=date.today() + timedelta(days=random.randint(1,7)),
+#             priority=random.randint(1, 5),
+#             estimated_completion_time=timedelta(hours=random.randint(1, 5))
+#         )
 
 # Create and save additional activities
 from django.utils import timezone

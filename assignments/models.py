@@ -12,3 +12,6 @@ class Assignment(models.Model):
     due_date = models.DateField()
     priority = models.IntegerField()
     estimated_completion_time = models.DurationField(default=datetime.timedelta)
+
+    def __str__(self):
+        return self.title
