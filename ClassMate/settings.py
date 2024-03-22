@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'friends',
     'users',
     'home',
+    'planner',
     'dashboard',
-    'calendar',
 ]
 
 
@@ -74,8 +74,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'ClassMate.context_processors.user_courses',
-
             ],
             
         },
