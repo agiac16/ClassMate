@@ -32,6 +32,6 @@ urlpatterns = [
 
     path('dashboard/', include('dashboard.urls')),
     path('users/', include('users.urls')),
-    path('planner/', include('calendar.urls')),
+    path('planner/', include('planner.urls')),
 
 ]

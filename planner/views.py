@@ -6,7 +6,7 @@ from users.models import Student
 # Create your views here.
 
 def weeklyPlanner(request):
-    return render(request, 'weeklyCalendar.html')
+    return render(request, 'planner/weeklyCalendar.html')
 
 def monthlyPlanner(request): 
-    return render(request, 'monthlyCalendar.html')
+    return render(request, 'planner/monthlyCalendar.html')
