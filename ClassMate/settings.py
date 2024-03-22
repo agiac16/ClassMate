@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'users',
     'home',
     'dashboard',
+    'calendar',
 ]
 
 
@@ -65,6 +66,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'coreStatic')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
