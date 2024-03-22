@@ -2,59 +2,82 @@
 {% load static %}
 
 {% block content %}
-<div class="max-w-md mx-auto my-10 bg-gray-100 p-8 border border-black-400 rounded-lg shadow-sm">
+<div class="max-w-2xl mx-auto my-2 bg-gray-100 p-8 border border-black-400 rounded-lg shadow-sm">
     <h2 class="text-5xl font-semibold text-purple-400 text-center">Sign Up</h2>
-    <form method="POST" class="mt-6">
 
+    <form method="POST" class="mt-6">
         {% csrf_token %}
         
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Username" required />
-        </div>
-
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="example@company.com" required />
-        </div>
-
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password1" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
-        </div>
-
-        <div>
-            <label for="rep-password">Repeat Password</label>
-            <input type="password" id="rep-password" name="password2" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
-        </div>
-
-        {% if form.errors %}
-
-            {% for field in form %}
-
-                {% for error in field.errors %}
-
-                    <div class="mt-2 mb-2 p-6 bg-red-200 text-center text-red-800 rounded-xl">
-                        <p>{{ error|escape }}</p>
-                    </div>
-
-                {% endfor %}
-
-            {% endfor %}
-
-            {% for error in form.non_field_errors %}
-                
-                <div class="mt-2 mb-2 p-6 bg-red-200 text-center text-red-800 rounded-xl">
-                    <p>{{ error|escape }}</p>
+        <div class="flex flex-row space-x-4">
+            <!-- Left Side -->
+            <div>
+                <div>
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    <input type="text" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Username" required value="{{ form.username.value|default_if_none:'' }}" />
+                </div>
+    
+                <div>
+                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                    <input type="password" name="{{ form.password1.html_name }}" id="{{ form.password1.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
                 </div>
 
-            {% endfor %}
+                <div>
+                    <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+                    <input type="text" name="{{ form.full_name.html_name }}" id="{{ form.full_name.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Full Name" required />
+                </div>
 
+                <div>
+                    <label for="{{ form.enrollment_year.id_for_label }}">Enrollment Year</label>
+                    <input type="number" name="{{ form.enrollment_year.html_name }}" id="{{ form.enrollment_year.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Year" />
+                </div>
+    
+    
+            </div>
+            <!-- Right Side -->
+            <div>
+                <div>
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="E-Mail" required value="{{ form.email.value|default_if_none:'' }}" />
+                </div>
+    
+                <div>
+                    <label for="{{ form.password2.id_for_label }}">Repeat Password</label>
+                    <input type="password" name="{{ form.password2.html_name }}" id="{{ form.password2.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="•••••••••" required />
+                </div>
+
+                <div>
+                    <label for="{{ form.major.id_for_label }}">Major</label>
+                    <input type="text" name="{{ form.major.html_name }}" id="{{ form.major.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Major" required />
+                </div>
+
+                <div>
+                    <label for="{{ form.expected_graduation_year.id_for_label }}">Expected Graduation</label>
+                    <input type="number" name="{{ form.expected_graduation_year.html_name }}" id="{{ form.expected_graduation_year.id_for_label }}" class="w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" placeholder="Year" />
+                </div>
+    
+            </div>
+        </div>
+    
+        <!-- Error handling -->
+        {% if form.errors %}
+            <div class="mt-2 mb-2 p-6 bg-red-200 text-center text-red-800 rounded-xl">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                {% endfor %}
+    
+                {% for error in form.non_field_errors %}
+                    <p>{{ error|escape }}</p>
+                {% endfor %}
+            </div>
         {% endif %}
-
+    
         <div>
             <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Sign Up</button>
         </div>
     </form>
+    
+    
 </div>
 {% endblock %}

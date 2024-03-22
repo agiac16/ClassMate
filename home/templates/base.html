@@ -21,10 +21,6 @@
             <div class="hidden md:flex items-center space-x-4">
               <a href="{% url 'homepage' %}#footer" class="py-5 px-3 text-gray-700 hover:text-gray-900">FAQ</a>
               <a href="{% url 'homepage' %}#footer" class="px-3 text-gray-700 hover:text-gray-900">Contact</a>            
-              <!-- Logout link if user is logged in -->
-              {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Logout</a>
-              {% endif %}
 
             </div>
           </div>
@@ -34,6 +30,7 @@
 
             {% if request.user.is_authenticated %}
             <a href="{% url 'logout' %}" class="py-2 px-3 text-gray-700 hover:text-gray-900">Logout</a>
+            <a href="{% url 'dashboard:dashboard' %}" class="py-2 px-3 bg-purple-400 text-purple-900 rounded hover:bg-purple-500 transition duration-300">Dashboard</a>
             {% else %}
             <a href="{% url 'login' %}" class="py-2 px-3 text-gray-700 hover:text-gray-900">Login</a>
             <a href="{% url 'signup' %}" class="py-2 px-3 bg-purple-400 text-purple-900 rounded hover:bg-purple-500 transition duration-300">Start for Free</a>

@@ -16,7 +16,9 @@
     <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
         <div>
             <div class="p-4 flex justify-center items-center">
-                <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
+                <a href="{% url 'homepage' %}">
+                    <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
+                </a>
             </div>
             
             <!-- Navigation Links -->
@@ -99,35 +101,30 @@
     
                         <div class="p-2 border rounded-md w-1/2 bg-gray-50">
                             <label for="email">Email:</label>
-                            <input id="email-display" class="pl-3" type="email" name="email" value="{{ user.email }}">
+                            <input id="email-display" class="bg-gray-50 pl-3" type="email" name="email" value="{{ user.email }}" readonly>
                         </div>
                         <div class="p-2 border rounded-md ml-2 w-1/2 bg-gray-50 flex flex-col">
                             <div class="flex flex-row">
-                                <label for="first_name">First Name:</label>
-                                <input id="first-name-display" class="pl-3" type="text" name="first_name" value="{{ user.first_name }}">
-                            </div>
-                    
-                            <div class="flex flex-row">
-                                <label for="last_name">Last Name:</label>
-                                <input id="last_name-display" class="pl-3" type="text" name="last_name" value="{{ user.last_name }}">
+                                <label for="full_name">Name:</label>
+                                <input id="full-name-display" class="bg-gray-50 pl-3" type="text" name="full_name" value="{{ user.student.full_name }}" readonly>
                             </div>
                         </div>
     
                     </div>
     
                     <!-- Major, Enrollment Year, Graduation Year display -->
-                    <div class="flex">
+                    <div class="flex mt-2">
                         <div class="p-2 border rounded-md w-1/3 bg-gray-50">
                             <label for="major">Major:</label>
-                            <input id="major-display" class="pl-3" type="text" name="major" value="{{ user.student.major }}">
+                            <input id="major-display" class="bg-gray-50 pl-3" type="text" name="major" value="{{ user.student.major }}" readonly>
                         </div>
                         <div class="p-2 border rounded-md ml-2 w-1/3 bg-gray-50 flex flex-row">
                             <label for="enrollment_year" class="pr-2">Enrollment Year:</label>
-                            <input id="enrollment-year-display" class="pl-3 h-6 w-32" type="number" name="enrollment_year" value="{{ user.student.enrollment_year }}">
+                            <input id="enrollment-year-display" class="bg-gray-50 pl-3 h-6 w-32" type="number" name="enrollment_year" value="{{ user.student.enrollment_year }}" readonly>
                         </div>
                         <div class="p-2 border rounded-md ml-2 w-1/3 bg-gray-50">
                             <label for="graduation_year" class="pr-2">Graduation Year:</label>
-                            <input id="graduation-year-display" class="pl-3 h-6 w-32" type="number" name="graduation_year" value="{{ user.student.graduation_year }}">
+                            <input id="graduation-year-display" class="bg-gray-50 pl-3 h-6 w-32" type="number" name="expected_graduation_year" value="{{ user.student.expected_graduation_year }}" readonly>
                         </div>
                     </div>
     
@@ -187,25 +184,17 @@
 
     <script>
         // JavaScript for toggling edit mode
-        document.getElementById('edit-update-btn').addEventListener('click', function() {
-            const button = this;
-            const form = document.getElementById('account-details-form');
-            const displaySection = document.getElementById('display-section');
-        
-            if (button.textContent.includes('Update')) {
-                button.textContent = 'Save Changes';
-                displaySection.querySelectorAll('span').forEach(function(span) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.name = span.id.replace('-display', '');
-                    input.value = span.textContent.trim();
-                    input.classList.add('pl-3');
-                    span.parentNode.replaceChild(input, span);
-                });
+        document.getElementById('edit-update-btn').addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        var inputs = document.querySelectorAll('#account-details-form input');
+        inputs.forEach(function(input) {
+            if (input.hasAttribute('readonly')) {
+                input.removeAttribute('readonly');
             } else {
-                form.submit();
+                input.setAttribute('readonly', true);
             }
         });
+    });
 
         document.getElementById('courses-btn').onclick = function() {
             var submenu = document.getElementById('courses-submenu');

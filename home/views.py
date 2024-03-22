@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from users.models import Student
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 
 def homepage(request):
     return render(request, 'home/homepage.html')
@@ -19,17 +23,32 @@ def login_view(request):
     return render(request, 'home/login.html', {'form': form})
 
 
-# need a custom form to get other info.
+class StudentSignUpForm(UserCreationForm):
+    full_name = forms.CharField(max_length=255)
+    enrollment_year = forms.IntegerField()
+    major = forms.CharField(max_length=255)
+    expected_graduation_year = forms.IntegerField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = StudentSignUpForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)  # Get a User instance without saving it to the database
-            user.save()  # Save the User instance to the database
-            Student.objects.create(account=user)  # Create a Student object for the new user
-            return redirect('login')
+            user = form.save()
+            Student.objects.create(
+                account=user,
+                full_name=form.cleaned_data.get('full_name'),
+                enrollment_year=form.cleaned_data.get('enrollment_year'),
+                major=form.cleaned_data.get('major'),
+                expected_graduation_year=form.cleaned_data.get('expected_graduation_year')
+            )
+            login(request, user)
+            return redirect('dashboard:dashboard')
     else:
-        form = UserCreationForm()
+        form = StudentSignUpForm()
     return render(request, 'home/signup.html', {'form': form})
 
 def logout_view(request):
