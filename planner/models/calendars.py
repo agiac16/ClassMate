@@ -220,7 +220,7 @@ class CalendarRelation(models.Model):
     calendar = models.ForeignKey(
         Calendar, on_delete=models.CASCADE, verbose_name=_("calendar")
     )
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='planner.CalendarRelation.content_type+')
     object_id = models.IntegerField(db_index=True)
     content_object = fields.GenericForeignKey("content_type", "object_id")
     distinction = models.CharField(_("distinction"), max_length=20)

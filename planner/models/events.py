@@ -65,7 +65,7 @@ class Event(models.Model):
         null=True,
         blank=True,
         verbose_name=_("creator"),
-        related_name="creator",
+        related_name="planner.Event.creator+",
     )
     created_on = models.DateTimeField(_("created on"), auto_now_add=True)
     updated_on = models.DateTimeField(_("updated on"), auto_now=True)
@@ -562,7 +562,7 @@ class EventRelation(models.Model):
     """
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name=_("event"))
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,related_name='planner.EventRelation.content_type+')
     object_id = models.IntegerField(db_index=True)
     content_object = fields.GenericForeignKey("content_type", "object_id")
     distinction = models.CharField(_("distinction"), max_length=20)
