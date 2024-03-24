@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'djangobower',
     "assignments",
     'courses',
     'forum',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'home',
     'planner',
     'dashboard',
+    'schedule',
 ]
 
 
@@ -81,6 +83,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "ClassMate.wsgi.application"
+
+# Required for the Calendar
+# BOWER_COMPONENTS_ROOT = BASE_DIR / 'ClassMate' # recommended in the base project, but not used in the sample, can probably delete
+
+BOWER_PATH = os.path.normpath(r'/myenv/lib/node_modules/bower')
+
+BOWER_INSTALLED_APPS = (
+    'jquery',
+    'jquery-ui',
+    'bootstrap',
+    'fullcalendar#3.8.2'
+)
 
 
 # Database
@@ -132,6 +146,10 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     "home/templates/home/static",
+]
+
+STATICFILES_FINDERS = [
+    'djangobower.finders.BowerFinder',
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
