@@ -9,8 +9,8 @@ from django.utils import timezone
 from django.utils.dates import WEEKDAYS, WEEKDAYS_ABBR
 from django.utils.translation import gettext
 
-from schedule.models import Occurrence
-from schedule.settings import SHOW_CANCELLED_OCCURRENCES
+from planner.models.events import Occurrence
+# from planner.settings import SHOW_CANCELLED_OCCURRENCES
 
 weekday_names = []
 weekday_abbrs = []
@@ -117,8 +117,8 @@ class Period:
             return self._persisted_occurrences
 
     def classify_occurrence(self, occurrence):
-        if occurrence.cancelled and not SHOW_CANCELLED_OCCURRENCES:
-            return
+        # if occurrence.cancelled and not SHOW_CANCELLED_OCCURRENCES:
+            # return
         if occurrence.start > self.end or occurrence.end < self.start:
             return None
         started = False

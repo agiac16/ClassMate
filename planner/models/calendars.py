@@ -7,8 +7,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from schedule.settings import USE_FULLCALENDAR
-from schedule.utils import EventListManager
+from planner.settings import USE_FULLCALENDAR
+from planner.utils import EventListManager
 
 
 class CalendarManager(models.Manager):

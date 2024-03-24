@@ -33,10 +33,11 @@ from django.views.generic.edit import (
     UpdateView,
 )
 
-from schedule.forms import EventForm, OccurrenceForm
-from schedule.models import Calendar, Event, Occurrence
-from schedule.periods import weekday_names
-from schedule.settings import (
+from planner.forms import EventForm, OccurrenceForm
+from planner.models.events import Event, Occurrence
+from planner.models.calendars import Calendar
+from planner.periods import weekday_names
+from planner.settings import (
     CHECK_EVENT_PERM_FUNC,
     CHECK_OCCURRENCE_PERM_FUNC,
     EVENT_NAME_PLACEHOLDER,
@@ -44,7 +45,7 @@ from schedule.settings import (
     OCCURRENCE_CANCEL_REDIRECT,
     USE_FULLCALENDAR,
 )
-from schedule.utils import (
+from planner.utils import (
     check_calendar_permissions,
     check_event_permissions,
     check_occurrence_permissions,
@@ -89,7 +90,7 @@ class CalendarMixin(CalendarViewPermissionMixin):
 
 
 class CalendarView(CalendarMixin, DetailView):
-    template_name = "schedule/calendar.html"
+    template_name = "planner/calendar.html"
 
 
 class FullCalendarView(CalendarMixin, DetailView):
@@ -102,7 +103,7 @@ class FullCalendarView(CalendarMixin, DetailView):
 
 
 class CalendarByPeriodsView(CalendarMixin, DetailView):
-    template_name = "schedule/calendar_by_period.html"
+    template_name = "planner/calendar_by_period.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -152,11 +153,11 @@ class OccurrenceEditMixin(
 
 
 class OccurrenceView(OccurrenceMixin, DetailView):
-    template_name = "schedule/occurrence.html"
+    template_name = "planner/occurrence.html"
 
 
 class OccurrencePreview(OccurrenceMixin, ModelFormMixin, ProcessFormView):
-    template_name = "schedule/occurrence.html"
+    template_name = "planner/occurrence.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -165,15 +166,15 @@ class OccurrencePreview(OccurrenceMixin, ModelFormMixin, ProcessFormView):
 
 
 class EditOccurrenceView(OccurrenceEditMixin, UpdateView):
-    template_name = "schedule/edit_occurrence.html"
+    template_name = "planner/edit_occurrence.html"
 
 
 class CreateOccurrenceView(OccurrenceEditMixin, CreateView):
-    template_name = "schedule/edit_occurrence.html"
+    template_name = "planner/edit_occurrence.html"
 
 
 class CancelOccurrenceView(OccurrenceEditMixin, ModelFormMixin, ProcessFormView):
-    template_name = "schedule/cancel_occurrence.html"
+    template_name = "planner/cancel_occurrence.html"
 
     def post(self, request, *args, **kwargs):
         event, occurrence = get_occurrence(**kwargs)
@@ -195,12 +196,12 @@ class EventEditMixin(CancelButtonMixin, EventEditPermissionMixin, EventMixin):
 
 
 class EventView(EventMixin, DetailView):
-    template_name = "schedule/event.html"
+    template_name = "planner/event.html"
 
 
 class EditEventView(EventEditMixin, UpdateView):
     form_class = EventForm
-    template_name = "schedule/create_event.html"
+    template_name = "planner/create_event.html"
 
     def form_valid(self, form):
         event = form.save(commit=False)
@@ -221,7 +222,7 @@ class EditEventView(EventEditMixin, UpdateView):
 
 class CreateEventView(EventEditMixin, CreateView):
     form_class = EventForm
-    template_name = "schedule/create_event.html"
+    template_name = "planner/create_event.html"
 
     def get_initial(self):
         date = coerce_date_dict(self.request.GET)
@@ -248,7 +249,7 @@ class CreateEventView(EventEditMixin, CreateView):
 
 
 class DeleteEventView(EventEditMixin, DeleteView):
-    template_name = "schedule/delete_event.html"
+    template_name = "planner/delete_event.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

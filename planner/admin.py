@@ -4,12 +4,16 @@ from django.contrib import admin
 from django.contrib import admin
 
 from planner.forms import EventAdminForm
-from planner.models import (
+from planner.models.calendars import (
     Calendar,
     CalendarRelation,
+)
+from planner.models.events import (
     Event,
     EventRelation,
     Occurrence,
+)
+from planner.models.rules import (
     Rule,
 )
 

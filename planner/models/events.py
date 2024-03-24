@@ -13,9 +13,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext, gettext_lazy as _
 
-from schedule.models.calendars import Calendar
-from schedule.models.rules import Rule
-from schedule.utils import OccurrenceReplacer
+from planner.models.calendars import Calendar
+from planner.models.rules import Rule
+from planner.utils import OccurrenceReplacer
 
 freq_dict_order = {
     "YEARLY": 0,

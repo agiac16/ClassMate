@@ -1,8 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from schedule.models import Event, Occurrence
-from schedule.widgets import ColorInput
+from planner.models.events import (Event, Occurrence)
+# from planner.widgets import ColorInput
 
 
 class SpanForm(forms.ModelForm):
@@ -45,4 +45,4 @@ class EventAdminForm(forms.ModelForm):
     class Meta:
         exclude = []
         model = Event
-        widgets = {"color_event": ColorInput}
+        # widgets = {"color_event": ColorInput}
