@@ -4,7 +4,7 @@
 <head>
     <title>Forums</title>
     <style>
-            .dashboard-container {
+        .dashboard-container {
             margin-left: 250px;
             width: calc(100% - 250px);
             padding: 20px;
@@ -12,8 +12,53 @@
             height: 100vh;
             background-color: #f8fafc;
         }
+
+        .centered-dropdown {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dropdown {
+            width: 200px;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function loadCoursePosts(courseId) {
+            // Clear existing posts
+            document.getElementById("posts-container").innerHTML = '';
+
+            // Make an AJAX request to the server
+            fetch(`/forum/course/${courseId}/posts/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the posts container with the received posts
+                    let postsHtml = '';
+                    data.posts.forEach(post => {
+                        postsHtml += `<div class="post">
+                            <h3>${post.title}</h3>
+                            <p>${post.content}</p>
+                            <p>Posted by ${post.posted_by} on ${new Date(post.timestamp).toLocaleString()}</p>
+                        </div>`;
+                    });
+                    document.getElementById("posts-container").innerHTML = postsHtml;
+                })
+                .catch(error => {
+                    console.error('Error fetching posts:', error);
+                });
+        }
+
+        // Attach the loadCoursePosts function to the onchange event of the select element
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById("courses").addEventListener('change', function() {
+                const courseId = this.value;
+                if (courseId) {
+                    loadCoursePosts(courseId);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -28,7 +73,6 @@
         
         <!-- Navigation Links -->
         <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
-
             <!-- Home -->
             <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                 <i class="fas fa-home"></i>
@@ -40,7 +84,6 @@
                 <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-book"></i>
                     <span>Courses</span>
-
                 </a>
                 <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
                     <div class="pt-2">
@@ -73,33 +116,45 @@
         </div>
     </div>
     
-    <!-- Profile Sticky to -->
-    <div class="pb-4 flex flex-row">
-        <div>
-            <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-        </div>
-        <div>
-            <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-    <div class="dashboard-container">
-        <div class="pt-2">
-            <!-- Dynamically populate course links here -->
-            {% for course in user_courses %}
-            <a href="" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
-            {% endfor %}
-            <a href="" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
+        <!-- Profile Sticky to -->
+        <div class="pb-4 flex flex-row">
+            <div>
+                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </div>
     </div>
     
-</body>
-</html>
+    <!-- Main content -->
+    <div class="dashboard-container">
+        <div class="centered-dropdown">
+            <div class="dropdown">
+                <label for="courses" class="form-label">Select a Course:</label>
+                <select id="courses" class="form-select">
+                    <option value="">-- Choose a Course --</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        
+
+        <!-- Posts Container -->
+        <div id="posts-container">
+            <!-- Posts will be loaded here -->
+        </div>
+    </div>
+    
+    </body>
+    </html>
+    
