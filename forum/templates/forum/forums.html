@@ -23,6 +23,30 @@
             width: 200px;
         }
 
+        .submit-button {
+            background-color: #6b46c1; /* TailwindCSS purple-700 */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-button:hover {
+            background-color: #553c9a; /* TailwindCSS purple-800 */
+        }
+
+        .dropdown-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
         .post {
             background-color: #fff;
             border: 1px solid #ddd;
@@ -169,7 +193,7 @@
 
 <div class="dashboard-container">
     <div class="centered-dropdown">
-        <div class="dropdown">
+        <div class="dropdown-container">
             <label for="courses" class="form-label">Select a Course:</label>
             <select id="courses" class="form-select">
                 <option value="">-- Choose a Course --</option>
@@ -180,22 +204,30 @@
         </div>
     </div>
 
-    <div id="create-post-container" class="create-post-container" style="display: none;">
-        <h2>Create New Post</h2>
-        <form id="create-post-form" method="post" action="{% url 'forum:create_post' %}">
-            {% csrf_token %}
-            <input type="hidden" name="course_id" id="selected-course-id" value="">
-            <div>
-                <label for="post-title">Title:</label>
-                <input type="text" id="post-title" name="title" required>
-            </div>
-            <div>
-                <label for="post-content">Content:</label>
-                <textarea id="post-content" name="content" rows="4" required></textarea>
-            </div>
-            <button type="submit">Submit Post</button>
-        </form>
-    </div>
+    <!-- Create Post Section -->
+<!-- Create Post Section -->
+<div id="create-post-container" class="create-post-container">
+    <h2 class="text-2xl font-bold mb-3">Create New Post</h2>
+    <form id="create-post-form" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="course_id" id="selected-course-id" value="">
+        <div class="mb-4">
+            <label for="post-title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+            <input type="text" id="post-title" name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div class="mb-6">
+            <label for="post-content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+            <textarea id="post-content" name="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" required></textarea>
+        </div>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="submit-button">
+                Submit Post
+            </button>
+        </div>
+    </form>
+</div>
+
+
 
     <div id="posts-container">
         <!-- Posts will be loaded here -->
@@ -215,8 +247,9 @@
                 let postsHtml = '';
                 data.posts.forEach(post => {
                     postsHtml += `<div class="post">
-                        <h3>${post.title}</h3>
+                        <div class="post-title">${post.title}</div>
                         <p>${post.content}</p>
+                        <div class="post-details">Posted by ${post.author} on ${post.date}</div>
                     </div>`;
                 });
                 document.getElementById("posts-container").innerHTML = postsHtml;
@@ -232,9 +265,9 @@
             const courseId = this.value;
             if (courseId) {
                 loadCoursePosts(courseId);
-                document.getElementById("create-post-container").style.display = 'block';
+                document.getElementById("create-post-container").classList.add('active');
             } else {
-                document.getElementById("create-post-container").style.display = 'none';
+                document.getElementById("create-post-container").classList.remove('active');
             }
         });
     });
@@ -250,9 +283,15 @@
                 url: '{% url "forum:create_post" %}',
                 data: formData,
                 success: function(response) {
-                    $('#posts-container').prepend('<div class="post"><h3>' + response.title + '</h3><p>' + response.content + '</p></div>');
+                    $('#posts-container').prepend(`
+                        <div class="post">
+                            <div class="post-title">${response.title}</div>
+                            <p>${response.content}</p>
+                            <div class="post-details">Posted by ${response.author} on ${response.date}</div>
+                        </div>
+                    `);
                     $('#create-post-form')[0].reset();
-                    document.getElementById("create-post-container").style.display = 'none';
+                    document.getElementById("create-post-container").classList.remove('active');
                 },
                 error: function(xhr, errmsg, err) {
                     console.log('Error:', errmsg);
@@ -261,6 +300,7 @@
         });
     });
 </script>
+
 
 </body>
 </html>
