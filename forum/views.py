@@ -26,7 +26,7 @@ def create_post(request):
             new_post.course_id = request.POST.get('course_id')
             new_post.save()
             # Render the new post as HTML and send it back
-            html = render_to_string('partials/_post.html', {'post': new_post}, request=request)
+            html = render_to_string('forum/forumPost.html', {'post': new_post}, request=request)
             return JsonResponse({'html': html}, status=200)
         else:
             # If the form is not valid, send back an error status and the form errors

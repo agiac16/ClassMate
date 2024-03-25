@@ -22,8 +22,25 @@
         .dropdown {
             width: 200px;
         }
+
+        .post {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .create-post-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .create-post-container.active {
+            display: block;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         function loadCoursePosts(courseId) {
             // Clear existing posts
@@ -39,7 +56,6 @@
                         postsHtml += `<div class="post">
                             <h3>${post.title}</h3>
                             <p>${post.content}</p>
-                            <p>Posted by ${post.posted_by} on ${new Date(post.timestamp).toLocaleString()}</p>
                         </div>`;
                     });
                     document.getElementById("posts-container").innerHTML = postsHtml;
@@ -55,7 +71,31 @@
                 const courseId = this.value;
                 if (courseId) {
                     loadCoursePosts(courseId);
+                    document.getElementById("create-post-container").style.display = 'block';
+                } else {
+                    document.getElementById("create-post-container").style.display = 'none';
                 }
+            });
+        });
+
+        // AJAX form submission
+        $(document).ready(function() {
+            $('#create-post-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "forum:create_post" %}',
+                    data: formData,
+                    success: function(response) {
+                        $('#posts-container').prepend(response.post_html);
+                        $('#create-post-form')[0].reset();
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log('Error:', errmsg);
+                    }
+                });
             });
         });
     </script>
@@ -73,13 +113,11 @@
         
         <!-- Navigation Links -->
         <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
-            <!-- Home -->
             <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                 <i class="fas fa-home"></i>
                 <span>Dashboard</span>
             </a>
 
-            <!-- Courses with submenu -->
             <div class="group">
                 <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-book"></i>
@@ -87,74 +125,143 @@
                 </a>
                 <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
                     <div class="pt-2">
-                        <!-- Dynamically populate course links here -->
                         {% for course in user_courses %}
                         <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
                         {% endfor %}
+                        <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg
                         <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Add Assignment -->
-            <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-600">
+            <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                 <i class="fas fa-tasks"></i>
                 <span>Add Assignment</span>
             </a>
 
-            <!-- Forum -->  
             <a href="{% url 'forum:courseList' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                 <i class="fas fa-comments"></i>
                 <span>Forum</span>
             </a>
 
-            <!-- Planner -->
             <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Planner</span>
             </a>
         </div>
     </div>
-    
-        <!-- Profile Sticky to -->
-        <div class="pb-4 flex flex-row">
-            <div>
-                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </div>
-            <div>
-                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Main content -->
-    <div class="dashboard-container">
-        <div class="centered-dropdown">
-            <div class="dropdown">
-                <label for="courses" class="form-label">Select a Course:</label>
-                <select id="courses" class="form-select">
-                    <option value="">-- Choose a Course --</option>
-                    {% for course in courses %}
-                    <option value="{{ course.id }}">{{ course.course_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        
-        
 
-        <!-- Posts Container -->
-        <div id="posts-container">
-            <!-- Posts will be loaded here -->
+    <div class="pb-4 flex flex-row">
+        <div>
+            <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
         </div>
     </div>
-    
-    </body>
-    </html>
-    
+</div>
+
+<div class="dashboard-container">
+    <div class="centered-dropdown">
+        <div class="dropdown">
+            <label for="courses" class="form-label">Select a Course:</label>
+            <select id="courses" class="form-select">
+                <option value="">-- Choose a Course --</option>
+                {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.course_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div id="create-post-container" class="create-post-container" style="display: none;">
+        <h2>Create New Post</h2>
+        <form id="create-post-form" method="post" action="{% url 'forum:create_post' %}">
+            {% csrf_token %}
+            <input type="hidden" name="course_id" id="selected-course-id" value="">
+            <div>
+                <label for="post-title">Title:</label>
+                <input type="text" id="post-title" name="title" required>
+            </div>
+            <div>
+                <label for="post-content">Content:</label>
+                <textarea id="post-content" name="content" rows="4" required></textarea>
+            </div>
+            <button type="submit">Submit Post</button>
+        </form>
+    </div>
+
+    <div id="posts-container">
+        <!-- Posts will be loaded here -->
+    </div>
+</div>
+
+<script>
+    function loadCoursePosts(courseId) {
+        // Clear existing posts
+        document.getElementById("posts-container").innerHTML = '';
+
+        // Make an AJAX request to the server
+        fetch(`/forum/course/${courseId}/posts/`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the posts container with the received posts
+                let postsHtml = '';
+                data.posts.forEach(post => {
+                    postsHtml += `<div class="post">
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                    </div>`;
+                });
+                document.getElementById("posts-container").innerHTML = postsHtml;
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    }
+
+    // Attach the loadCoursePosts function to the onchange event of the select element
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("courses").addEventListener('change', function() {
+            const courseId = this.value;
+            if (courseId) {
+                loadCoursePosts(courseId);
+                document.getElementById("create-post-container").style.display = 'block';
+            } else {
+                document.getElementById("create-post-container").style.display = 'none';
+            }
+        });
+    });
+
+    // AJAX form submission
+    $(document).ready(function() {
+        $('#create-post-form').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "forum:create_post" %}',
+                data: formData,
+                success: function(response) {
+                    $('#posts-container').prepend('<div class="post"><h3>' + response.title + '</h3><p>' + response.content + '</p></div>');
+                    $('#create-post-form')[0].reset();
+                    document.getElementById("create-post-container").style.display = 'none';
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log('Error:', errmsg);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
+
