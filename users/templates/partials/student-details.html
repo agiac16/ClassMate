@@ -1,0 +1,51 @@
+<div id="display-section">
+
+    <!-- Email and Name -->
+    <div class="flex">
+
+        <div class="p-2 border rounded-md w-1/2 overflow-clip bg-gray-50">
+            <label for="email">Email:</label>
+            <input id="email-display" class="bg-gray-50 pl-3" type="email" name="email" value="{{ user.email }}" readonly>
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/2 overflow-clip bg-gray-50 flex flex-col">
+            <div class="flex flex-row">
+                <label for="full_name">Name:</label>
+                <input id="full-name-display" class="bg-gray-50 pl-3" type="text" name="full_name" value="{{ user.student.full_name }}" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Major, Enrollment Year, Graduation -->
+    <div class="flex mt-2">
+        <div class="p-2 border rounded-md w-1/3 overflow-clip bg-gray-50">
+            <label for="major">Major:</label>
+            <input id="major-display" class="bg-gray-50 pl-3" type="text" name="major" value="{{ user.student.major }}" readonly>
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/3 overflow-clip bg-gray-50 flex flex-row">
+            <label for="enrollment_year" class="pr-2">Enrollment Year:</label>
+            <input id="enrollment-year-display" class="bg-gray-50 pl-3 h-6 w-32" type="number" name="enrollment_year" value="{{ user.student.enrollment_year }}" readonly>
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/3 overflow-clip bg-gray-50 flex flex-row">
+            <label for="graduation_year" class="pr-2">Graduation Year:</label>
+            <input id="graduation-year-display" class="bg-gray-50 pl-3 h-6 w-1/2" type="number" name="expected_graduation_year" value="{{ user.student.expected_graduation_year }}" readonly>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-center items-center space-x-6 mt-6">
+                    
+        <button type="submit" id="edit-update-btn" class="bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300"
+            hx-get="{% url 'user:updateProfile' %}"
+            hx-target="#student-info">
+            Update Information
+        </button>
+
+        <a href="{% url 'user:resetPassword' user.id %}">
+            <button class="bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300" type="button">
+                Reset Password
+            </button>
+        </a>
+    </div>
+
+</div>

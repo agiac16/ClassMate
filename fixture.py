@@ -59,6 +59,7 @@ for student in students:
         for _ in range(2):
             Assignment.objects.create(
                 student=student,
+                owner=student,
                 course=course,
                 title=fake.sentence(),
                 description=fake.text()[:16],

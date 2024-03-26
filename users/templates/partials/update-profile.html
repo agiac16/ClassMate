@@ -1,0 +1,48 @@
+<form hx-put="{% url 'user:viewProfile' %}" hx-target="#student-info" class="flex flex-col justify-between">
+    {% csrf_token %}
+
+    <!-- Email and Name -->
+    <div class="flex">
+        <div class="p-2 border rounded-md w-1/2 bg-gray-50">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            <span class="pl-3">{{ form.email }}</span>
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/2 bg-gray-50 flex flex-col">
+            <div class="flex flex-row">
+                <label for="{{ form.full_name.id_for_label }}">Name:</label>
+                {{ form.full_name }}
+                <script>
+                    document.getElementById("{{ form.email.id_for_label }}").readOnly = true;
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Major, Enrollment Year, Graduation -->
+    <div class="flex mt-2">
+        <div class="p-2 border rounded-md w-1/3 bg-gray-50 overflow-clip">
+            <label for="{{ form.major.id_for_label }}">Major:</label>
+            {{ form.major }}
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/3 bg-gray-50 flex flex-row overflow-clip">
+            <label for="{{ form.enrollment_year.id_for_label }}" class="pr-2">Enrollment Year:</label>
+            {{ form.enrollment_year }}
+        </div>
+        <div class="p-2 border rounded-md ml-2 w-1/3 bg-gray-50 flex flex-row overflow-clip">
+            <label for="{{ form.expected_graduation_year.id_for_label }}" class="pr-2">Graduation Year:</label>
+            {{ form.expected_graduation_year }}
+        </div>
+    </div>
+
+    <div class="flex justify-center items-center space-x-6 mt-6">
+
+        <button type="submit" id="edit-update-btn" class="overflow-clip bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 flex">
+            Submit Information
+        </button>
+
+        <button class="bg-purple-400 text-white overflow-clip font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300" type="button">
+            Reset Password
+        </button>
+    </div>
+
+</form>
