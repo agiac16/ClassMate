@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Assignment</title>
+    <title>Edit Assignment</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -129,7 +129,16 @@
                     {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                 </div>
             
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+                <div class="flex flex-row space-x-2">
+                    <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+                    
+                    <a href="{% url 'dashboard:delete_assignment' assignment.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">
+                            Delete
+                        </button>
+                    </a>
+                </div>
             </form>
         </div>
     </div>

@@ -1,0 +1,26 @@
+<div id="course-list">
+{% for course in user_courses %}
+    <div class="flex flex-row h-6 mt-3 items-center justify-evenly">
+        <div class="w-52 text-center">
+            <span>{{ course.course_name }}</span>
+        </div>
+        <div class="w-28 text-center">
+            <span>{{ course.course_code }}</span>
+        </div>
+        <div class="w-28 text-center">
+            <span>{{ course.crn }}</span>
+        </div>
+        <div class="w-36 text-center">
+            <span>{{ course.description }}</span>
+        </div>
+        <div class="w-24 text-center">
+            <button class="bg-purple-400 text-sm text-white font-bold px-3 rounded hover:bg-purple-500 transition duration-300"
+                hx-delete="{% url 'user:deleteCourse' course.pk %}"
+                hx-target="#course-list"
+                hx-confirm="Are you sure?">X</button>
+        </div>
+    </div>
+    {% empty %}
+        <p>No courses found.</p>
+    {% endfor %}
+</div>

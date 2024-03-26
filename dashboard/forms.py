@@ -7,18 +7,15 @@ from django.shortcuts import get_object_or_404
 
 
 class AssignmentForm(forms.ModelForm):
-    hours = forms.ChoiceField(choices=[(i, f"{i} hour{'s' if i != 1 else ''}") for i in range(0, 25)], widget=Select(attrs={'class': 'form-control'}))
-    minutes = forms.ChoiceField(choices=[(i, f"{i} minute{'s' if i != 1 else ''}") for i in range(0, 59, 5)], widget=Select(attrs={'class': 'form-control'}))
-
     class Meta:
         model = Assignment
         fields = ['course', 'title', 'description', 'due_date', 'priority']
         widgets = {
-            'course': forms.Select(attrs={'class': 'form-control'}),
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'due_date': SelectDateWidget(attrs={'class': 'form-control date-picker'}),
-            'priority': forms.NumberInput(attrs={'class': 'form-control', 'type': 'range', 'min': 1, 'max': 5, 'step': 1}),
+            'course': forms.Select(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'title': forms.TextInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'description': Textarea(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'rows': 3}),
+            'due_date': SelectDateWidget(attrs={'class': 'w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker'}),
+            'priority': forms.NumberInput(attrs={'class': 'w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'type': 'range', 'min': 1, 'max': 5, 'step': 1}),
         }
 
     def __init__(self, *args, **kwargs):

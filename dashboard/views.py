@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
@@ -62,7 +63,6 @@ def course_dashboard(request, course_id):
 
 @login_required
 def add_assignment(request):
-
     student = get_object_or_404(Student, account=request.user)
     user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
 
@@ -70,14 +70,35 @@ def add_assignment(request):
         form = AssignmentForm(request.POST, user=request.user)
         if form.is_valid():
             assignment = form.save(commit=False)
-            student = get_object_or_404(Student, account=request.user)
             assignment.student = student
+            assignment.owner = student  # Assign the current student as the owner
             assignment.save()
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(user=request.user)
     
     return render(request, 'dashboard/add_assignment.html', {'form': form, 'user_courses': user_courses})
+
+@login_required
+def edit_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    student = get_object_or_404(Student, account=request.user)
+    user_courses = Course.objects.filter(enrolled_students=student)
+
+    # Ensure the user is the owner of the assignment before allowing them to edit
+    if student != assignment.owner:
+        return redirect('dashboard:dashboard')
+
+    if request.method == "POST":
+        form = AssignmentForm(request.POST, instance=assignment, user=request.user)
+        
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('dashboard:dashboard'))
+    else:
+        form = AssignmentForm(instance=assignment, user=request.user)
+
+    return render(request, 'dashboard/edit_assignment.html', {'form': form, 'user_courses': user_courses, 'assignment': assignment})
 
 @login_required
 def add_course(request):
@@ -97,3 +118,17 @@ def add_course(request):
 
 
     return render(request, 'dashboard/add_course.html', {'form': form, 'user_courses': user_courses})
+
+@login_required
+def delete_assignment(request):
+    assignment = get_object_or_404(Assignment)
+    student = get_object_or_404(Student, account=request.user)
+
+    # Ensure the user is the owner of the assignment before allowing them to delete
+    if student != assignment.owner:
+        messages.error(request, 'You do not have permission to delete this assignment.')
+        return redirect('dashboard:dashboard')
+
+    assignment.delete()
+
+    return redirect('dashboard:dashboard')

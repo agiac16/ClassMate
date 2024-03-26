@@ -13,12 +13,11 @@
         }
         
         .dashboard-container {
-            margin-left: 250px;
+            margin-left: 208px;
             width: calc(100% - 250px);
             padding: 20px;
             overflow: auto;
             height: 100vh;
-            background-color: #f8fafc;
         }
         .day-container {
             margin-bottom: 20px;
@@ -124,8 +123,7 @@
     </div>
 </div>
 
-
-    <div class="dashboard-container">
+    <div class="dashboard-container bg-slate-50">
         <main>
             {% for date, assignments in assignments_by_day %}
             <div class="day-container">
@@ -133,14 +131,16 @@
                 {% if assignments %}
                     <div class="assignments-container">
                         {% for assignment in assignments %}
-                            <div class="assignment-card">
-                                <div class="card-body">
-                                    <p>{{ assignment.course.course_name }} - {{ assignment.title }}</p>
-                                    <p>Due: {{ assignment.due_date|date:"F jS, Y" }}</p>
-                                    <p>Points: {{ assignment.priority }}</p>
-                                    <!-- Other details can be added here -->
+                            <a href="{% url 'dashboard:edit_assignment' assignment.id %}">
+                                <div class="assignment-card">
+                                    <div class="card-body">
+                                        <p>{{ assignment.course.course_name }} - {{ assignment.title }}</p>
+                                        <p>Due: {{ assignment.due_date|date:"F jS, Y" }}</p>
+                                        <p>Points: {{ assignment.priority }}</p>
+                                        <!-- Other details can be added here -->
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -157,5 +157,14 @@
             submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
     };
     </script>
+
+    <script type="text/javascript">
+        function toggleModal(modalID){
+          document.getElementById(modalID).classList.toggle("hidden");
+          document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
+          document.getElementById(modalID).classList.toggle("flex");
+          document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+        }
+      </script>
 </body>
 </html>

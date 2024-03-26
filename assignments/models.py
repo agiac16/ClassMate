@@ -5,7 +5,8 @@ from courses.models import Course
 from users.models import Student
 
 class Assignment(models.Model):
-    student = models.ForeignKey('users.Student', on_delete=models.CASCADE, related_name='assignments')
+    owner = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='owned_assignments', null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='assignments')
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()

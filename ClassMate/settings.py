@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'home',
     'planner',
     'dashboard',
+    'widget_tweaks',
+
 ]
 
 
