@@ -3,6 +3,7 @@ Django==5.0.1
 django-bower==5.2.0
 django-scheduler==0.10.1
 Faker==24.0.0
+django-widget-tweaks
 icalendar==5.0.12
 node==1.2.1
 nodeenv==1.8.0
