@@ -5,6 +5,8 @@ from django.utils import timezone
 from courses.models import Course
 from users.models import Student
 
+
+
 class ForumPost(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -13,10 +15,11 @@ class ForumPost(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ['-timestamp']  # Orders posts by most recent
+        ordering = ['-timestamp']
 
     def __str__(self):
         return f"{self.title} by {self.posted_by.full_name} for {self.course.course_name}"
+
 
 
 class ForumThread(models.Model):

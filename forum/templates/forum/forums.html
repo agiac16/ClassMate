@@ -66,28 +66,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        function loadCoursePosts(courseId) {
-            // Clear existing posts
-            document.getElementById("posts-container").innerHTML = '';
+       function loadCoursePosts(courseId) {
+    // Clear existing posts
+    document.getElementById("posts-container").innerHTML = '';
 
-            // Make an AJAX request to the server
-            fetch(`/forum/course/${courseId}/posts/`)
-                .then(response => response.json())
-                .then(data => {
-                    // Populate the posts container with the received posts
-                    let postsHtml = '';
-                    data.posts.forEach(post => {
-                        postsHtml += `<div class="post">
-                            <h3>${post.title}</h3>
-                            <p>${post.content}</p>
-                        </div>`;
-                    });
-                    document.getElementById("posts-container").innerHTML = postsHtml;
-                })
-                .catch(error => {
-                    console.error('Error fetching posts:', error);
-                });
-        }
+    // Set the course_id in the form
+    document.getElementById("selected-course-id").value = courseId;
+
+    // Make an AJAX request to the server
+    fetch(`/forum/course/${courseId}/posts/`)
+        .then(response => response.json())
+        .then(data => {
+            // Populate the posts container with the received posts
+            let postsHtml = '';
+            data.posts.forEach(post => {
+                postsHtml += `<div class="post">
+                    <div class="post-title">${post.title}</div>
+                    <p>${post.content}</p>
+                    <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
+                </div>`;
+            });
+            document.getElementById("posts-container").innerHTML = postsHtml;
+        })
+        .catch(error => {
+            console.error('Error fetching posts:', error);
+        });
+}
+
 
         // Attach the loadCoursePosts function to the onchange event of the select element
         document.addEventListener('DOMContentLoaded', function() {
@@ -104,24 +109,37 @@
 
         // AJAX form submission
         $(document).ready(function() {
-            $('#create-post-form').on('submit', function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "forum:create_post" %}',
-                    data: formData,
-                    success: function(response) {
-                        $('#posts-container').prepend(response.post_html);
-                        $('#create-post-form')[0].reset();
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log('Error:', errmsg);
-                    }
-                });
-            });
+    $('#create-post-form').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        console.log("Form Data: ", formData); // Check if course_id is included
+        $.ajax({
+            type: 'POST',
+            url: '{% url "forum:create_post" %}',  // Update this with the correct URL
+            data: formData,
+            headers: {
+                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Post created successfully!');
+                    // Optionally, refresh the list of posts
+                } else {
+                    alert('Error creating post: ' + JSON.stringify(response.errors));
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                alert('Error creating post: ' + errmsg);
+            }
         });
+    });
+
+    $('#courses').on('change', function() {
+        var selectedCourseId = $(this).val();
+        console.log("Selected Course ID: ", selectedCourseId); // Check the selected course ID
+        $('#selected-course-id').val(selectedCourseId); // Update the hidden input field
+    });
+});
     </script>
 </head>
 <body>
@@ -206,6 +224,7 @@
 
     <!-- Create Post Section -->
 <!-- Create Post Section -->
+<!-- Create Post Section -->
 <div id="create-post-container" class="create-post-container">
     <h2 class="text-2xl font-bold mb-3">Create New Post</h2>
     <form id="create-post-form" method="post">
@@ -229,6 +248,7 @@
 
 
 
+
     <div id="posts-container">
         <!-- Posts will be loaded here -->
     </div>
@@ -249,7 +269,7 @@
                     postsHtml += `<div class="post">
                         <div class="post-title">${post.title}</div>
                         <p>${post.content}</p>
-                        <div class="post-details">Posted by ${post.author} on ${post.date}</div>
+                        <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
                     </div>`;
                 });
                 document.getElementById("posts-container").innerHTML = postsHtml;
@@ -287,7 +307,7 @@
                         <div class="post">
                             <div class="post-title">${response.title}</div>
                             <p>${response.content}</p>
-                            <div class="post-details">Posted by ${response.author} on ${response.date}</div>
+                            <div class="post-details">Posted by ${response.posted_by_username} on ${response.timestamp}</div>
                         </div>
                     `);
                     $('#create-post-form')[0].reset();
