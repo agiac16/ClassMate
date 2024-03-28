@@ -20,24 +20,6 @@ from courses.models import AcademicRecord
 
 fake = Faker()
 
-# Create more meaningful fake data for courses
-course_data = [
-    {"name": "Introduction to Computer Science", "code": 101, "department": "CS", "credits": 4},
-    {"name": "Calculus I", "code": 201, "department": "MATH", "credits": 4},
-    {"name": "Physics for Engineers", "code": 102, "department": "PHYS", "credits": 3},
-    {"name": "Digital Logic Design", "code": 204, "department": "EE", "credits": 3},
-    {"name": "Mechanics of Materials", "code": 303, "department": "ME", "credits": 3},
-]
-
-# Create and save courses
-course_objects = [Course.objects.create(
-    course_name=course["name"],
-    course_code=course["code"],
-    crn=random.randint(10000, 99999),
-    department=course["department"],
-    credit_hours=course["credits"],
-    description=fake.text()[:16]
-) for course in course_data]
 
 
 # Create and save students with associated user accounts
@@ -51,7 +33,7 @@ students = [Student.objects.create(
 
 # Assign 3 random courses to each student
 for student in students:
-    courses_for_student = random.sample(course_objects, 3)
+    courses_for_student = random.sample(list(Course.objects.all()), 3)
     for course in courses_for_student:
         course.enrolled_students.add(student)
 
@@ -67,11 +49,6 @@ for student in students:
                 priority=random.randint(1, 5),
                 estimated_completion_time=timedelta(hours=random.randint(1, 5))
             )
-
-for course in course_objects:
-    for _ in range(random.randint(1, 5)):  # Choose a random number of students for each course
-        student = random.choice(students)
-        course.enrolled_students.add(student)
 
     
 # # Create and save friends
@@ -89,7 +66,7 @@ from django.utils import timezone
 
 # Create and save forum posts and threads with timezone-aware datetime objects
 for student in students:
-    for course in course_objects:
+    for course in Course.objects.all():
         post = ForumPost.objects.create(
             title=fake.sentence(),
             content=fake.text(),
@@ -110,7 +87,7 @@ for student in students:
 # Create and save class schedules
 schedules = [ClassSchedule.objects.create(
     student=student_obj,
-    course=random.choice(course_objects),
+    course=random.choice(Course.objects.all()),
     semester=random.choice(['Fall', 'Spring', 'Summer']),
     year=random.randint(2021, 2024),
     days_of_week=random.choice(['MWF', 'TTh', 'MW', 'TThF']),
