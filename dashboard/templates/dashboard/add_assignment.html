@@ -25,8 +25,7 @@
     </button>
 
     <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
-        <div>
+    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform grid grid-rows-[auto,1fr,auto]">        <div>
             <div class="p-4 flex justify-center items-center">
                 <a href="{% url 'homepage' %}">
                     <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
@@ -34,7 +33,7 @@
             </div>
             
             <!-- Navigation Links -->
-            <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
+            <div class="space-y-2 py-4 flex flex-col justify-center">
 
                 <!-- Home -->
                 <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
@@ -81,7 +80,7 @@
         </div>
         
         <!-- Profile Sticky to -->
-        <div class="pb-4 flex flex-row">
+        <div class="mt-auto pb-4 flex flex-row">
             <div>
                 <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-user"></i>

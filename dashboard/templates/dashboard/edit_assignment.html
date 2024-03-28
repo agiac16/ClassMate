@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Assignment</title>
+    <title>Add Assignment</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -25,7 +25,7 @@
     </button>
 
     <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
+    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 min-h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
         <div>
             <div class="p-4 flex justify-center items-center">
                 <a href="{% url 'homepage' %}">
@@ -100,7 +100,7 @@
     <!-- MAIN CONTENT -->
     <div class="lg:ml-52 flex justify-center items-center w-full">
         <div class="dashboard-container flex flex-col justify-center items-center ">
-            <h2 class="text-2xl font-bold">Add Assignment</h2>
+            <h2 class="text-2xl font-bold">Edit Assignment</h2>
             <div class="w-4/5">
 
             </div>
@@ -108,35 +108,38 @@
                 {% csrf_token %}
 
                 <div class="flex space-x-3 w-full">
-                    <div class="mb-4 w-full">
+                    <div class="mb-4 flex-1">
                         <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
                         {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
                     </div>
 
-                    <div class="mb-4 w-1/2">
+                    <div class="mb-4 flex-1">
                         <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
                         {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
                     </div>
                 </div>
 
-                <div class="mb-4 flex flex-col w-full">
+                <div class="mb-4 flex flex-col flex-1">
                     <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
                     {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
                 </div>
 
-                <div class="mb-4 w-full">
+                <div class="mb-4 flex-1">
                     <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
-                    <span class="flex flex-row space w-full">
+                    <span class="flex flex-row space flex-1 space-x-2">
                         {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
                     </span>
                 </div>
 
-                <div class="mb-4 w-full">
+                <div class="mb-4 flex-1">
                     <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
                     {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                 </div>
 
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+                <div class="flex space-x-2">
+                    <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+                    <button type="delete" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Delete</button>
+                </div>
             </form>
         </div>
     </div>

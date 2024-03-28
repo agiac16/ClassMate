@@ -115,26 +115,26 @@
 
             
                 <div class="flex space-x-3">
-                    <div class="mb-4 flex flex-col">
+                    <div class="mb-4 flex flex-col flex-1">
                         <label for="id_crn" class="block text-sm font-medium text-gray-700">CRN</label>
                         {{ form.crn|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                     </div>
 
-                    <div class="mb-4 w-1/2">
+                    <div class="mb-4 flex flex-col flex-1">
                         <label for="id_course_code" class="block text-sm font-medium text-gray-700">Course Code</label>
                         {{ form.course_code|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                     </div>
                 </div>
 
                 <div class="flex space-x-3">
-                    <div class="mb-4 w-1/2">
+                    <div class="mb-4 flex-1">
                         <label for="id_department" class="block text-sm font-medium text-gray-700">Department</label>
                         <span class="flex flex-row space">
                             {{ form.department|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                         </span>
                     </div>
                 
-                    <div class="mb-4 w-1/2">
+                    <div class="mb-4 flex-1">
                         <label for="id_credit_hours" class="block text-sm font-medium text-gray-700">Credits (1-6)</label>
                         {{ form.credit_hours|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                     </div>
