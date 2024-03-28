@@ -54,7 +54,7 @@
                             {% for course in user_courses %}
                             <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
                             {% endfor %}
-                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
+                            <a href="{% url 'dashboard:add_course_page' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
                         </div>
                     </div>
                 </div>

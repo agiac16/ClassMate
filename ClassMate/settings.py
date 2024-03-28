@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'dashboard',
     'widget_tweaks',
     'djangobower',
-    # 'schedule',
+    'schedule',
 
 ]
 

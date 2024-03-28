@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from schedule.models import Rule 
 
 from users.models import Student 
 
@@ -9,8 +10,13 @@ class Course(models.Model):
     crn = models.IntegerField()
     department = models.CharField(max_length=255)
     credit_hours = models.IntegerField()
-    description = models.TextField()
     enrolled_students = models.ManyToManyField(Student, related_name='enrolled_courses')
+    professor = models.CharField(max_length=255, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+    start_time_2 = models.TimeField(null=True, blank=True)
+    end_time_2 = models.TimeField(null=True, blank=True)
+    rule = models.ForeignKey(Rule, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.course_name 
