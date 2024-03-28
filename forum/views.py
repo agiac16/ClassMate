@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
-from .models import Course, ForumPost
+from .models import Course, ForumPost, Student
 from .forms import ForumPostForm
 
 def courseList(request):
-    courses = Course.objects.all()
+    student = get_object_or_404(Student, account=request.user)
+    courses = Course.objects.filter(enrolled_students=student)
     return render(request, 'forum/forums.html', {'courses': courses})
 
 def get_course_posts(request, course_id):
