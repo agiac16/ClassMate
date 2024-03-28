@@ -6,12 +6,12 @@
     <title>Forums</title>
     <style>
         .dashboard-container {
-            margin-left: 250px;
-            width: calc(100% - 250px);
+            margin-left: 208px;
+            width: calc(100% - 208px);
             padding: 20px;
             overflow: auto;
             height: 100vh;
-            background-color: #f8fafc;
+
         }
 
         .centered-dropdown {
@@ -30,9 +30,6 @@
             margin-bottom: 10px;
         }
 
-        .submit-button, .submit-reply {
-           float: right; /* Align buttons to the right */
-         }
 
         .post-details {
             font-style: italic;
@@ -51,20 +48,6 @@
             border-radius: 5px;
             padding: 8px 10px;
             margin-bottom: 5px;
-        }
-
-        .submit-reply {
-            background-color: #4c51bf; /* TailwindCSS indigo-700 */
-            color: white;
-            padding: 6px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .submit-reply:hover {
-            background-color: #434190; /* TailwindCSS indigo-800 */
         }
 
         .replies-container {
@@ -184,7 +167,7 @@
                         <div class="replies-section">
                             <div class="reply-form">
                                 <textarea class="reply-input" placeholder="Write a reply..."></textarea>
-                                <button class="submit-reply">Reply</button>
+                                <button class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="replies-container">
@@ -251,125 +234,138 @@
 });
     </script>
 </head>
-<body>
+<body class="flex flex-col md:flex-row bg-slate-50">
 
-<!-- Sidebar -->
-<div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
-    <div>
-        <div class="p-4 flex justify-center items-center">
-            <a href="{% url 'homepage' %}">
-                <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
-            </a>
-        </div>
-        
-        <!-- Navigation Links -->
-        <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
-            <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
+    <!-- Toggle Button for Smaller Screens -->
+    <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
+        <i class="fas fa-bars"></i>
+    </button>
 
-            <div class="group">
-                <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-book"></i>
-                    <span>Courses</span>
+    <!-- Sidebar/Topbar -->
+    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
+        <div>
+            <div class="p-4 flex justify-center items-center">
+                <a href="{% url 'homepage' %}">
+                    <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
                 </a>
-                <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
-                    <div class="pt-2">
-                        {% for course in user_courses %}
-                        <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
-                        {% endfor %}
-                        <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg
-                        <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
+
+                <!-- Home -->
+                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <!-- Courses with submenu -->
+                <div class="group">
+                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+
+                    </a>
+                    <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
+                        <div class="pt-2">
+                            <!-- Dynamically populate course links here -->
+                            {% for course in user_courses %}
+                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
+                            {% endfor %}
+                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Add Assignment -->
+                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-600">
+                    <i class="fas fa-tasks"></i>
+                    <span>Add Assignment</span>
+                </a>
+
+                <!-- Forum -->  
+                <a href="{% url 'forum:courseList' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-comments"></i>
+                    <span>Forum</span>
+                </a>
+
+                <!-- Planner -->
+                <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Planner</span>
+                </a>
             </div>
-
-            <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-tasks"></i>
-                <span>Add Assignment</span>
-            </a>
-
-            <a href="{% url 'forum:courseList' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-comments"></i>
-                <span>Forum</span>
-            </a>
-
-            <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Planner</span>
-            </a>
+        </div>
+        
+        <!-- Profile Sticky to -->
+        <div class="pb-4 flex flex-row">
+            <div>
+                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="pb-4 flex flex-row">
-        <div>
-            <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
+    <main class="flex-1 overflow-auto md:m-10 lg:ml-60">
+        <div class="centered-dropdown">
+            <div class="dropdown-container">
+                <label for="courses" class="form-label">Select a Course:</label>
+                <select id="courses" class="form-select">
+                    <option value="">-- Choose a Course --</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-        <div>
-            <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+
+
+    <div id="create-post-container" class="create-post-container post">
+        <h2 class="text-2xl font-bold mb-3">Create New Post</h2>
+        <form id="create-post-form" method="post" class="clearfix">
+            {% csrf_token %}
+            <input type="hidden" name="course_id" id="selected-course-id" value="">
+            <div class="mb-4">
+                <label for="post-title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                <input type="text" id="post-title" name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-6">
+                <label for="post-content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+                <textarea id="post-content" name="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" required></textarea>
+            </div>
+            <div class="form-button-container text-right">
+                <button type="submit" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">
+                    Submit Post
+                </button>
+            </div>
+        </form>
+    </div>
+        <div id="posts-container">
+            <!-- Posts will be loaded here -->
         </div>
     </div>
-</div>
 
-<div class="dashboard-container">
-    <div class="centered-dropdown">
-        <div class="dropdown-container">
-            <label for="courses" class="form-label">Select a Course:</label>
-            <select id="courses" class="form-select">
-                <option value="">-- Choose a Course --</option>
-                {% for course in courses %}
-                <option value="{{ course.id }}">{{ course.course_name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-
-    <!-- Create Post Section -->
-<!-- Create Post Section -->
-<!-- Create Post Section -->
-<!-- Create Post Section -->
-<!-- Create Post Section Container -->
-<!-- Create Post Section Container -->
-<div id="create-post-container" class="create-post-container post">
-    <h2 class="text-2xl font-bold mb-3">Create New Post</h2>
-    <form id="create-post-form" method="post" class="clearfix">
-        {% csrf_token %}
-        <input type="hidden" name="course_id" id="selected-course-id" value="">
-        <div class="mb-4">
-            <label for="post-title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
-            <input type="text" id="post-title" name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        </div>
-        <div class="mb-6">
-            <label for="post-content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
-            <textarea id="post-content" name="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" required></textarea>
-        </div>
-        <div class="form-button-container text-right">
-            <button type="submit" class="submit-button">
-                Submit Post
-            </button>
-        </div>
-    </form>
-</div>
-
-
-
-
-
-
-
-    <div id="posts-container">
-        <!-- Posts will be loaded here -->
-    </div>
-</div>
-
-
+    <script>
+        // Toggle Sidebar/Topbar for Smaller Screens
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('-translate-y-full')) {
+                    sidebar.classList.remove('-translate-y-full');
+                    sidebar.classList.add('translate-y-0');
+                } else {
+                    sidebar.classList.add('-translate-y-full');
+                    sidebar.classList.remove('translate-y-0');
+                }
+            });
+    </script>
 
 </body>
 </html>

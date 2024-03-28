@@ -1,31 +1,23 @@
-{% load widget_tweaks %}
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Assignment</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        .dashboard-container {
-            padding: 20px;
-            overflow: auto;
-            height: 100vh;
-        }
-    </style>
+    <script src="https://unpkg.com/htmx.org"></script>
 </head>
-<body class="flex flex-col md:flex-row bg-slate-50">
+<body class="flex flex-col md:flex-row">
 
     <!-- Toggle Button for Smaller Screens -->
-    <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
+    <button id="sidebarToggle" class="md:hidden text-white bg-zinc-800 p-4">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-zinc-800 text-white w-52 flex-col justify-between fixed inset-y-0 left-0 z-40 transform -translate-x-full md:translate-x-0 transition-transform">
         <div>
             <div class="p-4 flex justify-center items-center">
                 <a href="{% url 'homepage' %}">
@@ -97,60 +89,74 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="lg:ml-52 flex justify-center items-center w-full">
-        <div class="dashboard-container flex flex-col justify-center items-center ">
-            <h2 class="text-2xl font-bold">Add Assignment</h2>
-            <div class="w-4/5">
+    <!-- Main Content -->
+    <main class="flex-1 lg:ml-52 overflow-auto">
+        <div class="bg-slate-100 p-5 rounded-md space-y-4 m-2 md:m-10">
+            <!-- ACCOUNT DETAILS -->
+            <h1 class="text-2xl font-bold pb-2 border-b">Account Details</h1>
 
-            </div>
-            <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
-                {% csrf_token %}
+            <form id="account-details-form" class="flex flex-col justify-between">
 
-                <div class="flex space-x-3 w-full">
-                    <div class="mb-4 w-full">
-                        <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
-                        {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
-
-                    <div class="mb-4 w-1/2">
-                        <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
-                        {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
+                {% csrf_token %}  
+                <div id="student-info">
+                    <!-- Pulls the students info from the other HTML -->
+                    {% include 'partials/student-details.html' %}
                 </div>
-
-                <div class="mb-4 flex flex-col w-full">
-                    <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
-                    {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                </div>
-
-                <div class="mb-4 w-full">
-                    <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
-                    <span class="flex flex-row space w-full">
-                        {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
-                    </span>
-                </div>
-
-                <div class="mb-4 w-full">
-                    <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
-                    {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                </div>
-
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
             </form>
+
+             <!-- Course Info -->
+             <h1 class="text-2xl font-bold pb-2 border-b">Courses:</h1>
+             {% include 'partials/student-courses.html' %}
         </div>
-    </div>
+    </main>
+
     <script>
-        // Toggle Sidebar/Topbar for Smaller Screens
+        // Toggle Sidebar for Smaller Screens
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
-            if (sidebar.classList.contains('-translate-y-full')) {
-                sidebar.classList.remove('-translate-y-full');
-                sidebar.classList.add('translate-y-0');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
             } else {
-                sidebar.classList.add('-translate-y-full');
-                sidebar.classList.remove('translate-y-0');
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
             }
+        });
+
+         // JavaScript for toggling edit mode
+         document.getElementById('edit-update-btn').addEventListener('click', function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+        var inputs = document.querySelectorAll('#account-details-form input');
+        
+            inputs.forEach(function(input) {
+                if (input.hasAttribute('readonly')) {
+                    input.removeAttribute('readonly');
+                } else {
+                    input.setAttribute('readonly', true);
+                }
+            });
+        });
+
+        document.getElementById('courses-btn').onclick = function() {
+            var submenu = document.getElementById('courses-submenu');
+            submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
+        };
+
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        });
+        
+        document.body.addEventListener('htmx:configRequest', function(evt) {
+            evt.detail.parameters['auth_token'] = getAuthToken(); // add a new parameter into the mix
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const sidebar = document.querySelector('.sidebar');
+
+            hamburger.addEventListener('click', function () {
+                sidebar.classList.toggle('-translate-x-full');
+            });
         });
     </script>
 </body>

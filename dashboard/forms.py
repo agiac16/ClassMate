@@ -30,10 +30,10 @@ class CourseForm(forms.ModelForm):
         model = Course
         fields = ['course_name', 'course_code', 'crn', 'department', 'credit_hours', 'description']
         widgets = {
-            'course_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'course_code': forms.TextInput(attrs={'class': 'form-control'}),
-            'crn': NumberInput(attrs={'class': 'form-control'}),
-            'department': forms.TextInput(attrs={'class': 'form-control'}),
-            'credit_hours': NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 6}),
-            'description': Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'course_name': forms.TextInput(attrs={'class': 'mt-2 w-full mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'course_code': forms.TextInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'crn': NumberInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'department': forms.TextInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
+            'credit_hours': NumberInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'min': 1, 'max': 6}),
+            'description': Textarea(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'rows': 3}),
         }

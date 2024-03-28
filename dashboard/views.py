@@ -13,7 +13,7 @@ from django.urls import reverse
 def dashboard(request):
     student = get_object_or_404(Student, account=request.user)
     today = timezone.now().date()
-    next_seven_days = [today + timedelta(days=i) for i in range(7)]
+    next_seven_days = [today + timedelta(days=i) for i in range(30)]
     upcoming_assignments = Assignment.objects.filter(
         student=student,  # Adjusted to reference the student
         due_date__range=(today, next_seven_days[-1])
@@ -37,7 +37,7 @@ def dashboard(request):
 def course_dashboard(request, course_id):
     student = get_object_or_404(Student, account=request.user)
     today = timezone.now().date()
-    next_seven_days = [today + timedelta(days=i) for i in range(7)]
+    next_seven_days = [today + timedelta(days=i) for i in range(30)]
     
     # Make sure the course exists and the user is enrolled in it
     course = get_object_or_404(Course, id=course_id, enrolled_students=student)
