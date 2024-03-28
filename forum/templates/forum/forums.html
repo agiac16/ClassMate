@@ -30,6 +30,21 @@
             margin-bottom: 10px;
         }
 
+        .submit-button, .submit-reply {
+           float: right; /* Align buttons to the right */
+         }
+
+        .post-details {
+            font-style: italic;
+            text-align: right; /* Align 'posted by' text to the right */
+        }
+
+        /* Clear floats after the buttons */
+        .clearfix {
+            clear: both;
+        }
+
+
         .reply-input {
             width: 100%;
             border: 1px solid #ddd;
@@ -87,6 +102,31 @@
             background-color: #553c9a; /* TailwindCSS purple-800 */
         }
 
+        .form-button-container {
+             text-align: right; /* Align the container to the right */
+        }
+
+        /* Styles for the post title */
+        .post-title {
+            font-size: 1.25em; /* Example size, adjust as needed */
+            font-weight: bold;
+            margin-bottom: .5em; /* Creates space between title and content */
+        }
+
+        /* Styles for the post content */
+        .post-content {
+            margin-bottom: 1em; /* Creates space between content and 'posted by' text */
+        }
+
+        /* Styles for the post details to add space above */
+        .post-details {
+            margin-top: 1em;
+            font-style: italic;
+            text-align: right;
+        }
+
+
+
         .dropdown-container {
             background-color: #fff;
             border: 1px solid #ddd;
@@ -95,6 +135,13 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
 
 
         .post {
@@ -128,22 +175,24 @@
             let postsHtml = '';
             data.posts.forEach(post => {
                 postsHtml += `
-                <div class="post">
-                    <div class="post-title">${post.title}</div>
-                    <p>${post.content}</p>
-                    <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
-                    
-                    <!-- Replies Section -->
-                    <div class="replies-section">
-                        <div class="reply-form">
-                            <textarea class="reply-input" placeholder="Write a reply..."></textarea>
-                            <button class="submit-reply">Reply</button>
+                    <div class="post">
+                        <div class="post-title">${post.title}</div>
+                        <p>${post.content}</p>
+                        <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
+
+                        <!-- Replies Section -->
+                        <div class="replies-section">
+                            <div class="reply-form">
+                                <textarea class="reply-input" placeholder="Write a reply..."></textarea>
+                                <button class="submit-reply">Reply</button>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="replies-container">
+                                <!-- Individual replies will be loaded here -->
+                            </div>
                         </div>
-                        <div class="replies-container">
-                            <!-- Individual replies will be loaded here -->
-                        </div>
-                    </div>
-                </div>`;
+                    </div>`;
+
             });
             document.getElementById("posts-container").innerHTML = postsHtml;
         })
@@ -285,9 +334,12 @@
     <!-- Create Post Section -->
 <!-- Create Post Section -->
 <!-- Create Post Section -->
-<div id="create-post-container" class="create-post-container">
+<!-- Create Post Section -->
+<!-- Create Post Section Container -->
+<!-- Create Post Section Container -->
+<div id="create-post-container" class="create-post-container post">
     <h2 class="text-2xl font-bold mb-3">Create New Post</h2>
-    <form id="create-post-form" method="post">
+    <form id="create-post-form" method="post" class="clearfix">
         {% csrf_token %}
         <input type="hidden" name="course_id" id="selected-course-id" value="">
         <div class="mb-4">
@@ -298,13 +350,16 @@
             <label for="post-content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
             <textarea id="post-content" name="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" required></textarea>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="form-button-container text-right">
             <button type="submit" class="submit-button">
                 Submit Post
             </button>
         </div>
     </form>
 </div>
+
+
+
 
 
 
