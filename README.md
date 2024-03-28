@@ -56,6 +56,8 @@ To populate your database with fake data for testing and development purposes:
 1. Ensure that your virtual environment is activated and you are in the project directory.
 2. Run the fake data script:
    - In the terminal, execute the following command:
+     
+     python manage.py import_courses
   
      python path/to/fixture.py
 
