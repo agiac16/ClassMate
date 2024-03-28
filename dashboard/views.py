@@ -156,11 +156,38 @@ def bulk_import(request):
             if all(header in headers for header in required_headers):
                 print("Success: All required headers found.")
                 print("Headers:", headers)
+                
                 # Continue processing the file
-                # You can add your processing logic here
+                for row in csv_reader:
+                    # Skip the first column (id)
+                    row = row[1:]
+                    
+                    # Create a dictionary with headers as keys and row values as values
+                    course_data = dict(zip(headers[1:], row))
+                    print("Course data:", course_data)
+                    
+                    # Create a new course if all required fields are present
+                    if all(course_data.get(header) for header in required_headers):
+                        new_course = Course.objects.create(
+                            course_name=course_data['course_name'],
+                            course_code=course_data['course_code'],
+                            crn=course_data['crn'],
+                            department=course_data['department'],
+                            credit_hours=course_data['credit_hours'],
+                            description=course_data['description']
+                            # Add any other fields you want to populate
+                        )
+                        # Print out the newly added course with all fields
+                        print(f"New Course Added: {new_course}")
+                        print(f"Course Name: {new_course.course_name}")
+                        print(f"Course Code: {new_course.course_code}")
+                        print(f"CRN: {new_course.crn}")
+                        print(f"Department: {new_course.department}")
+                        print(f"Credit Hours: {new_course.credit_hours}")
+                        print(f"Description: {new_course.description}")
                 
                 # Return success message
-                return JsonResponse({'success': True, 'message': 'File uploaded successfully.'})
+                return JsonResponse({'success': True, 'message': 'File uploaded successfully. Courses added.'})
             else:
                 missing_headers = [header for header in required_headers if header not in headers]
                 return JsonResponse({'success': False, 'message': f'Missing headers: {missing_headers}'})
