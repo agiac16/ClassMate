@@ -10,5 +10,5 @@ urlpatterns = [
     path('add-assignment/', views.add_assignment, name='add_assignment'),
     path('edit-assignment/<int:assignment_id>/', views.edit_assignment, name='edit_assignment'),
     path('delete-assignment/<int:assignment_id>/', views.delete_assignment, name='delete_assignment'),
-
+    path('bulk-import/', views.bulk_import, name='bulk_import'), 
 ]

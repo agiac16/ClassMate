@@ -8,6 +8,9 @@ from courses.models import Course
 from users.models import Student
 from .forms import AssignmentForm, CourseForm
 from django.urls import reverse
+from django.http import JsonResponse
+import csv
+from django.http import JsonResponse
 
 @login_required
 def dashboard(request):
@@ -132,3 +135,32 @@ def delete_assignment(request):
     assignment.delete()
 
     return redirect('dashboard:dashboard')
+
+@login_required
+def bulk_import(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        try:
+            uploaded_file = request.FILES['file']
+            
+            # Check if the uploaded file is a CSV file
+            if not uploaded_file.name.endswith('.csv'):
+                return JsonResponse({'success': False, 'message': 'Invalid file format. Please upload a CSV file.'})
+            
+            # Decode and process the CSV file
+            decoded_file = uploaded_file.read().decode('utf-8').splitlines()
+            csv_reader = csv.reader(decoded_file)
+            
+            # Print out the contents of the CSV file
+            print("Contents of the uploaded CSV file:")
+            for row in csv_reader:
+                print(row)
+            
+            # Return success message
+            return JsonResponse({'success': True, 'message': 'File uploaded successfully.'})
+        
+        except Exception as e:
+            # Return error message
+            return JsonResponse({'success': False, 'message': str(e)})
+    
+    # Return error message if no file is selected
+    return JsonResponse({'success': False, 'message': 'No file selected.'})
