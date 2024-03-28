@@ -99,55 +99,17 @@
         </div>
     </div>
     <!-- main content -->
-    <div class="lg:ml-52 flex justify-center items-center w-full max-h-screen">
-        <div class="dashboard-container flex flex-col justify-center items-center ">
-            <h2 class="text-2xl font-bold pt-8">Add Course</h2>
-            <div class="w-4/5">
-
+    <div class="lg:ml-52 flex flex-col items-center w-full px-4 md:px-10 py-10">
+        <div class="dashboard-container w-full max-w-4xl">
+            <h2 class="text-3xl font-bold mb-6 text-center">Add Course</h2>
+    
+            <!-- Search Field -->
+            <div id="search-field" class="mb-4">
+                <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
             </div>
-            <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
-                {% csrf_token %}
-            
-
-                <div class="mb-4 ">
-                    <label for="id_course_name" class="block text-sm font-medium text-gray-700">Course Name</label>
-                    {{ form.course_name|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                </div>
-
-            
-                <div class="flex space-x-3">
-                    <div class="mb-4 flex flex-col flex-1">
-                        <label for="id_crn" class="block text-sm font-medium text-gray-700">CRN</label>
-                        {{ form.crn|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                    </div>
-
-                    <div class="mb-4 flex flex-col flex-1">
-                        <label for="id_course_code" class="block text-sm font-medium text-gray-700">Course Code</label>
-                        {{ form.course_code|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                    </div>
-                </div>
-
-                <div class="flex space-x-3">
-                    <div class="mb-4 flex-1">
-                        <label for="id_department" class="block text-sm font-medium text-gray-700">Department</label>
-                        <span class="flex flex-row space">
-                            {{ form.department|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                        </span>
-                    </div>
-                
-                    <div class="mb-4 flex-1">
-                        <label for="id_credit_hours" class="block text-sm font-medium text-gray-700">Credits (1-6)</label>
-                        {{ form.credit_hours|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
-                    {{ form.description|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                </div>
-            
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
-            </form>
+    
+            <!-- Search Results -->
+            <div id="search-results" class="mb-4 w-full"></div>
         </div>
     </div>
 
