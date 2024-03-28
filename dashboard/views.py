@@ -150,14 +150,21 @@ def bulk_import(request):
             decoded_file = uploaded_file.read().decode('utf-8').splitlines()
             csv_reader = csv.reader(decoded_file)
             
-            # Print out the contents of the CSV file
-            print("Contents of the uploaded CSV file:")
-            for row in csv_reader:
-                print(row)
-            
-            # Return success message
-            return JsonResponse({'success': True, 'message': 'File uploaded successfully.'})
-        
+            # Read the first row to check for specific headers
+            headers = next(csv_reader)
+            required_headers = ['course_name', 'course_code', 'crn', 'department', 'credit_hours', 'description']
+            if all(header in headers for header in required_headers):
+                print("Success: All required headers found.")
+                print("Headers:", headers)
+                # Continue processing the file
+                # You can add your processing logic here
+                
+                # Return success message
+                return JsonResponse({'success': True, 'message': 'File uploaded successfully.'})
+            else:
+                missing_headers = [header for header in required_headers if header not in headers]
+                return JsonResponse({'success': False, 'message': f'Missing headers: {missing_headers}'})
+
         except Exception as e:
             # Return error message
             return JsonResponse({'success': False, 'message': str(e)})
