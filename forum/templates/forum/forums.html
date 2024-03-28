@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,55 @@
             justify-content: center;
             margin-top: 20px;
         }
+
+        .replies-section {
+             margin-top: 10px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .reply-form {
+            margin-bottom: 10px;
+        }
+
+        .reply-input {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-bottom: 5px;
+        }
+
+        .submit-reply {
+            background-color: #4c51bf; /* TailwindCSS indigo-700 */
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-reply:hover {
+            background-color: #434190; /* TailwindCSS indigo-800 */
+        }
+
+        .replies-container {
+            /* Styles for the container where replies will be displayed */
+            background-color: #f7f7f7;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Styles for individual replies (Optional, add if needed) */
+        .reply {
+            background-color: white;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
 
         .dropdown {
             width: 200px;
@@ -70,9 +120,6 @@
     // Clear existing posts
     document.getElementById("posts-container").innerHTML = '';
 
-    // Set the course_id in the form
-    document.getElementById("selected-course-id").value = courseId;
-
     // Make an AJAX request to the server
     fetch(`/forum/course/${courseId}/posts/`)
         .then(response => response.json())
@@ -80,10 +127,22 @@
             // Populate the posts container with the received posts
             let postsHtml = '';
             data.posts.forEach(post => {
-                postsHtml += `<div class="post">
+                postsHtml += `
+                <div class="post">
                     <div class="post-title">${post.title}</div>
                     <p>${post.content}</p>
                     <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
+                    
+                    <!-- Replies Section -->
+                    <div class="replies-section">
+                        <div class="reply-form">
+                            <textarea class="reply-input" placeholder="Write a reply..."></textarea>
+                            <button class="submit-reply">Reply</button>
+                        </div>
+                        <div class="replies-container">
+                            <!-- Individual replies will be loaded here -->
+                        </div>
+                    </div>
                 </div>`;
             });
             document.getElementById("posts-container").innerHTML = postsHtml;
@@ -92,6 +151,7 @@
             console.error('Error fetching posts:', error);
         });
 }
+
 
 
         // Attach the loadCoursePosts function to the onchange event of the select element
@@ -254,74 +314,7 @@
     </div>
 </div>
 
-<script>
-    function loadCoursePosts(courseId) {
-        // Clear existing posts
-        document.getElementById("posts-container").innerHTML = '';
-
-        // Make an AJAX request to the server
-        fetch(`/forum/course/${courseId}/posts/`)
-            .then(response => response.json())
-            .then(data => {
-                // Populate the posts container with the received posts
-                let postsHtml = '';
-                data.posts.forEach(post => {
-                    postsHtml += `<div class="post">
-                        <div class="post-title">${post.title}</div>
-                        <p>${post.content}</p>
-                        <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
-                    </div>`;
-                });
-                document.getElementById("posts-container").innerHTML = postsHtml;
-            })
-            .catch(error => {
-                console.error('Error fetching posts:', error);
-            });
-    }
-
-    // Attach the loadCoursePosts function to the onchange event of the select element
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById("courses").addEventListener('change', function() {
-            const courseId = this.value;
-            if (courseId) {
-                loadCoursePosts(courseId);
-                document.getElementById("create-post-container").classList.add('active');
-            } else {
-                document.getElementById("create-post-container").classList.remove('active');
-            }
-        });
-    });
-
-    // AJAX form submission
-    $(document).ready(function() {
-        $('#create-post-form').on('submit', function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: 'POST',
-                url: '{% url "forum:create_post" %}',
-                data: formData,
-                success: function(response) {
-                    $('#posts-container').prepend(`
-                        <div class="post">
-                            <div class="post-title">${response.title}</div>
-                            <p>${response.content}</p>
-                            <div class="post-details">Posted by ${response.posted_by_username} on ${response.timestamp}</div>
-                        </div>
-                    `);
-                    $('#create-post-form')[0].reset();
-                    document.getElementById("create-post-container").classList.remove('active');
-                },
-                error: function(xhr, errmsg, err) {
-                    console.log('Error:', errmsg);
-                }
-            });
-        });
-    });
-</script>
 
 
 </body>
 </html>
-
