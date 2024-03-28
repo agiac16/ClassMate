@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org"></script>
-
 </head>
 <body class="flex flex-col md:flex-row">
 
     <!-- Toggle Button for Smaller Screens -->
-    <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
+    <button id="sidebarToggle" class="md:hidden text-white bg-zinc-800 p-4">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-zinc-800 text-white w-52 flex-col justify-between fixed inset-y-0 left-0 z-40 transform -translate-x-full md:translate-x-0 transition-transform">
         <div>
             <div class="p-4 flex justify-center items-center">
                 <a href="{% url 'homepage' %}">
@@ -90,35 +89,42 @@
         </div>
     </div>
 
-
-    <!--  Account Information -->
-    <main class="flex-1 ml-64 h-screen overflow-auto flex justify-center">
-        <div class="bg-slate-100 p-5 rounded-md flex-col space-y-4 w-4/5 m-10">
-    
+    <!-- Main Content -->
+    <main class="flex-1 lg:ml-52 overflow-auto">
+        <div class="bg-slate-100 p-5 rounded-md space-y-4 m-2 md:m-10">
             <!-- ACCOUNT DETAILS -->
-            <h1 class="text-2xl font-bold pb-2 border-b">Reset Password</h1>
-    
+            <h1 class="text-2xl font-bold pb-2 border-b">Account Details</h1>
+
             <form id="account-details-form" class="flex flex-col justify-between">
 
                 {% csrf_token %}  
-                <span>need an SMTP server for this</span>
+                <div id="student-info">
+                    <!-- Pulls the students info from the other HTML -->
+                    {% include 'partials/student-details.html' %}
+                </div>
             </form>
-        </main>
+
+             <!-- Course Info -->
+             <h1 class="text-2xl font-bold pb-2 border-b">Courses:</h1>
+             {% include 'partials/student-courses.html' %}
+        </div>
+    </main>
 
     <script>
-        // Toggle Sidebar/Topbar for Smaller Screens
+        // Toggle Sidebar for Smaller Screens
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
-            if (sidebar.classList.contains('-translate-y-full')) {
-                sidebar.classList.remove('-translate-y-full');
-                sidebar.classList.add('translate-y-0');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
             } else {
-                sidebar.classList.add('-translate-y-full');
-                sidebar.classList.remove('translate-y-0');
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
             }
         });
-        // JavaScript for toggling edit mode
-        document.getElementById('edit-update-btn').addEventListener('click', function(event) {
+
+         // JavaScript for toggling edit mode
+         document.getElementById('edit-update-btn').addEventListener('click', function(event) {
         event.preventDefault();  // Prevent the form from submitting
         var inputs = document.querySelectorAll('#account-details-form input');
         
@@ -144,6 +150,14 @@
             evt.detail.parameters['auth_token'] = getAuthToken(); // add a new parameter into the mix
         });
 
-        </script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const sidebar = document.querySelector('.sidebar');
+
+            hamburger.addEventListener('click', function () {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+        });
+    </script>
 </body>
 </html>
