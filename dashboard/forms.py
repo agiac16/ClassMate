@@ -28,12 +28,11 @@ class AssignmentForm(forms.ModelForm):
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['course_name', 'course_code', 'crn', 'department', 'credit_hours', 'description']
+        fields = ['course_name', 'course_code', 'crn', 'department', 'credit_hours']
         widgets = {
             'course_name': forms.TextInput(attrs={'class': 'form-control'}),
             'course_code': forms.TextInput(attrs={'class': 'form-control'}),
             'crn': NumberInput(attrs={'class': 'form-control'}),
             'department': forms.TextInput(attrs={'class': 'form-control'}),
             'credit_hours': NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 6}),
-            'description': Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }

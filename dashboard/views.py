@@ -8,6 +8,10 @@ from courses.models import Course
 from users.models import Student
 from .forms import AssignmentForm, CourseForm
 from django.urls import reverse
+from django.http import JsonResponse
+from django.db.models import Q
+import traceback
+
 
 @login_required
 def dashboard(request):
@@ -101,23 +105,44 @@ def edit_assignment(request, assignment_id):
     return render(request, 'dashboard/edit_assignment.html', {'form': form, 'user_courses': user_courses, 'assignment': assignment})
 
 @login_required
-def add_course(request):
+def add_course(request, course_id):
     student = get_object_or_404(Student, account=request.user)
-    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
+    course = get_object_or_404(Course, id=course_id)
+
     if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            new_course = form.save(commit=False)
-            new_course.save()
-            # Now that the course is saved and has an ID, we can add enrolled students
-            new_course.enrolled_students.add(student)  # Add the student instance
-            new_course.save()
-            return redirect(reverse('dashboard:dashboard'))
-    else:
-        form = CourseForm()
+        # Add the course to the student's enrolled courses
+        student.enrolled_courses.add(course)
+        return JsonResponse({'success': True})
 
+    return JsonResponse({'success': False}, status=400)
 
-    return render(request, 'dashboard/add_course.html', {'form': form, 'user_courses': user_courses})
+def search_courses(request):
+    try:
+        print("Request method:", request.method)
+        print("Request GET parameters:", request.GET)
+        
+        search_query = request.GET.get('query', '')
+        print("Search query:", search_query)
+        
+        courses = Course.objects.filter(
+            Q(course_name__icontains=search_query) |
+            Q(crn__icontains=search_query) |
+            Q(course_code__icontains=search_query)
+        ).values('id', 'course_name', 'crn', 'department', 'credit_hours')[:10]
+        
+        print("Courses queryset:", courses)
+        
+        return JsonResponse(list(courses), safe=False)
+    except Exception as e:
+        print("Error occurred:")
+        traceback.print_exc()
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def add_course_page(request):
+    student = get_object_or_404(Student, account=request.user)
+    user_courses = Course.objects.filter(enrolled_students=student)
+    return render(request, 'dashboard/add_course.html', {'user_courses': user_courses})
 
 @login_required
 def delete_assignment(request):

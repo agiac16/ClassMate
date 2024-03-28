@@ -1,0 +1,690 @@
+﻿CRN,Subj,Crse,Sect,Part of Term,Session,Title,Prof,Day  Beg   End   Bldg Room  (Type),Campus,AddlInfo,Hrs,Max,MaxResv,LeftResv,Enr,Avail,WaitCap,WaitCount,WaitAvail,Room Cap
+20487,CS,00100,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,"COMP SCI LEARNING COMMUNITY-RS3+1 students only
+","Ryan, Natalie",   ,Online,,1,20,0,0,9,11,50,0,50,
+20488,CS,00100,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP SCI LEARNING COMMUNITY-RS,"Fischetti, Jessica Lee","M       1015 1215 ROBSON 121 (Exam)
+M       1100 1215 ROBSON 121 (Class)",Main,,1,65,0,0,54,11,50,0,50,65
+20489,CS,00100,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMP SCI LEARNING COMMUNITY-RS,"Ferrara, Jill T","M       1700 1815 JAMES 3114 (Class)
+M       1700 1900 JAMES 3114 (Exam)",Main,,1,65,0,0,50,15,50,0,50,68
+20490,CS,00100,  4,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMP SCI LEARNING COMMUNITY-RS,STAFF,,Main,,1,0,0,0,0,0,0,0,0,
+20566,CS,01101,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTER SCIENCE PRINCIPLES,"Swift, Adam R",   ,Online,,3,35,0,0,35,0,50,0,50,
+20569,CS,01101,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTER SCIENCE PRINCIPLES,"Togashi, Michele Mayumi",   ,Online,,3,35,0,0,34,1,50,0,50,
+20570,CS,01101,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCIENCE PRINCIPLES,"Smith, Howard R","MW      1230 1345 ROBSON 325 (Class)
+W       1230 1430 ROBSON 325 (Exam)",Main,,3,27,0,0,26,1,50,0,50,27
+20579,CS,01104,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO PROG/PROB SLV:C#,"Epler, Robert Michael","T       1830 1945 ROBSON 325 (Class)
+T       1905 2105 ROBSON 325 (Exam)
+T       2000 2115 ROBSON 325 (Class)",Main,,3,27,0,0,15,12,50,0,50,27
+20591,CS,01104,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO PROG/PROB SLV:JAVA,"Basu, Shuba","TR      0800 0915 BUSN 233 (Class)
+T       0800 1000 BUSN 233 (Exam)",Main,,3,31,0,0,30,1,50,0,50,40
+20592,CS,01104,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO PROG/PROB SLV:JAVA,"Guo, Guimu","TR      0930 1045 BUSN 233 (Class)
+R       1015 1215 BUSN 233 (Exam)",Main,,3,31,0,0,26,5,50,0,50,40
+20593,CS,01104,  4,"Full Term ... 
+16-JAN to 03-MAY",Online,INTRO PROG/PROB SLV:JAVA,"Auriemma, Thomas Henry",   ,Online,,3,35,0,0,30,5,50,0,50,
+20594,CS,01104,  5,"Full Term ... 
+16-JAN to 03-MAY",Online,INTRO PROG/PROB SLV:JAVA,"McMillan, Quadii Kareem",   ,Online,,3,35,0,0,35,0,50,0,50,
+20586,CS,01104,  6,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO PROG/PROB SLV:PYTHON,"Lueder, Nikkoli Theodore","TR      1530 1645 JAMES 2113 (Class)
+R       1445 1645 JAMES 2113 (Exam)",Main,,3,28,0,0,28,0,50,0,50,28
+20587,CS,01104,  7,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO PROG/PROB SLV:PYTHON,"Lueder, Nikkoli Theodore","TR      1700 1815 JAMES 2113 (Class)
+T       1700 1900 JAMES 2113 (Exam)",Main,,3,28,0,0,27,1,50,0,50,28
+20588,CS,01104,  8,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO PROG/PROB SLV:PYTHON,"Garron, Harold John","T       1830 1945 BUSN 107 (Class)
+T       1905 2105 BUSN 107 (Exam)
+T       2000 2115 BUSN 107 (Class)",Main,,3,31,0,0,28,3,50,0,50,40
+20589,CS,01104,  9,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO PROG/PROB SLV:PYTHON,"Zeits, Mark A","R       1830 1945 BUSN 233 (Class)
+R       1905 2105 BUSN 233 (Exam)
+R       2000 2115 BUSN 233 (Class)",Main,,3,31,0,0,10,21,50,0,50,40
+20580,CS,01104, 10,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO PROG/PROB SLV:PYTHON,"Righter, Aaron","M       1830 1945 ROBSON 325 (Class)
+M       1905 2105 ROBSON 325 (Exam)
+M       2000 2115 ROBSON 325 (Class)",Main,,3,27,0,0,27,0,50,0,50,27
+25509,CS,01104, 11,"Module Four ... 
+12-MAR to 06-MAY",Online,INTRO PROG/PROB SLV:PYTHON,"Lafferty, Melissa Lee",   ,Online,,3,35,0,0,18,17,50,0,50,
+20597,CS,01110,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"DiGialleonardo, Janice J",   ,Online,,3,35,0,0,34,1,50,0,50,
+20598,CS,01110,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"DiGialleonardo, Janice J",   ,Online,,3,35,0,0,35,0,50,0,50,
+20599,CS,01110,  3,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"Dougherty, William E",   ,Online,,3,35,0,0,35,0,50,0,50,
+20600,CS,01110,  4,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"Dougherty, William E",   ,Online,,3,35,0,0,35,0,50,0,50,
+20601,CS,01110,  5,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"Amberths, Jasmine",   ,Online,,3,35,0,0,32,3,50,0,50,
+20602,CS,01110,  6,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"Barnes, Karen Denise",   ,Online,,3,35,0,0,33,2,50,0,50,
+25724,CS,01110,  7,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTING ENVIRONMENTS,"Fiedler, Frank",   ,Online,,3,35,0,0,35,0,50,0,50,
+25850,CS,01110,  8,"Module Four ... 
+12-MAR to 06-MAY",Online,COMPUTING ENVIRONMENTS,"Amberths, Jasmine",   ,Online,,3,35,0,0,29,6,50,1,49,
+25972,CS,01110,  9,"Module Four ... 
+12-MAR to 06-MAY",Online,COMPUTING ENVIRONMENTS,"Barnes, Karen Denise",   ,Online,,3,35,0,0,9,26,50,0,50,
+21063,CS,01211,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,PRINC OF INFORMATION SECURITY,"Gonzalez, Gilbert E.",   ,Online,,3,35,1,0,35,0,0,0,0,
+21064,CS,01501,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,ESSENTIALS OF COMPUTER SCI I,"Petit, Thierry",   ,Online,,3,35,0,0,30,5,0,0,0,
+21065,CS,01501,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,ESSENTIALS OF COMPUTER SCI I,"Romero, Fernando",   ,Online,,3,35,0,0,32,3,0,0,0,
+21066,CS,01502,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,ESSENTIALS OF COMPUTER SCI II,"Chu, Heng Yi M",   ,Online,,3,35,0,0,42,-7,0,0,0,
+21067,CS,01502,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,ESSENTIALS OF COMPUTER SCI II,"Berenbach, Brian A",   ,Online,,3,35,0,0,42,-7,0,0,0,
+24438,CS,02370,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO TO INFO VISUALIZATION,"Sun, Bo","TR      1100 1215 ROBSON 323 (Class)
+T       1015 1215 ROBSON 323 (Exam)",Main,,3,30,0,0,27,3,50,0,50,30
+21068,CS,02421,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,BIG DATA TOOLS AND TECHNIQUES,"Chandrasekaran, Ganesh","T       1830 1945 ROBSON 211 (Class)
+T       1905 2105 ROBSON 211 (Exam)
+T       2000 2115 ROBSON 211 (Class)",Main,,3,15,0,0,15,0,50,0,50,48*
+24435,CS,02435,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,DATABASE SYS:THEORY & PROGM,"Boccaleri, Dominic Alexander","M       1830 1945 ROBSON 323 (Class)
+M       1905 2105 ROBSON 323 (Exam)
+M       2000 2115 ROBSON 323 (Class)",Main,,3,30,0,0,30,0,50,0,50,30
+24436,CS,02435,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,DATABASE SYS:THEORY & PROGM,"Trofimoff, Alejandro Erick","R       1100 1215 ROBSON 121 (Class)
+R       1230 1345 ROBSON 121 (Class)
+R       1230 1430 ROBSON 121 (Exam)",Main,,3,30,0,0,27,3,50,0,50,65
+24437,CS,02440,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,DATA WAREHOUSING,"Leonchuck, Michael Blaise","M       1830 1945 ROBSON 121 (Class)
+M       1905 2105 ROBSON 121 (Exam)
+M       2000 2115 ROBSON 121 (Class)",Main,,3,20,0,0,20,0,50,0,50,65*
+24439,CS,02480,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRODUCTION TO DATA MINING,"Witkowski, Jonathan","R       1830 1945 ROBSON 323 (Class)
+R       1905 2105 ROBSON 323 (Exam)
+R       2000 2115 ROBSON 323 (Class)",Main,,3,30,0,0,28,2,50,0,50,30
+21069,CS,02505,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,DATA MINING I,"Yesilbas, Veysel","T       1830 1945 JAMES 3114 (Class)
+T       1905 2105 JAMES 3114 (Exam)
+T       2000 2115 JAMES 3114 (Class)",Main,,3,68,0,0,66,2,0,0,0,68
+21071,CS,02516,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,"BIG DATA TOOLS AND TECHNIQUESASRC Fed Mission Solutions Eng only
+","Chandrasekaran, Ganesh",R       1715 1945   (Class),ASRC Fed Mission Solutions Eng,,3,30,0,0,26,4,0,0,0,
+22277,CS,02516,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,"BIG DATA TOOLS AND TECHNIQUESMS Data Science students only.
+","Chandrasekaran, Ganesh","W       1830 1945 ROBSON 211 (Class)
+W       1905 2105 ROBSON 211 (Exam)
+W       2000 2115 ROBSON 211 (Class)",Main,,3,30,0,0,39,-9,0,0,0,48
+25853,CS,02516,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,BIG DATA TOOLS AND TECHNIQUES,"Chandrasekaran, Ganesh","T       1830 1945 ROBSON 211 (Class)
+T       1905 2105 ROBSON 211 (Exam)
+T       2000 2115 ROBSON 211 (Class)",Main,,3,0,0,0,18,-18,0,0,0,48*
+21076,CS,02530,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV DATABASE SYS:THEORY/PRO,"Burns, Edward Ewing","M       1830 1945 ROWAN 117 (Class)
+M       1905 2105 ROWAN 117 (Exam)
+M       2000 2115 ROWAN 117 (Class)",Main,,3,100,0,0,100,0,0,0,0,116
+21075,CS,02530,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV DATABASE SYS:THEORY/PRO,"Masterson, John J","T       1830 1945 ENTPRZ 517 (Class)
+T       1905 2105 ENTPRZ 517 (Exam)
+T       2000 2115 ENTPRZ 517 (Class)",Main,,3,30,0,0,30,0,0,0,0,40
+21074,CS,02530,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV DATABASE SYS:THEORY/PRO,STAFF,,Main,,3,0,0,0,0,0,0,0,0,
+21084,CS,02605,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA MINING II,"Breitzman, Anthony F","M       1530 1645 ROBSON 207 (Class)
+M       1700 1815 ROBSON 207 (Class)
+M       1700 1900 ROBSON 207 (Exam)",Main,,3,30,0,0,10,20,0,0,0,36
+21085,CS,02620,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA WAREHOUSING,"Breitzman, Anthony F","W       1230 1345 JAMES 3114 (Class)
+W       1230 1430 JAMES 3114 (Exam)
+W       1400 1515 JAMES 3114 (Class)",Main,,3,68,0,0,61,7,0,0,0,68
+25854,CS,02620,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,DATA WAREHOUSING,"Leonchuck, Michael Blaise","M       1830 1945 ROBSON 121 (Class)
+M       1905 2105 ROBSON 121 (Exam)
+M       2000 2115 ROBSON 121 (Class)",Main,,3,0,0,0,9,-9,0,0,0,65*
+25207,CS,02630,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV TOPICS IN DATABASE SYSTEMS,"Boccaleri, Dominic Alexander","T       1830 1945 ROBSON 207 (Class)
+T       1905 2105 ROBSON 207 (Exam)
+T       2000 2115 ROBSON 207 (Class)",Main,,3,30,0,0,32,-2,0,0,0,36
+24451,CS,03351,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,"CYBER SEC: FUND, PRIN AND APPS","Bouhsine, Taha
+Alicioglu, Gulsum
+","TR      1100 1215 JAMES 2108 (Class)
+T       1015 1215 JAMES 2108 (Exam)",Main,,3,20,0,0,20,0,50,0,50,20
+24452,CS,03351,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,"CYBER SEC: FUND, PRIN AND APPS","Stinchcombe, Fred
+Kairamkonda, Tarun Teja
+","TR      1400 1515 JAMES 2108 (Class)
+T       1445 1645 JAMES 2108 (Exam)",Main,,3,20,0,0,20,0,50,0,50,20
+24453,CS,03351,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,"CYBER SEC: FUND, PRIN AND APPS","Stinchcombe, Fred
+Kairamkonda, Tarun Teja
+","TR      1530 1645 JAMES 2108 (Class)
+R       1445 1645 JAMES 2108 (Exam)",Main,,3,20,0,0,20,0,50,0,50,20
+24454,CS,03351,  4,"Full Term ... 
+16-JAN to 03-MAY",Evening,"CYBER SEC: FUND, PRIN AND APPS","Vitale, Russell","M       1830 1945 JAMES 2108 (Class)
+M       1905 2105 JAMES 2108 (Exam)
+M       2000 2115 JAMES 2108 (Class)",Main,,3,20,0,0,19,1,50,0,50,20
+24455,CS,03351,  5,"Full Term ... 
+16-JAN to 03-MAY",Evening,"CYBER SEC: FUND, PRIN AND APPS","Vitale, Russell","T       1830 1945 JAMES 2108 (Class)
+T       1905 2105 JAMES 2108 (Exam)
+T       2000 2115 JAMES 2108 (Class)",Main,,3,20,0,0,19,1,50,0,50,20
+24440,CS,03440,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,CLOUD COMPUT & INTERNET THINGS,"Zilovic, Bojan","M       1830 1945 ROBSON 207 (Class)
+M       1905 2105 ROBSON 207 (Exam)
+M       2000 2115 ROBSON 207 (Class)",Main,,3,10,0,0,11,-1,50,0,50,36*
+24441,CS,03470,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,CYBER OPERATIONS,STAFF,,Main,,3,0,0,0,0,0,0,0,0,
+21089,CS,03500,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,FOUNDATIONS OF CYBERSECURITY,"Davie, Michael S","M       1830 1945 JAMES 3114 (Class)
+M       1905 2105 JAMES 3114 (Exam)
+M       2000 2115 JAMES 3114 (Class)",Main,,3,68,0,0,68,0,0,0,0,68
+21091,CS,03506,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,CYBERSECURITY MGT/POLICY/RISK,"Tarabah, Sally","R       1830 1945 ROWAN 117 (Class)
+R       1905 2105 ROWAN 117 (Exam)
+R       2000 2115 ROWAN 117 (Class)",Main,,3,30,0,0,31,-1,0,0,0,116
+21092,CS,03551,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV CYBER SEC: PRINC AND APPS,"Campbell, Kevin L","T       1830 1945 ROWAN 117 (Class)
+T       1905 2105 ROWAN 117 (Exam)
+T       2000 2115 ROWAN 117 (Class)",Main,,3,100,0,0,78,22,0,0,0,116
+25855,CS,03551,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,ADV CYBER SEC: PRINC AND APPS,"Patterson, Scott",   ,Online,,3,35,0,0,35,0,0,0,0,
+21095,CS,03570,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,CYBER DEFENSE OP SYS & NETWKS,"Stinchcombe, Fred","W       1400 1515 ROWAN 117 (Class)
+W       1445 1645 ROWAN 117 (Exam)
+W       1530 1645 ROWAN 117 (Class)",Main,,3,65,0,0,71,-6,0,0,0,116
+20500,CS,03580,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,CLOUD CMP/INTERNET OF THINGS,"Zilovic, Bojan","M       1830 1945 ROBSON 207 (Class)
+M       1905 2105 ROBSON 207 (Exam)
+M       2000 2115 ROBSON 207 (Class)",Main,,3,20,0,0,20,0,0,0,0,36*
+21104,CS,03695,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV TPS CYBER: LEGAL ISSUES,"Patterson, Scott","M       1400 1515 JAMES 2113 (Class)
+M       1445 1645 JAMES 2113 (Exam)
+M       1530 1645 JAMES 2113 (Class)",Main,,3,24,0,0,25,-1,0,0,0,28
+24769,CS,03695,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV TPS CYBER: APPLIED CRYPTOG,"O'Malley, Katelyn","W       1830 1945 ROBSON 224 (Class)
+W       1905 2105 ROBSON 224 (Exam)
+W       2000 2115 ROBSON 224 (Class)",Main,,3,30,0,0,27,3,0,0,0,50
+21110,CS,04103,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,"COMPUTER SCI & PROGMStudents must bring laptops to class.
+","Escajadillo Munoa, Jose Isaac
+Seedorf, Robert J
+","M       1830 1945 JAMES 2101 (Lab)
+M       2000 2115 JAMES 2101 (Lab)
+T       1830 1945 ROBSON 121 (Lecture)
+T       1905 2105 ROBSON 121 (Exam)
+T       2000 2115 ROBSON 121 (Lecture)",Main,,4,31,0,0,29,2,50,0,50,36
+21111,CS,04103,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,"COMPUTER SCI & PROGMStudents must bring laptops to class.
+","Escajadillo Munoa, Jose Isaac
+Seedorf, Robert J
+","T       1830 1945 ROBSON 121 (Lecture)
+T       1905 2105 ROBSON 121 (Exam)
+T       2000 2115 ROBSON 121 (Lecture)
+W       1830 1945 JAMES 2101 (Lab)
+W       2000 2115 JAMES 2101 (Lab)",Main,,4,31,0,0,31,0,50,0,50,36
+21108,CS,04103,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTER SCI & PROGM,"Rea, James J.","W       1830 1945 JAMES 2113 (Lab)
+W       2000 2115 JAMES 2113 (Lab)
+R       1830 1945 ENTPRZ 517 (Lecture)
+R       1905 2105 ENTPRZ 517 (Exam)
+R       2000 2115 ENTPRZ 517 (Lecture)",Main,,4,28,0,0,12,16,50,0,50,28
+21109,CS,04103,  4,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTER SCI & PROGM,"Tinsley, Kevin F
+Uppalapati, Vinay Kumar
+","W       1830 1945 JAMES 1115 (Lecture)
+W       1905 2105 JAMES 1115 (Exam)
+W       2000 2115 JAMES 1115 (Lecture)
+R       1830 1945 JAMES 2113 (Lab)
+R       2000 2115 JAMES 2113 (Lab)",Main,,4,28,0,0,13,15,50,0,50,28
+24770,CS,04103,  5,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCI & PROGM,"Mabtoul, Samira","T       1230 1345 ROBSON 325 (Lecture)
+T       1230 1430 ROBSON 325 (Exam)
+T       1400 1515 ROBSON 325 (Lecture)
+R       1230 1345 ROBSON 325 (Lab)
+R       1400 1515 ROBSON 325 (Lab)",Main,,4,27,0,0,26,1,50,0,50,27
+21112,CS,04113,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO OBJ-ORIENT PRGRMMNG,"Chien, Chia C","M       0800 0915 JAMES 3114 (Lecture)
+M       0800 1000 JAMES 3114 (Exam)
+M       0930 1045 JAMES 3114 (Lecture)
+W       0800 0915 JAMES 2113 (Lab)
+W       0930 1045 JAMES 2113 (Lab)",Main,,4,28,0,0,25,3,50,0,50,28
+21113,CS,04113,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO OBJ-ORIENT PRGRMMNG,"Chien, Chia C","M       0800 0915 JAMES 3114 (Lecture)
+M       0800 1000 JAMES 3114 (Exam)
+M       0930 1045 JAMES 3114 (Lecture)
+T       0800 0915 JAMES 2113 (Lab)
+T       0930 1045 JAMES 2113 (Lab)",Main,,4,28,0,0,9,19,50,0,50,28
+21114,CS,04113,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO OBJ-ORIENT PRGRMMNG,"Rabbitz, Richard J
+Alicioglu, Gulsum
+","TR      0930 1045 ROBSON 121 (Lecture)
+R       1015 1215 ROBSON 121 (Exam)
+F       0930 1045 ROBSON 325 (Lab)
+F       1100 1215 ROBSON 325 (Lab)",Main,,4,27,0,0,18,9,50,0,50,27
+21115,CS,04113,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO OBJ-ORIENT PRGRMMNG,"Rabbitz, Richard J
+Alicioglu, Gulsum
+","M       0930 1045 ROBSON 325 (Lab)
+M       1100 1215 ROBSON 325 (Lab)
+TR      0930 1045 ROBSON 121 (Lecture)
+R       1015 1215 ROBSON 121 (Exam)",Main,,4,27,0,0,25,2,50,0,50,27
+21116,CS,04113,  5,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO OBJ-ORIENT PRGRMMNG,"Safko, Gregory J","T       1530 1645 ROBSON 323 (Lecture)
+T       1700 1815 ROBSON 323 (Lecture)
+R       1445 1645 ROBSON 323 (Exam)
+R       1530 1645 ROBSON 325 (Lab)
+R       1700 1815 ROBSON 325 (Lab)",Main,,4,27,0,0,27,0,50,0,50,27
+21117,CS,04114,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,HONORS OBJ-ORNT PRGM/DATA ABST,"Myers, Jack F","TR      1700 1815 ROBSON 312 (Class)
+T       1700 1900 ROBSON 312 (Exam)",Main,,3,24,0,0,18,6,5,0,5,27
+21118,CS,04114,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,OBJ-ORIENT PRGRM/DATA ABSTR,"Gibson, Norman","R       1830 1945 ROBSON 312 (Class)
+R       1905 2105 ROBSON 312 (Exam)
+R       2000 2115 ROBSON 312 (Class)",Main,,3,27,0,0,27,0,50,0,50,27
+21119,CS,04114,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,OBJ-ORIENT PRGRM/DATA ABSTR,"Weissman, Stephen B","MW      0930 1045 ROBSON 312 (Class)
+W       1015 1215 ROBSON 312 (Exam)",Main,,3,27,0,0,26,1,50,0,50,27
+21120,CS,04114,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,OBJ-ORIENT PRGRM/DATA ABSTR,"Weissman, Stephen B","MW      1100 1215 ROBSON 312 (Class)
+M       1015 1215 ROBSON 312 (Exam)",Main,,3,27,0,0,26,1,50,0,50,27
+21121,CS,04114,  5,"Full Term ... 
+16-JAN to 03-MAY",Day,"OBJ-ORIENT PRGRM/DATA ABSTRStudents must bring laptop to class
+","Weissman, Stephen B","T       0930 1045 ROBSON 312 (Class)
+T       1015 1215 ROBSON 312 (Exam)
+T       1100 1215 ROBSON 305 (Class)",Main,,3,24,0,0,24,0,50,0,50,24
+21122,CS,04114,  6,"Full Term ... 
+16-JAN to 03-MAY",Day,OBJ-ORIENT PRGRM/DATA ABSTR,"Rabbitz, Richard J","TR      1100 1215 ROBSON 325 (Class)
+T       1015 1215 ROBSON 325 (Exam)",Main,,3,27,0,0,27,0,50,0,50,27
+21126,CS,04210,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV PROGRAMNG WRKSHP: JS,"Levy, Jacob Ross","MW      1900 1950 ROBSON 312 (Class)
+M       1905 2105 ROBSON 312 (Exam)",Main,,2,27,0,0,27,0,50,0,50,27
+21127,CS,04210,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV PROGRAMNG WRKSHP: JS,"Levy, Jacob Ross","MW      2000 2050 ROBSON 312 (Class)
+W       1905 2105 ROBSON 312 (Exam)",Main,,2,27,0,0,24,3,50,0,50,27
+21123,CS,04210,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV PROGRAMNG WRKSHP: UNITY/C#,"Weidner, Benjamin Daniel","RF      0800 0850 ROBSON 312 (Class)
+F       0800 1000 ROBSON 312 (Exam)",Main,,2,27,0,0,27,0,50,0,50,27
+21124,CS,04210,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV PROGRAMNG WRKSHP: UNITY/C#,"Weidner, Benjamin Daniel","RF      0930 1020 ROBSON 312 (Class)
+R       0800 1000 ROBSON 312 (Exam)",Main,,2,27,0,0,27,0,50,0,50,27
+21125,CS,04210,  5,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV PROGRAMNG WRKSHP: UNITY/C#,"Weidner, Benjamin Daniel","RF      1100 1150 ROBSON 312 (Class)
+R       1015 1215 ROBSON 312 (Exam)",Main,,2,27,0,0,27,0,50,0,50,27
+24456,CS,04215,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER LAB TECHNQ,"Provine, Darren F.","TR      1230 1345 JAMES 2113 (Class)
+R       1230 1430 JAMES 2113 (Exam)",Main,,3,28,0,0,27,1,50,0,50,28
+24457,CS,04215,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER LAB TECHNQ,"Provine, Darren F.","TR      1100 1215 JAMES 2113 (Class)
+T       1015 1215 JAMES 2113 (Exam)",Main,,3,28,0,0,28,0,50,0,50,28
+24458,CS,04215,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER LAB TECHNQ,"Provine, Darren F.","MF      1100 1215 JAMES 2113 (Class)
+M       1015 1215 JAMES 2113 (Exam)",Main,,3,28,0,0,26,2,50,0,50,28
+24459,CS,04215,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER LAB TECHNQ,"Provine, Darren F.","MF      1230 1345 JAMES 2113 (Class)
+M       1230 1430 JAMES 2113 (Exam)",Main,,3,28,0,0,25,3,50,0,50,28
+24460,CS,04215,  5,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTER LAB TECHNQ,"Pugh, Brandon Scott","M       1830 1945 JAMES 2113 (Class)
+M       1905 2105 JAMES 2113 (Exam)
+M       2000 2115 JAMES 2113 (Class)",Main,,3,28,0,0,26,2,50,0,50,28
+21128,CS,04222,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA STRUCT/ALGORIM,"Bergmann, Seth","MT      1230 1345 ROBSON 323 (Lecture)
+M       1230 1430 ROBSON 312 (Exam)
+W       1230 1345 ROBSON 312 (Lab)
+W       1400 1515 ROBSON 312 (Lab)",Main,,4,27,0,0,26,1,50,0,50,27
+21129,CS,04222,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA STRUCT/ALGORIM,"Bergmann, Seth","MT      1400 1515 ROBSON 323 (Lecture)
+M       1445 1645 ROBSON 312 (Exam)
+R       1230 1345 ROBSON 312 (Lab)
+R       1400 1515 ROBSON 312 (Lab)",Main,,4,27,0,0,26,1,50,0,50,27
+21130,CS,04222,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA STRUCT/ALGORIM,"Hristescu, Gabriela","T       1530 1645 ROBSON 325 (Lab)
+T       1700 1815 ROBSON 325 (Lab)
+R       1400 1515 JAMES 3114 (Lecture)
+R       1445 1645 JAMES 3114 (Exam)
+R       1530 1645 JAMES 3114 (Lecture)",Main,,4,27,0,0,19,8,50,0,50,27
+21131,CS,04222,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,DATA STRUCT/ALGORIM,"Hristescu, Gabriela","T       1100 1215 ROBSON 312 (Lab)
+T       1230 1345 ROBSON 312 (Lab)
+R       1400 1515 JAMES 3114 (Lecture)
+R       1445 1645 JAMES 3114 (Exam)
+R       1530 1645 JAMES 3114 (Lecture)",Main,,4,27,0,0,23,4,50,0,50,27
+21132,CS,04225,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,PRINCIPLES OF DATA STRUCTURES,"Weidner, Benjamin Daniel","MW      1700 1815 ROBSON 211 (Class)
+M       1700 1900 ROBSON 211 (Exam)",Main,,3,30,0,0,30,0,50,0,50,48
+21133,CS,04225,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,PRINCIPLES OF DATA STRUCTURES,"Weidner, Benjamin Daniel","MW      1230 1345 ROBSON 121 (Class)
+W       1230 1430 ROBSON 121 (Exam)",Main,,3,30,0,0,32,-2,50,0,50,65
+21134,CS,04225,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,PRINCIPLES OF DATA STRUCTURES,"Weidner, Benjamin Daniel","MW      1400 1515 ENGR 107 (Class)
+M       1445 1645 ENGR 107 (Exam)",Main,,3,30,0,0,30,0,50,0,50,36
+21135,CS,04225,  4,"Full Term ... 
+16-JAN to 03-MAY",Evening,PRINCIPLES OF DATA STRUCTURES,"Stockton, Edward L","M       1830 1945 ENTPRZ 517 (Class)
+M       1905 2105 ENTPRZ 517 (Exam)
+M       2000 2115 ENTPRZ 517 (Class)",Main,,3,30,0,0,30,0,50,0,50,40
+25208,CS,04225,  5,"Full Term ... 
+16-JAN to 03-MAY",Evening,PRINCIPLES OF DATA STRUCTURES,"Stockton, Edward L","W       1830 1945 ROBSON 324 (Class)
+W       1905 2105 ROBSON 324 (Exam)
+W       2000 2115 ROBSON 324 (Class)",Main,,3,30,0,0,14,16,50,0,50,30
+21136,CS,04305,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,WEB PROGRAMMING,"Pullen, Marquise Neshawntay","W       1830 1945 ROBSON 325 (Class)
+W       1905 2105 ROBSON 325 (Exam)
+W       2000 2115 ROBSON 325 (Class)",Main,,3,27,0,0,26,1,50,0,50,27
+21137,CS,04315,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,PROGRAMMING LANGUAGES,"Tinkham, Nancy","MW      1530 1645 ROBSON 102 (Class)
+W       1445 1645 ROBSON 102 (Exam)",Main,,3,30,0,0,30,0,50,0,50,35
+21138,CS,04315,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,PROGRAMMING LANGUAGES,"Tinkham, Nancy","MW      1700 1815 ROBSON 323 (Class)
+M       1700 1900 ROBSON 323 (Exam)",Main,,3,30,0,0,28,2,50,0,50,30
+21139,CS,04315,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,PROGRAMMING LANGUAGES,"Weidner, Benjamin Daniel","TR      1400 1515 ROBSON 121 (Class)
+T       1445 1645 ROBSON 121 (Exam)",Main,,3,30,0,0,24,6,50,0,50,65
+24448,CS,04321,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,SOFTWARE ENGINEERING I,"Myers, Jack F","MTR     1400 1515 ROBSON 101B (Class)
+T       1445 1645 ROBSON 101B (Exam)",Main,,4,30,0,0,29,1,50,0,50,40
+24449,CS,04321,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,SOFTWARE ENGINEERING I,"Toporski, Neil F.","MTR     1230 1345 ROBSON 207 (Class)
+R       1230 1430 ROBSON 207 (Exam)",Main,,4,30,0,0,22,8,50,0,50,36
+24450,CS,04321,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,SOFTWARE ENGINEERING I,"Pierantozzi, Jeffrey C.","W       1830 1945 ROBSON 207 (Class)
+W       1905 2105 ROBSON 207 (Exam)
+W       2000 2115 ROBSON 207 (Class)",Main,,4,30,0,0,23,7,50,0,50,36
+24729,CS,04350,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,BLOCKCHAIN PROGRAMMING,STAFF,,Main,,3,0,0,0,0,0,0,0,0,
+21143,CS,04380,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,OBJECT ORIENTED DESIGN,"Baliga, Ganesh R.","MW      1530 1645 ROBSON 121 (Class)
+W       1445 1645 ROBSON 121 (Exam)",Main,,3,30,0,0,30,0,50,0,50,65
+21190,CS,04391,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,PARALLEL AND CONCURRENT PROG,"Guo, Guimu","F       0930 1045 ROBSON 121 (Class)
+F       1015 1215 ROBSON 121 (Exam)
+F       1100 1215 ROBSON 121 (Class)",Main,,3,8,0,0,3,5,50,0,50,65*
+24735,CS,04400,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP SCI-SENIOR PROJECT,"McKee, Patrick M","R       1230 1345 JAMES 3091A (Class)
+R       1230 1430 JAMES 3091A (Exam)",Main,,3,30,0,0,36,-6,0,0,0,60
+21193,CS,04400,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP SCI-SENIOR PROJECT,"Baliga, Ganesh R.","F       0930 1045 ROBSON 207 (Class)
+F       1015 1215 ROBSON 207 (Exam)",Main,,3,30,0,0,25,5,50,0,50,36
+21194,CS,04400,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP SCI-SENIOR PROJECT,"Baliga, Ganesh R.","F       1100 1215 ROBSON 207 (Class)
+F       1230 1430 ROBSON 207 (Exam)",Main,,3,30,0,0,26,4,50,0,50,36
+21196,CS,04401,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPILER DESIGN,"Bergmann, Seth","TR      0930 1045 ROBSON 323 (Class)
+R       1015 1215 ROBSON 323 (Exam)",Main,,3,11,0,0,11,0,50,0,50,30*
+24442,CS,04444,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,HUMAN-COMPUTER INTERACTION,"Togashi, Michele Mayumi","T       1830 1945 ROBSON 323 (Class)
+T       1905 2105 ROBSON 323 (Exam)
+T       2000 2115 ROBSON 323 (Class)",Main,,3,30,0,0,30,0,50,0,50,30
+21219,CS,04471,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,TOPICS IN MOBILE PROGRAMMING,"Robinson, John H.","MW      1700 1815 ROBSON 121 (Class)
+M       1700 1900 ROBSON 121 (Exam)",Main,,3,30,0,0,27,3,50,0,50,65
+20502,CS,04515,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,EMBEDDED SYSTEMS PROG,"McKee, Patrick M","T       0800 0915 ROBSON 207 (Class)
+T       0800 1000 ROBSON 207 (Exam)
+T       0930 1045 ROBSON 207 (Class)",Main,,3,15,0,0,17,-2,0,0,0,36*
+21221,CS,04524,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,AGILE SOFTWARE ENGINEERING,"Vemulakonda, Padmalatha","R       1830 1945 ROBSON 121 (Class)
+R       1905 2105 ROBSON 121 (Exam)
+R       2000 2115 ROBSON 121 (Class)",Main,,3,30,0,0,30,0,0,0,0,65
+21224,CS,04563,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,PARALLEL AND CONCURRENT PROG,"Guo, Guimu","F       0930 1045 ROBSON 121 (Class)
+F       1015 1215 ROBSON 121 (Exam)
+F       1100 1215 ROBSON 121 (Class)",Main,,3,24,0,0,9,15,0,0,0,65*
+25857,CS,04564,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPILER DESIGN THEORY,"Bergmann, Seth","TR      0930 1045 ROBSON 323 (Class)
+R       1015 1215 ROBSON 323 (Exam)",Main,,3,19,0,0,1,18,0,0,0,30*
+21225,CS,06205,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER ORGANIZATION,"Ivanov, Nick","MF      0930 1045 ROBSON 323 (Class)
+F       1015 1215 ROBSON 323 (Exam)",Main,,3,30,0,0,14,16,50,0,50,30
+21226,CS,06205,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER ORGANIZATION,"Ivanov, Nick","MF      1100 1215 ROBSON 323 (Class)
+M       1015 1215 ROBSON 323 (Exam)",Main,,3,30,0,0,9,21,50,0,50,30
+21227,CS,06205,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER ORGANIZATION,"Kokalj-Filipovic, Silvija","TR      0930 1045 ROBSON 211 (Class)
+R       1015 1215 ROBSON 211 (Exam)",Main,,3,30,0,0,26,4,50,0,50,48
+21228,CS,06205,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER ORGANIZATION,"Fiedler, Frank","MF      1100 1215 ROBSON 211 (Class)
+M       1015 1215 ROBSON 211 (Exam)",Main,,3,31,0,0,31,0,50,0,50,48
+24445,CS,06395,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,OPERATING SYSTEMS,"McKee, Patrick M","MF      0800 0915 ROBSON 211 (Class)
+M       0800 1000 ROBSON 211 (Exam)",Main,,3,30,0,0,18,12,50,0,50,48
+24446,CS,06395,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,OPERATING SYSTEMS,"Ghen, Michael","TR      0800 0915 ROBSON 323 (Class)
+T       0800 1000 ROBSON 323 (Exam)",Main,,3,30,0,0,30,0,50,0,50,30
+24447,CS,06395,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,OPERATING SYSTEMS,"McKee, Patrick M","MF      0930 1045 ROBSON 211 (Class)
+F       1015 1215 ROBSON 211 (Exam)",Main,,3,30,0,0,30,0,50,0,50,48
+21229,CS,06410,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,DATA COMM/NETWORKING,STAFF,,Main,,3,0,0,0,0,0,0,0,0,
+20505,CS,06420,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,EMBEDDED SYSTEMS PROGRAMMING,"McKee, Patrick M","T       0800 0915 ROBSON 207 (Class)
+T       0800 1000 ROBSON 207 (Exam)
+T       0930 1045 ROBSON 207 (Class)",Main,,3,15,0,0,7,8,50,0,50,36*
+21231,CS,07210,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,FOUNDATIONS COMP SCI,"Tinkham, Nancy","MW      1230 1345 ROBSON 211 (Class)
+W       1230 1430 ROBSON 211 (Exam)",Main,,3,30,0,0,30,0,50,0,50,48
+21232,CS,07210,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,FOUNDATIONS COMP SCI,"Tinkham, Nancy","TR      1700 1815 ROBSON 211 (Class)
+T       1700 1900 ROBSON 211 (Exam)",Main,,3,30,0,0,31,-1,50,0,50,48
+21233,CS,07210,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,FOUNDATIONS COMP SCI,"Kay, Jennifer S.","MW      1400 1515 ROBSON 211 (Class)
+M       1230 1430 WESTBY 111 (Exam)",Main,,3,30,0,0,30,0,50,0,50,48
+21234,CS,07210,  4,"Full Term ... 
+16-JAN to 03-MAY",Day,HONORS FOUNDATIONS COMP SCI,"Kay, Jennifer S.","MW      1530 1645 ROBSON 211 (Class)
+M       1230 1430 WESTBY 111 (Exam)",Main,,3,24,0,0,15,9,50,0,50,48
+21235,CS,07210,  5,"Full Term ... 
+16-JAN to 03-MAY",Day,FOUNDATIONS COMP SCI,"Kay, Jennifer S.","MW      0930 1045 ROBSON 121 (Class)
+M       1230 1430 WESTBY 111 (Exam)",Main,,3,30,0,0,30,0,50,0,50,65
+21239,CS,07340,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,DES-ANLYS ALGORITHMS,"Lobo, Andrea F.","TR      1100 1215 ROBSON 211 (Class)
+T       1015 1215 ROBSON 211 (Exam)",Main,,3,30,0,0,30,0,50,0,50,48
+21240,CS,07340,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,DES-ANLYS ALGORITHMS,"Lobo, Andrea F.","TR      1230 1345 ROBSON 101A (Class)
+TR      1230 1345 ROBSON 211 (Class)
+R       1230 1430 ROBSON 211 (Exam)",Main,,3,30,0,0,31,-1,50,0,50,40
+21241,CS,07340,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,DES-ANLYS ALGORITHMS,"Hristescu, Gabriela","WF      1230 1345 ROBSON 323 (Class)
+F       1445 1645 ROBSON 323 (Exam)",Main,,3,30,0,0,8,22,50,0,50,30
+20558,CS,07459,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,MODELS OF DEEP LEARNING,"Kokalj-Filipovic, Silvija","R       1400 1515 ROBSON 211 (Class)
+R       1445 1645 ROBSON 211 (Exam)
+R       1530 1645 ROBSON 211 (Class)",Main,,3,15,0,0,5,10,50,0,50,48*
+21249,CS,07460,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER VISION,"Rabbitz, Richard J","R       1530 1645 ROBSON 323 (Class)
+R       1700 1815 ROBSON 323 (Class)
+R       1700 1900 ROBSON 323 (Exam)",Main,,3,30,0,0,28,2,50,0,50,30
+21251,CS,07540,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV DESIGN & ANALY OF ALGOR,"Fiedler, Frank","T       1015 1215 JAMES 3114 (Exam)
+T       1100 1215 JAMES 3114 (Class)
+T       1230 1345 JAMES 3114 (Class)",Main,,3,68,0,0,52,16,0,0,0,68
+21252,CS,07540,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV DESIGN & ANALY OF ALGOR,"Fiedler, Frank","R       1015 1215 JAMES 3114 (Exam)
+R       1100 1215 JAMES 3114 (Class)
+R       1230 1345 JAMES 3114 (Class)",Main,,3,68,0,0,54,14,0,0,0,68
+21253,CS,07556,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,MACHINE LEARNING I,"Ho, Shen Shyang","F       1230 1345 ROBSON 121 (Class)
+F       1400 1515 ROBSON 121 (Class)
+F       1445 1645 ROBSON 121 (Exam)",Main,,3,30,0,0,16,14,0,0,0,65
+20560,CS,07559,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV MODELS OF DEEP LEARNING,"Kokalj-Filipovic, Silvija","R       1400 1515 ROBSON 211 (Class)
+R       1445 1645 ROBSON 211 (Exam)
+R       1530 1645 ROBSON 211 (Class)",Main,,3,15,0,0,15,0,0,0,0,48*
+21254,CS,07565,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER VISION,"Rabbitz, Richard J","F       1400 1515 ROBSON 207 (Class)
+F       1445 1645 ROBSON 207 (Exam)
+F       1530 1645 ROBSON 207 (Class)",Main,,3,30,0,0,35,-5,0,0,0,36
+21255,CS,07595,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV TPS CS: HW & DIGITAL SYS,"Trofimoff, Alejandro Erick","R       1445 1645 ROBSON 121 (Exam)
+R       1530 1645 ROBSON 121 (Class)
+R       1700 1815 ROBSON 121 (Class)",Main,,3,30,0,0,34,-4,0,0,0,65
+21256,CS,07595,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV TPS CS: FUNCTIONAL PROG,"Juneja, Badal Raghuvir","W       1830 1945 ROBSON 323 (Class)
+W       1905 2105 ROBSON 323 (Exam)
+W       2000 2115 ROBSON 323 (Class)",Main,,3,30,0,0,30,0,0,0,0,30
+25856,CS,07595,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,AT IN CS: WEB SERVER PLATFORMS,"Singer, Steven","W       0930 1045 ROBSON 325 (Class)
+W       1015 1215 ROBSON 325 (Exam)
+W       1100 1215 ROBSON 325 (Class)",Main,,3,0,0,0,19,-19,0,0,0,27*
+25420,CS,07631,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCIENCE THESIS II,"Ho, Shen Shyang",   ,Main,,3,0,0,0,1,-1,0,0,0,
+25421,CS,07631,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCIENCE THESIS II,"Kokalj-Filipovic, Silvija",   ,Main,,3,0,0,0,1,-1,0,0,0,
+25422,CS,07631,  3,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCIENCE THESIS II,STAFF,,Main,,3,0,0,0,0,0,0,0,0,
+25476,CS,07632,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER SCIENCE THESIS III,"Ho, Shen Shyang",   ,Main,,3,0,0,0,1,-1,0,0,0,
+24443,CS,08360,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO COMPUTER GRAPHICS,"Rabbitz, Richard J","M       1400 1515 ROBSON 325 (Class)
+M       1445 1645 ROBSON 325 (Exam)
+M       1530 1645 ROBSON 325 (Class)",Main,,3,13,0,0,13,0,50,0,50,27*
+20557,CS,08560,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER GRAPHICS,"Rabbitz, Richard J","M       1400 1515 ROBSON 325 (Class)
+M       1445 1645 ROBSON 325 (Exam)
+M       1530 1645 ROBSON 325 (Class)",Main,,3,14,0,0,14,0,0,0,0,27*
+24444,CS,09415,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,WIRELESS NETWORKS & APPLIC,"Lobo, Andrea F.","T       1530 1645 ROBSON 121 (Class)
+T       1700 1815 ROBSON 121 (Class)
+T       1700 1900 ROBSON 121 (Exam)",Main,,3,2,0,0,2,0,50,0,50,65*
+21257,CS,09510,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTER NETWORKS,"Escajadillo Munoa, Jose Isaac","R       1830 1945 JAMES 3114 (Class)
+R       1905 2105 JAMES 3114 (Exam)
+R       2000 2115 JAMES 3114 (Class)",Main,,3,68,0,0,68,0,0,0,0,68
+21258,CS,09510,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER NETWORKS,"Chu, Heng Yi M","T       1015 1215 ROBSON 121 (Exam)
+T       1100 1215 ROBSON 121 (Class)
+T       1230 1345 ROBSON 121 (Class)",Main,,3,30,0,0,31,-1,0,0,0,65
+20552,CS,09605,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,WIRELESS NETWORKS/SYSTEMS,"Lobo, Andrea F.","T       1530 1645 ROBSON 121 (Class)
+T       1700 1815 ROBSON 121 (Class)
+T       1700 1900 ROBSON 121 (Exam)",Main,,3,28,0,0,18,10,0,0,0,65*
+25074,CS,09612,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,"NETWORK SECURITYASRC Fed Mission Solutions Eng only
+","Chu, Heng Yi M",T       1630 1900   (Class),ASRC Fed Mission Solutions Eng,,3,30,0,0,29,1,0,0,0,
+22275,CS,10271,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,INTRO TO ANDROID PROGRAMMING,"Robinson, John H.","MW      1530 1645 ROBSON 312 (Class)
+W       1445 1645 ROBSON 312 (Exam)",Main,,3,27,0,0,14,13,50,0,50,27
+21259,CS,10310,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO TO WEB DEVELOPMENT,"Burns, Edward Ewing","T       1830 1945 JAMES 2113 (Class)
+T       1905 2105 JAMES 2113 (Exam)
+T       2000 2115 JAMES 2113 (Class)",Main,,3,27,0,0,18,9,50,0,50,28
+21261,CS,10310,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,INTRO TO WEB DEVELOPMENT,"Hoxworth, Ryan","R       1830 1945 ROBSON 325 (Class)
+R       1905 2105 ROBSON 325 (Exam)
+R       2000 2115 ROBSON 325 (Class)",Main,,3,27,0,0,18,9,50,0,50,27
+21262,CS,10310,  3,"Full Term ... 
+16-JAN to 03-MAY",Online,"INTRO TO WEB DEVELOPMENT3+1 students only
+","Hoxworth, Ryan",   ,Online,,3,20,0,0,16,4,50,0,50,
+21263,CS,10337,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,APPLIED DATABASE TECHNOLOGIES,"Quinn, Philip Scott","T       1830 1945 ROBSON 312 (Class)
+T       1905 2105 ROBSON 312 (Exam)
+T       2000 2115 ROBSON 312 (Class)",Main,,3,27,0,0,27,0,50,0,50,27
+21265,CS,10342,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,WEB SERVER PLATFORMS,"Singer, Steven","W       0930 1045 ROBSON 325 (Class)
+W       1015 1215 ROBSON 325 (Exam)
+W       1100 1215 ROBSON 325 (Class)",Main,,3,8,0,0,8,0,50,0,50,27*
+21266,CS,10430,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP INFORMATICS CAPSTONE EXP,"Toporski, Neil F.","T       1015 1215 ROBSON 207 (Exam)
+T       1100 1215 ROBSON 207 (Class)",Main,,3,30,0,0,30,0,50,0,50,36
+21268,CS,10430,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMP INFORMATICS CAPSTONE EXP,"Toporski, Neil F.","R       1015 1215 ROBSON 207 (Exam)
+R       1100 1215 ROBSON 207 (Class)",Main,,3,30,0,0,19,11,50,0,50,36
+21269,CS,10430,  3,"Full Term ... 
+16-JAN to 03-MAY",Online,"COMP INFORMATICS CAPSTONE EXP3+1 students only
+","Toporski, Neil F.",   ,Online,,3,30,0,0,24,6,50,0,50,
+20563,CS,99300,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTER FLD EXPER,"Chien, Chia C",   ,Off-campus,,12,0,0,0,6,-6,0,0,0,
+21271,CST,02110,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,IMPLEMENTATIONS OF SQL I,"Orta, Rafael J",   ,Online,,3,35,1,-7,34,1,0,0,0,
+21272,CST,03201,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,SECURITY+,"Stinchcombe, Fred",   ,Online,,3,35,10,-1,35,0,50,0,50,
+25245,CST,03201,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,SECURITY+,"Tarabah, Sally",   ,Online,,3,35,0,0,33,2,50,0,50,
+21273,CST,03218,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,ETHICAL HACKING FUNDAMENTALS,"Tarabah, Sally",   ,Online,,3,35,10,0,34,1,50,0,50,
+21274,CST,03252,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,FOUND OF COMPUTER FORENSICS,"Shah, Deval","W       1830 1945 ROBSON 121 (Class)
+W       1905 2105 ROBSON 121 (Exam)
+W       2000 2115 ROBSON 121 (Class)",Main,,3,30,0,0,28,2,50,0,50,65
+25299,CST,03252,  2,"Full Term ... 
+16-JAN to 03-MAY",Evening,FOUND OF COMPUTER FORENSICS,"Brickley, Joseph Carl","R       1830 1945 ROBSON 207 (Class)
+R       1905 2105 ROBSON 207 (Exam)
+R       2000 2115 ROBSON 207 (Class)",Main,,3,30,0,0,18,12,50,0,50,36
+21288,CST,03315,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,ADVANCED PENETRATION TESTING,"Stinchcombe, Fred",   ,Online,,3,35,1,-1,6,29,0,0,0,
+21289,CST,03370,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,IDS/IPS ADMINISTRATION,"Shelar, Akash",   ,Online,,3,35,1,-4,28,7,0,0,0,
+21290,CST,03410,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,CYBER DEFENSE,"Brickley, Joseph Carl",   ,Online,,3,35,10,-1,35,0,50,0,50,
+21291,CST,03418,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,ADV TOPICS IN ETHICAL HACKING,"Bronson, Hope Elizabeth",   ,Online,,3,35,1,-2,7,28,0,0,0,
+21292,CST,06220,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,LINUX/UNIX ESSENTIALS,"Provine, Darren F.",   ,Online,,3,35,0,0,35,0,50,0,50,
+21293,CST,06225,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,LINUX/UNIX ADMINISTRATION,"Green, Brian Christopher",   ,Online,,3,35,1,-3,6,29,0,0,0,
+21294,CST,06230,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,MICROCOMP OP SYSTEMS I: WORKS,"Dorsey, Stephen",   ,Online,,3,35,1,-9,19,16,0,0,0,
+21295,CST,09210,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,INTRO COMP NTWRKS/DATA COMM,"Chu, Heng Yi M",   ,Online,,3,35,1,-3,33,2,0,0,0,
+21296,CST,09210,  2,"Full Term ... 
+16-JAN to 03-MAY",Online,INTRO COMP NTWRKS/DATA COMM,"Chu, Heng Yi M",   ,Online,,3,35,1,0,34,1,0,0,0,
+21297,CST,09210,  3,"Full Term ... 
+16-JAN to 03-MAY",Online,INTRO COMP NTWRKS/DATA COMM,"Garron, Harold John",   ,Online,,3,35,1,-1,35,0,0,0,0,
+21298,CST,09290,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,INTERMEDIATE NETWORKING,"Chu, Heng Yi M",   ,Online,,3,35,1,-8,22,13,0,0,0,
+21299,CST,09310,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,NETWORK SUPPORT AND TROUBLESHO,"Ramsaran, Arnold Mahendra",   ,Online,,3,35,1,-6,13,22,0,0,0,
+24421,DA,03510,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,PATIENT DATA UNDERSTANDING,"Poolos, Kimberly Rose",   ,Online,,3,35,0,0,36,-1,0,0,0,
+21300,DA,03511,  1,"Full Term ... 
+16-JAN to 03-MAY",Online,PATIENT DATA PRIVACY & ETHICS,"Diaz, Erika Mae",   ,Online,,3,35,0,0,37,-2,0,0,0,
+21896,DS,02395,  1,"Full Term ... 
+16-JAN to 03-MAY",Evening,"SP TPS IN DS: SMART DRONESSmart Drones and Robots -Artificial Intelligence and Autonomous Vehicles
+","Nguyen, Hieu Duc","T       1700 1815 ROBSON 212 (Class)
+T       1830 1945 ROBSON 212 (Class)
+T       1905 2105 ROBSON 212 (Exam)",Main,,3,15,0,0,8,7,0,0,0,40*
+22278,DS,02510,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,VISUAL ANALYTICS,"Sun, Bo","R       1230 1345 ROBSON 323 (Class)
+R       1230 1430 ROBSON 323 (Exam)
+R       1400 1515 ROBSON 323 (Class)",Main,,3,30,0,0,23,7,0,0,0,30
+22280,DS,02510,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,VISUAL ANALYTICS,"Sun, Bo","T       1400 1515 ROBSON 211 (Class)
+T       1445 1645 ROBSON 211 (Exam)
+T       1530 1645 ROBSON 211 (Class)",Main,,3,30,0,0,30,0,0,0,0,48
+21302,DS,02695,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,ADV TPS DS: APPLIED DATA SCI,"Banerjee, Protima","F       0930 1045 JAMES 3114 (Class)
+F       1015 1215 JAMES 3114 (Exam)
+F       1100 1215 JAMES 3114 (Class)",Main,,3,30,0,0,20,10,0,0,0,68
+24366,DS,02695,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,ADV TPS DS: SMART DRONES,"Nguyen, Hieu Duc","T       1700 1815 ROBSON 212 (Class)
+T       1700 1900 ROBSON 212 (Exam)
+T       1830 1945 ROBSON 212 (Class)",Main,,3,15,0,0,9,6,0,0,0,40*
+25514,DS,02799,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,DOCTORAL RESEARCH AND DISSERTA,"Ivanov, Nick",   ,Main,,3,0,0,0,1,-1,0,0,0,
+25851,DS,02799,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,DOCTORAL RESEARCH AND DISSERTA,"Sun, Bo",   ,Main,,6,0,0,0,1,-1,0,0,0,
+25477,DS,03650,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,THESIS I DATA SCIENCE,"Sun, Bo",   ,Main,,3,0,0,0,1,-1,0,0,0,
+25480,DS,03650,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,THESIS I DATA SCIENCE,"Ho, Shen Shyang",   ,Main,,3,0,0,0,1,-1,0,0,0,
+25519,DS,03652,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,THESIS III DATA SCIENCE,"Mantawy, Islam M.",   ,Main,,3,0,0,0,1,-1,0,0,0,
+20491,INTR,01265,  1,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTERS & SOCIETY,"Coakley, Thomas James","MW      0930 1045 ROBSON 207 (Class)
+W       1015 1215 ROBSON 207 (Exam)",Main,,3,24,0,0,24,0,50,0,50,36
+20495,INTR,01265,  2,"Full Term ... 
+16-JAN to 03-MAY",Day,COMPUTERS & SOCIETY,"Coakley, Thomas James","MW      1100 1215 ROBSON 207 (Class)
+M       1015 1215 ROBSON 207 (Exam)",Main,,3,24,0,0,23,1,50,0,50,36
+20494,INTR,01265,  3,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTERS & SOCIETY,"Caranci, Frank A.","M       1830 1945 ROBSON 305 (Class)
+M       1905 2105 ROBSON 305 (Exam)
+M       2000 2115 ROBSON 305 (Class)",Main,,3,24,0,0,20,4,50,0,50,24
+20497,INTR,01265,  4,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTERS & SOCIETY,"Poolos, Kimberly Rose","W       1230 1345 ROBSON 207 (Class)
+W       1230 1430 ROBSON 207 (Exam)
+W       1400 1515 ROBSON 207 (Class)",Main,,3,24,0,0,23,1,50,0,50,36
+20496,INTR,01265,  5,"Full Term ... 
+16-JAN to 03-MAY",Evening,COMPUTERS & SOCIETY,"DeStefano, Davann Catherine","TR      1700 1815 ROBSON 305 (Class)
+T       1700 1900 ROBSON 305 (Exam)",Main,,3,24,0,0,21,3,50,0,50,24
+20498,INTR,01265,  6,"Full Term ... 
+16-JAN to 03-MAY",Online,COMPUTERS & SOCIETY,"Daws, Len E.",   ,Online,,3,35,0,0,33,2,50,0,50,
+20493,INTR,01265,  7,"Module Four ... 
+12-MAR to 06-MAY",Online,COMPUTERS & SOCIETY,STAFF,,Online,,3,0,0,0,0,0,0,0,0,
+20492,INTR,01265,  8,"Module Four ... 
+12-MAR to 06-MAY",Online,COMPUTERS & SOCIETY,"DeStefano, Davann Catherine",   ,Online,,3,35,0,0,27,8,50,0,50,

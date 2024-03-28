@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Add Course</title>
     <style>
         body {
@@ -110,7 +111,7 @@
                             {% for course in user_courses %}
                             <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
                             {% endfor %}
-                            <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
+                            <a href="{% url 'dashboard:add_course_page' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
                         </div>
                     </div>
                 </div>
@@ -153,29 +154,92 @@
     </div>
 
     <div class="dashboard-container">
-        <h2>Add Course</h2>
-        <form method="post" class="course-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="mt-6 inline-block bg-purple-400 text-purple-900 font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer"">Submit</button>
-
-        </form>
+        <h2 class="text-2xl font-bold mb-4">Add Course</h2>
+    
+        <!-- Search Field -->
+        <div id="search-field" class="mb-4">
+            <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control" autocomplete="off">
+        </div>
+    
+        <!-- Search Results -->
+        <div id="search-results" class="mb-4"></div>
     </div>
+    
     <script>
-        function disableSubmitButton() {
-            var submitButton = document.getElementById('submit-button');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Submitting...'; // Optional: Change button text
-            // Further prevent multiple submissions by waiting for a bit before the form is actually submitted
-            setTimeout(function() {
-                submitButton.form.submit();
-            }, 500); // 500 milliseconds delay
-            return true; // Proceed with the form submission
+    // Function to perform the AJAX call and update the search results
+    function updateSearchResults() {
+        const searchQuery = document.getElementById('course-search').value;
+        const resultsContainer = document.getElementById('search-results');
+
+        // Construct the query string
+        const queryString = `query=${encodeURIComponent(searchQuery)}`;
+    
+        fetch("{% url 'dashboard:search_courses' %}?query=" + encodeURIComponent(searchQuery))
+            .then(response => response.json())
+            .then(data => {
+                resultsContainer.innerHTML = ''; // Clear previous results
+                if (data.length) {
+                    data.forEach(course => {
+                        const courseElement = document.createElement('div');
+                        courseElement.classList.add('p-3', 'border', 'rounded', 'mb-2', 'hover:bg-gray-100');
+                        courseElement.innerHTML = `
+                            <div class="font-semibold">${course.course_name}</div>
+                            <div>CRN: ${course.crn}</div>
+                            <div>Course Code: ${course.course_code}</div>
+                            <div>Department: ${course.department}</div>
+                            <div>Credit Hours: ${course.credit_hours}</div>
+                            <button class="mt-2 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer" onclick="addCourse(${course.id})">Add Course</button>
+                        `;
+                        resultsContainer.appendChild(courseElement);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<div class="text-gray-700">No courses found.</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching courses:', error);
+                resultsContainer.innerHTML = '<div class="text-red-500">An error occurred while searching.</div>';
+            });
+    }
+    
+    function addCourse(courseId) {
+    const csrftoken = document.querySelector('meta[name="csrf-token"]').content;
+
+    fetch(`/dashboard/add-course/${courseId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            // Include any necessary request body data here
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-        document.getElementById('courses-btn').onclick = function() {
-            var submenu = document.getElementById('courses-submenu');
-            submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
-    };
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Course added successfully!');
+            // Redirect to the dashboard or refresh the page
+            // Note: You cannot use Django template tags in external JS. 
+            // If this JS is in an external file, you'll need to set the URL differently.
+            window.location.href = "/dashboard/"; // Adjust if needed for your URL structure
+        } else {
+            alert('Failed to add course. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error adding course:', error);
+        alert('An error occurred while adding the course.');
+    });
+}
+    
+    // Event listener for search input
+    document.getElementById('course-search').addEventListener('input', updateSearchResults);
     </script>
 </body>
 </html>
