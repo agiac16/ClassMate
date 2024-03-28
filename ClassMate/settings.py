@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
+    "django.contrib.staticfiles",    
     "assignments",
     'courses',
     'forum',
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'planner',
     'dashboard',
     'widget_tweaks',
+    'djangobower',
+    'schedule',
 
 ]
 
@@ -84,6 +86,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ClassMate.wsgi.application"
 
+BOWER_INSTALLED_APPS = (
+    'jquery',
+    'jquery-ui',
+    'bootstrap'
+    # 'fullcalendar'
+)
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -135,6 +143,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     "home/templates/home/static",
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
