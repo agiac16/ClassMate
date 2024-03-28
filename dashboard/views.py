@@ -164,3 +164,21 @@ def bulk_import(request):
     
     # Return error message if no file is selected
     return JsonResponse({'success': False, 'message': 'No file selected.'})
+
+@login_required
+def add_sample_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:dashboard')
+    else:
+        form = CourseForm(initial={
+            'course_name': 'Sample Course',
+            'course_code': 'SAMPLE101',
+            'crn': 12345,
+            'department': 'Sample Department',
+            'credit_hours': 3,
+            'description': 'This is a sample course created for demonstration purposes.'
+        })
+    return redirect('dashboard:dashboard')  # Redirect to the dashboard if not a POST request
