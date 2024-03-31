@@ -17,6 +17,9 @@
         }
     </style>
 </head>
+
+<!-- edit this page to show more content
+show assignment and allow add subtasks.. rather a view and then edit page -->
 <body class="flex flex-col md:flex-row bg-slate-50">
 
     <!-- Toggle Button for Smaller Screens -->
@@ -135,12 +138,18 @@
                     <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
                     {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
                 </div>
-
-                <div class="flex space-x-2">
-                    <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
-                    <button type="delete" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Delete</button>
-                </div>
             </form>
+            <div class="flex space-x-2 w-full">
+                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+
+                <form 
+                method="post" 
+                action="{% url 'dashboard:delete_assignment' assignment.id %}"
+                class="w-full">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
     <script>

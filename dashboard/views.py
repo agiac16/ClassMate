@@ -1,6 +1,7 @@
 from pyexpat.errors import messages
 from django.utils import timezone
 from datetime import timedelta
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from assignments.models import Assignment
@@ -17,14 +18,14 @@ import traceback
 def dashboard(request):
     student = get_object_or_404(Student, account=request.user)
     today = timezone.now().date()
-    next_seven_days = [today + timedelta(days=i) for i in range(30)]
+    next_thirty_days = [today + timedelta(days=i) for i in range(0, 30)]
     upcoming_assignments = Assignment.objects.filter(
         student=student,  # Adjusted to reference the student
-        due_date__range=(today, next_seven_days[-1])
+        due_date__range=(today, next_thirty_days[-1])
     ).order_by('due_date')
 
     assignments_by_day = []
-    for day in next_seven_days:
+    for day in next_thirty_days:
         day_assignments = [assignment for assignment in upcoming_assignments if assignment.due_date == day]
         assignments_by_day.append((day, day_assignments))
 
@@ -41,7 +42,7 @@ def dashboard(request):
 def course_dashboard(request, course_id):
     student = get_object_or_404(Student, account=request.user)
     today = timezone.now().date()
-    next_seven_days = [today + timedelta(days=i) for i in range(30)]
+    next_thirty_days = [today + timedelta(days=i) for i in range(0,30)]
     
     # Make sure the course exists and the user is enrolled in it
     course = get_object_or_404(Course, id=course_id, enrolled_students=student)
@@ -49,11 +50,11 @@ def course_dashboard(request, course_id):
     upcoming_assignments = Assignment.objects.filter(
         student=student,
         course=course,  # Filter by the specific course
-        due_date__range=(today, next_seven_days[-1])
+        due_date__range=(today, next_thirty_days[-1])
     ).order_by('due_date')
 
     assignments_by_day = []
-    for day in next_seven_days:
+    for day in next_thirty_days:
         day_assignments = [assignment for assignment in upcoming_assignments if assignment.due_date == day]
         assignments_by_day.append((day, day_assignments))
     
@@ -144,16 +145,19 @@ def add_course_page(request):
     user_courses = Course.objects.filter(enrolled_students=student)
     return render(request, 'dashboard/add_course.html', {'user_courses': user_courses})
 
+
+
 @login_required
-def delete_assignment(request):
-    assignment = get_object_or_404(Assignment)
-    student = get_object_or_404(Student, account=request.user)
+def delete_assignment(request, assignment_id):
+    if request.method == 'POST':
+        assignment = get_object_or_404(Assignment, id=assignment_id) 
+        student = get_object_or_404(Student, account=request.user)
 
-    # Ensure the user is the owner of the assignment before allowing them to delete
-    if student != assignment.owner:
-        messages.error(request, 'You do not have permission to delete this assignment.')
-        return redirect('dashboard:dashboard')
+        # Ensure the user is the owner of the assignment before allowing them to delete
+        if student != assignment.owner:
+            messages.error(request, 'You do not have permission to delete this assignment.')
+            return redirect('dashboard:dashboard')
 
-    assignment.delete()
+        assignment.delete()
 
     return redirect('dashboard:dashboard')
