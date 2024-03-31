@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
 from .models import Course, ForumPost, Student
 from .forms import ForumPostForm
+from notifications.signals import notify
+
 
 def courseList(request):
     student = get_object_or_404(Student, account=request.user)
@@ -24,9 +26,12 @@ def create_post(request):
                 new_post.course = course
                 new_post.posted_by = request.user.student  # Assuming a Student model is related to User
                 new_post.save()
+
+
                 return JsonResponse({'success': True, 'post_id': new_post.id})
             else:
                 return JsonResponse({'success': False, 'errors': 'Invalid course ID'})
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
     return JsonResponse({'success': False, 'errors': 'Invalid request'})
+

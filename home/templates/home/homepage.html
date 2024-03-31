@@ -6,67 +6,58 @@
 {% endblock %}
 
 {% block content %}      
-<!-- Hero Section -->
-<div class="h-screen bg-cover bg-center flex items-center justify-center">
-    <div class="max-w-3xl mx-auto px-4 text-center -mt-20">
-        <h1 class="font-bold text-6xl text-gray-900">Organize your classes and assignments.</h1>
-        <p class="mt-4 text-gray-600">Manage your assignments, connect with others in your class, and reach your full potential.</p>
-        <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer">Start for Free</a>
+    <!-- Hero Section -->
+    <div class="h-screen bg-cover bg-center flex items-center justify-center">
+        <div class="max-w-3xl mx-auto px-4 text-center -mt-20">
+            <h1 class="font-bold text-6xl text-gray-900">Organize your classes and assignments.</h1>
+            <p class="mt-4 text-gray-600">Manage your assignments, connect with others in your class, and reach your full potential.</p>
+            <a href="{% url 'signup' %}" class="mt-6 inline-block bg-purple-400 text-purple-900 py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer">Start for Free</a>
 
-        <!-- Downward Arrow Button -->
-        <div class="mt-8 flex justify-center">
-            <a href="#info" class="scroll-smooth">
-                <svg class="animate-bounce w-10 h-10 text-purple-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </a>
+            <!-- Downward Arrow Button -->
+            <div class="mt-8 flex justify-center">
+                <a href="#info" class="scroll-smooth">
+                    <svg class="animate-bounce w-10 h-10 text-purple-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
-</div>
+            
+
+    <!-- General To-Do List Section -->
+    <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40" id="info">
+        <div class="flex-1 p-4">
+            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">General To-Do List</p>
+            <p class="text-gray-600">Get tasks out of your head and visualize them. With course-specific and a general task list, you can view all your tasks with ease.</p>
+        </div>
+        <div class="flex-1 p-4 flex justify-center">
+            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+        </div>
+    </div>
+
+    <!-- Daily Planner Section -->
+    <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40 mt-10 md:mt-20">
+        <div class="flex-1 p-4">
+            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Plan Out Your Work and Life</p>
+            <p class="text-gray-600">A daily planner! Add all of your assignments and anything else in your life to stay on top.</p>
+        </div>
+        <div class="flex-1 p-4 flex justify-center">
+            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+        </div>
+    </div>
+
+    <!-- Connect with Friends Section -->
+    <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40 mt-10 md:mt-20">
+        <div class="flex-1 p-4">
+            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Connect with Friends</p>
+            <p class="text-gray-600">Join classes and connect with everyone else who is taking it. Use the forums to chat with others and get help!</p>
+        </div>
+        <div class="flex-1 p-4 flex justify-center">
+            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+        </div>
+    </div>
         
-
-<!-- General To-Do List Section -->
-<div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40" id="info">
-    <div class="flex-1 p-4">
-        <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">General To-Do List</p>
-        <p class="text-gray-600">Get tasks out of your head and visualize them. With course-specific and a general task list, you can view all your tasks with ease.</p>
-    </div>
-    <div class="flex-1 p-4 flex justify-center">
-        <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
-    </div>
-</div>
-
-<!-- Daily Planner Section -->
-<div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40 mt-10 md:mt-20">
-    <div class="flex-1 p-4">
-        <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Plan Out Your Work and Life</p>
-        <p class="text-gray-600">A daily planner! Add all of your assignments and anything else in your life to stay on top.</p>
-    </div>
-    <div class="flex-1 p-4 flex justify-center">
-        <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
-    </div>
-</div>
-
-<!-- Connect with Friends Section -->
-<div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40 mt-10 md:mt-20">
-    <div class="flex-1 p-4">
-        <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Connect with Friends</p>
-        <p class="text-gray-600">Join classes and connect with everyone else who is taking it. Use the forums to chat with others and get help!</p>
-    </div>
-    <div class="flex-1 p-4 flex justify-center">
-        <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
-    </div>
-</div>
-        
-
-<!-- Modal -->
-<!-- <div id="modal" class="hidden fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white p-8 rounded">
-        <h2 class="text-2xl mb-4">FAQs</h2>
-        <p>FAQ</p>
-        <button id="close-modal" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Close</button>
-    </div>
-</div> -->
 
 <!-- Footer Section -->
 <footer id="footer" class="bg-white dark:bg-slate-50">

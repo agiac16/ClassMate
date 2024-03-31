@@ -48,9 +48,12 @@
     </style>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/ws.js"></script>
+
 </head>
 <body class="flex flex-col md:flex-row bg-slate-50">
-
+    
+  
     <!-- Toggle Button for Smaller Screens -->
     <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
         <i class="fas fa-bars"></i>
@@ -130,32 +133,46 @@
 
 
     <main class="flex-1 overflow-auto md:m-10 lg:ml-60 sm:px-10 md:px-10">
-        <main>
+
+        <!-- displays the notfication -->
+
+        {% for notification in notifications %}
+            <div class="notification pb-20">
+                <p>{{ notification.description }}</p>
+                <p>{{ notification.timestamp }}</p>
+            </div>
+        {% empty %}
+            <p>No notifications.</p>
+        {% endfor %}
+
+
+        <div>
             {% for date, assignments in assignments_by_day %}
-            <div class="day-container">
-                <h3 class="card-header bg-purple-400">{{ date|date:"l F jS, Y" }}</h3>
+            <div class="mb-8">
+                <div class="flex flex-col">
+                    <h3 class="text-md font-semibold text-black pb-1">{{ date|date:"l, F j" }}</h3>
+                    <span class="border-b mb-4"></span>
+                </div>
                 {% if assignments %}
-                    <div class="assignments-container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {% for assignment in assignments %}
-                            <a href="{% url 'dashboard:edit_assignment' assignment.id %}">
-                                <div class="assignment-card">
-                                    <div class="card-body">
-                                        <p>{{ assignment.course.course_name }} - {{ assignment.title }}</p>
-                                        <p>Due: {{ assignment.due_date|date:"F jS, Y" }}</p>
-                                        <p>Points: {{ assignment.priority }}</p>
-                                        <!-- Other details can be added here -->
-                                    </div>
-                                </div>
-                            </a>
+                        <a href="{% url 'dashboard:edit_assignment' assignment.id %}" class="block bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden transform transition duration-500 ease-in-out hover:-translate-y-1 border-2 ">
+                            <div class="p-5">
+                                <h4 class="text-sm text-black truncate pb-2">{{ assignment.course.course_name }}</h4>
+                                <span class="text-md font-bold text-purple-400">{{ assignment.title }}</span>
+                                <p class="text-sm text-gray-600 pt-2">Due: {{ assignment.due_date|date:"F jS, Y" }}</p>
+                                <p class="text-sm text-gray-600">Priority: {{ assignment.priority }}</p>
+                            </div>
+                        </a>
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div class="no-assignments">No assignments</div>
+                    <div class="text-gray-500">No assignments</div>
                 {% endif %}
             </div>
             {% endfor %}
-        </main>
-    </div>
+        </div>
+    </main>
     
     <script>
     document.getElementById('courses-btn').onclick = function() {

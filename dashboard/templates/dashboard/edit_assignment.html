@@ -101,56 +101,54 @@ show assignment and allow add subtasks.. rather a view and then edit page -->
     </div>
 
     <!-- MAIN CONTENT -->
-    <div class="lg:ml-52 flex justify-center items-center w-full">
+    <div class="lg:ml-52 flex justify-center  items-center w-full">
         <div class="dashboard-container flex flex-col justify-center items-center ">
             <h2 class="text-2xl font-bold">Edit Assignment</h2>
             <div class="w-4/5">
 
-            </div>
-            <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
-                {% csrf_token %}
-
-                <div class="flex space-x-3 w-full">
-                    <div class="mb-4 flex-1">
-                        <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
-                        {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
-
-                    <div class="mb-4 flex-1">
-                        <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
-                        {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
-                </div>
-
-                <div class="mb-4 flex flex-col flex-1">
-                    <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
-                    {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                </div>
-
-                <div class="mb-4 flex-1">
-                    <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
-                    <span class="flex flex-row space flex-1 space-x-2">
-                        {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
-                    </span>
-                </div>
-
-                <div class="mb-4 flex-1">
-                    <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
-                    {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                </div>
-            </form>
-            <div class="flex space-x-2 w-full">
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
-
-                <form 
-                method="post" 
-                action="{% url 'dashboard:delete_assignment' assignment.id %}"
-                class="w-full">
-                    {% csrf_token %}
-                    <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Delete</button>
-                </form>
-            </div>
         </div>
+        
+        <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
+            {% csrf_token %}
+
+            <div class="flex space-x-3 w-full">
+                <div class="mb-4 flex-1">
+                    <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
+                    {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+                </div>
+
+                <div class="mb-4 flex-1">
+                    <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
+                    {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+                </div>
+            </div>
+
+            <div class="mb-4 flex flex-col flex-1">
+                <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
+                {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+            </div>
+
+            <div class="mb-4 flex-1">
+                <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
+                <span class="flex flex-row space flex-1 space-x-2">
+                    {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
+                </span>
+            </div>
+
+            <div class="mb-4 flex-1">
+                <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
+                {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
+            </div>
+
+            <button type="submit" class="w-full mt-6 mb-6 bg-purple-400 text-center text-purple-900 py-2 px-5 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+        </form>
+        <form 
+            method="post" 
+            action="{% url 'dashboard:delete_assignment' assignment.id %}"
+            class="w-full bg-slate-100 rounded-md px-4 pb-2 -mt-16">
+                {% csrf_token %}
+            <button type="submit" class="w-full bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Delete</button>
+        </form>
     </div>
     <script>
         // Toggle Sidebar/Topbar for Smaller Screens

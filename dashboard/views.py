@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.db.models import Q
 import traceback
+from notifications.models import Notification
+
 
 
 @login_required
@@ -31,10 +33,13 @@ def dashboard(request):
 
     user_courses = Course.objects.filter(enrolled_students=student)  # Adjusted to reference the student
 
+    # Add this line to define notifications
+    notifications = Notification.objects.filter(recipient=request.user).order_by('-timestamp')
 
     context = {
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,
+        'notifications': notifications,
     }
     return render(request, 'dashboard/dashboard.html', context)
 
@@ -161,3 +166,8 @@ def delete_assignment(request, assignment_id):
         assignment.delete()
 
     return redirect('dashboard:dashboard')
+
+@login_required
+def notifications_view(request):
+    notifications = Notification.objects.filter(recipient=request.user)
+    return render(request, 'dashboard.html', {'notifications': notifications})
