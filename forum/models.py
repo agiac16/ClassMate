@@ -33,6 +33,7 @@ class ForumThread(models.Model):
     def __str__(self):
         return f"Reply by {self.posted_by.full_name} on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
 
+
 class NotificationType(models.Model):
     name = models.CharField(max_length=100)
 

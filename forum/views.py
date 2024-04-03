@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
-from .models import Course, ForumPost, Student
+from .models import Course, ForumPost, ForumThread, Student
 from .forms import ForumPostForm
 from notifications.signals import notify
 
@@ -14,6 +14,14 @@ def get_course_posts(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     posts = ForumPost.objects.filter(course=course).values('id', 'title', 'content', 'posted_by', 'timestamp')
     return JsonResponse({'posts': list(posts)})
+
+def get_replies(request, post_id):
+    replies = ForumThread.objects.filter(parent_post_id=post_id).values(
+        'id', 'content', 'posted_by', 'timestamp'
+    ).order_by('timestamp')  # Ensure replies are ordered by timestamp
+    return JsonResponse({'replies': list(replies)})
+
+
 
 def create_post(request):
     if request.method == 'POST':
@@ -34,4 +42,23 @@ def create_post(request):
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
     return JsonResponse({'success': False, 'errors': 'Invalid request'})
+
+
+
+
+def create_reply(request, post_id):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            parent_post = get_object_or_404(ForumPost, id=post_id)
+            reply = ForumThread.objects.create(
+                parent_post=parent_post,
+                content=content,
+                posted_by=request.user.student  # Assuming a Student model is related to User
+            )
+            return JsonResponse({'success': True, 'reply_id': reply.id})
+        else:
+            return JsonResponse({'success': False, 'errors': 'Content cannot be empty'})
+    return JsonResponse({'success': False, 'errors': 'Invalid request'})
+
 
