@@ -161,7 +161,7 @@
                     <div class="post" data-post-id="${post.id}">
                         <div class="post-title">${post.title}</div>
                         <p>${post.content}</p>
-                        <div class="post-details">Posted by ${post.posted_by_username} on ${post.timestamp}</div>
+                        <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
 
                         <!-- Replies Section -->
                         <div class="replies-section">
@@ -236,7 +236,7 @@ function loadRepliesForPost(postId) {
         const repliesContainer = document.getElementById(`replies-container-${postId}`);
         let repliesHtml = '';
         data.replies.forEach(reply => {
-            repliesHtml += `<div class="reply">${reply.content} - Posted by ${reply.posted_by} on ${reply.timestamp}</div>`;
+            repliesHtml += `<div class="reply">${reply.content} - Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>`;
         });
         repliesContainer.innerHTML = repliesHtml;
     })
@@ -262,13 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // AJAX form submission
         $(document).ready(function() {
-    $('#create-post-form').on('submit', function(e) {
+            $('#create-post-form').on('submit', function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        console.log("Form Data: ", formData); // Check if course_id is included
+
         $.ajax({
             type: 'POST',
-            url: '{% url "forum:create_post" %}',  // Update this with the correct URL
+            url: '{% url "forum:create_post" %}', // Make sure this URL is correctly pointing to your view for creating a post
             data: formData,
             headers: {
                 'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
@@ -276,7 +276,33 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 if (response.success) {
                     alert('Post created successfully!');
-                    // Optionally, refresh the list of posts
+                    const newPost = response.post; // Assuming the server returns the created post
+
+                    // Build the new post's HTML and prepend it to the posts container
+                    let newPostHtml = `
+                        <div class="post" data-post-id="${newPost.id}">
+                            <div class="post-title">${newPost.title}</div>
+                            <p>${newPost.content}</p>
+                            <div class="post-details">Posted by ${newPost.posted_by__account__username} on ${newPost.timestamp}</div>
+
+                            <!-- Replies Section -->
+                            <div class="replies-section">
+                                <div class="reply-form">
+                                    <textarea class="reply-input" id="reply-input-${newPost.id}" placeholder="Write a reply..."></textarea>
+                                    <button onclick="submitReply(${newPost.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="replies-container" id="replies-container-${newPost.id}">
+                                    <!-- Individual replies will be loaded here -->
+                                </div>
+                            </div>
+                        </div>`;
+                    
+                    $('#posts-container').prepend(newPostHtml); // Add the new post at the beginning of the container
+                    // Clear the input fields
+                    $('#post-title').val('');
+                    $('#post-content').val('');
+
                 } else {
                     alert('Error creating post: ' + JSON.stringify(response.errors));
                 }
@@ -285,10 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Error creating post: ' + errmsg);
             }
         });
-
-        
     });
-
     
 
 
