@@ -216,7 +216,7 @@ function submitReply(postId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Reply submitted successfully!');
+            //alert('Reply submitted successfully!');
             replyInput.value = '';
             loadRepliesForPost(postId);  // Refresh the list of replies for the post
         } else {
@@ -236,7 +236,11 @@ function loadRepliesForPost(postId) {
         const repliesContainer = document.getElementById(`replies-container-${postId}`);
         let repliesHtml = '';
         data.replies.forEach(reply => {
-            repliesHtml += `<div class="reply">${reply.content} - Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>`;
+            repliesHtml += `
+                <div class="post">
+                    <div class="post-content">${reply.content}</div>
+                    <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
+                </div>`;
         });
         repliesContainer.innerHTML = repliesHtml;
     })
@@ -244,6 +248,7 @@ function loadRepliesForPost(postId) {
         console.error('Error loading replies:', error);
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("courses").addEventListener('change', function() {
@@ -275,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             success: function(response) {
                 if (response.success) {
-                    alert('Post created successfully!');
+                    //alert('Post created successfully!');
                     const newPost = response.post; // Assuming the server returns the created post
 
                     // Build the new post's HTML and prepend it to the posts container
