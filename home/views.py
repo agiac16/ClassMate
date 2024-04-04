@@ -1,15 +1,17 @@
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from users.models import Student
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
+from .forms import StudentSignUpForm, AuthenticationForm
 
 def homepage(request):
     return render(request, 'home/homepage.html')
+
+def contact(request):
+    return render(request, 'home/contact.html')
+
+def faq(request):
+    return render(request, 'home/faq.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -21,17 +23,6 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'home/login.html', {'form': form})
-
-
-class StudentSignUpForm(UserCreationForm):
-    full_name = forms.CharField(max_length=255)
-    enrollment_year = forms.IntegerField()
-    major = forms.CharField(max_length=255)
-    expected_graduation_year = forms.IntegerField()
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
 
 def signup_view(request):
     if request.method == 'POST':
@@ -48,9 +39,15 @@ def signup_view(request):
             login(request, user)
             return redirect('dashboard:dashboard')
     else:
-        form = StudentSignUpForm()
-    return render(request, 'home/signup.html', {'form': form})
+        if request.user.is_authenticated:
+            return redirect('homepage')
+        else:
+            form = StudentSignUpForm()
+            return render(request, 'home/signup.html', {'form': form})
 
 def logout_view(request):
+    if request.user.is_authenticated:
         logout(request) # Logout the user
         return redirect('login') # Redirect to login
+    else:
+        return redirect('homepage')
