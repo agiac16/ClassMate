@@ -103,24 +103,6 @@ def edit_assignment(request, assignment_id):
 
     return render(request, 'dashboard/edit_assignment.html', {'form': form, 'user_courses': user_courses, 'assignment': assignment})
 
-@login_required
-def add_course(request):
-    student = get_object_or_404(Student, account=request.user)
-    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
-    if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            new_course = form.save(commit=False)
-            new_course.save()
-            # Now that the course is saved and has an ID, we can add enrolled students
-            new_course.enrolled_students.add(student)  # Add the student instance
-            new_course.save()
-            return redirect(reverse('dashboard:dashboard'))
-    else:
-        form = CourseForm()
-
-
-    return render(request, 'dashboard/add_course.html', {'form': form, 'user_courses': user_courses})
 
 @login_required
 def delete_assignment(request):
@@ -201,18 +183,55 @@ def bulk_import(request):
 
 @login_required
 def add_sample_course(request):
+    student = get_object_or_404(Student, account=request.user)
+
+    # Sample course data
+    sample_course_data = {
+        'course_name': 'Sample Course',
+        'course_code': '101',
+        'crn': 12345,
+        'department': 'Sample Department',
+        'credit_hours': 3,
+        'description': 'This is a sample course created for demonstration purposes.'
+    }
+
+    try:
+        # Create a new course object with the sample data
+        new_course = Course.objects.create(
+            course_name=sample_course_data['course_name'],
+            course_code=sample_course_data['course_code'],
+            crn=sample_course_data['crn'],
+            department=sample_course_data['department'],
+            credit_hours=sample_course_data['credit_hours'],
+            description=sample_course_data['description']
+        )
+
+        # Add the student to the enrolled students of the new course
+        new_course.enrolled_students.add(student)
+
+        # Redirect to the dashboard
+        return redirect(reverse('dashboard:dashboard'))
+    except Exception as e:
+        # Return error message if there's an exception
+        return JsonResponse({'success': False, 'message': str(e)})
+
+
+
+@login_required
+def add_course(request):
+    student = get_object_or_404(Student, account=request.user)
+    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('dashboard:dashboard')
+            new_course = form.save(commit=False)
+            new_course.save()
+            # Now that the course is saved and has an ID, we can add enrolled students
+            new_course.enrolled_students.add(student)  # Add the student instance
+            new_course.save()
+            return redirect(reverse('dashboard:dashboard'))
     else:
-        form = CourseForm(initial={
-            'course_name': 'Sample Course',
-            'course_code': 'SAMPLE101',
-            'crn': 12345,
-            'department': 'Sample Department',
-            'credit_hours': 3,
-            'description': 'This is a sample course created for demonstration purposes.'
-        })
-    return redirect('dashboard:dashboard')  # Redirect to the dashboard if not a POST request
+        form = CourseForm()
+
+
+    return render(request, 'dashboard/add_course.html', {'form': form, 'user_courses': user_courses})
