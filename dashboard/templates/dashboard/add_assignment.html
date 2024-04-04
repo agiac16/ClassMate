@@ -8,142 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Assignment</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        .dashboard-container {
-            padding: 20px;
-            overflow: auto;
-            height: 100vh;
-        }
-    </style>
 </head>
 <body class="flex flex-col md:flex-row bg-slate-50">
 
-    <!-- Toggle Button for Smaller Screens -->
+    <!-- toggle for mobile -->
     <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform grid grid-rows-[auto,1fr,auto]">        <div>
-            <div class="p-4 flex justify-center items-center">
-                <a href="{% url 'homepage' %}">
-                    <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
-                </a>
-            </div>
-            
-            <!-- Navigation Links -->
-            <div class="space-y-2 py-4 flex flex-col justify-center">
+    <!-- sidebar/mobile top nav -->
+    {% include 'partials/sidebar.html' %}
 
-                <!-- Home -->
-                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-
-                <!-- Courses with submenu -->
-                <div class="group">
-                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                        <i class="fas fa-book"></i>
-                        <span>Courses</span>
-
-                    </a>
-                    <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
-                        <div class="pt-2">
-                            <!-- Dynamically populate course links here -->
-                            {% for course in user_courses %}
-                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
-                            {% endfor %}
-                            <a href="{% url 'dashboard:add_course_page' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add Assignment -->
-                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-600">
-                    <i class="fas fa-tasks"></i>
-                    <span>Add Assignment</span>
-                </a>
-
-                <!-- Forum -->  
-                <a href="{% url 'forum:courseList' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-comments"></i>
-                    <span>Forum</span>
-                </a>
-
-                <!-- Planner -->
-                <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Planner</span>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Profile Sticky to -->
-        <div class="mt-auto pb-4 flex flex-row">
-            <div>
-                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </div>
-            <div>
-                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </div>
+    <!-- assignment info -->
+    <div class="lg:ml-52 flex justify-center items-center w-full flex-col ">
+        <h2 class="text-2xl font-bold">Add Assignment</h2>
+        {% include 'partials/assignment.html' %}
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="lg:ml-52 flex justify-center items-center w-full">
-        <div class="dashboard-container flex flex-col justify-center items-center ">
-            <h2 class="text-2xl font-bold">Add Assignment</h2>
-            <div class="w-4/5">
-
-            </div>
-            <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
-                {% csrf_token %}
-
-                <div class="flex space-x-3 w-full">
-                    <div class="mb-4 w-full">
-                        <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
-                        {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
-
-                    <div class="mb-4 w-1/2">
-                        <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
-                        {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                    </div>
-                </div>
-
-                <div class="mb-4 flex flex-col w-full">
-                    <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
-                    {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                </div>
-
-                <div class="mb-4 w-full">
-                    <label for="id_title" class="block text-sm font-medium text-gray-700">Group Members</label>
-                    {{ form.additional_username|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
-                </div>
-
-                <div class="mb-4 w-full">
-                    <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
-                    <span class="flex flex-row space w-full">
-                        {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
-                    </span>
-                </div>
-
-                <div class="mb-4 w-full">
-                    <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
-                    {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
-                </div>
-
-                <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
-            </form>
-        </div>
-    </div>
     <script>
         // Toggle Sidebar/Topbar for Smaller Screens
         document.getElementById('sidebarToggle').addEventListener('click', function() {

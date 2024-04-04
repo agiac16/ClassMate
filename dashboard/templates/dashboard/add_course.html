@@ -14,90 +14,20 @@
     <style>
         .dashboard-container {
             padding: 20px;
-            overflow: auto;
-            height: 100vh;
+
         }
     </style>
 </head>
 <body class="flex flex-col md:flex-row bg-slate-50">
 
-    <!-- Toggle Button for Smaller Screens -->
+    <!-- toggle for mobile -->
     <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar/Topbar -->
-    <div id="sidebar" class="bg-zinc-800 text-white w-full md:w-52 h-screen md:h-auto fixed md:inset-y-0 top-0 left-0 z-40 transform -translate-y-full md:translate-y-0 md:translate-x-0 transition-transform">
-        <div>
-            <div class="p-4 flex justify-center items-center">
-                <a href="{% url 'homepage' %}">
-                    <img src="{% static 'classmate.png' %}" alt="Logo" class="h-10">
-                </a>
-            </div>
-            
-            <!-- Navigation Links -->
-            <div class="flex-1 space-y-2 py-4 flex flex-col justify-center">
+    <!-- sidebar/mobile top nav -->
+    {% include 'partials/sidebar.html' %}
 
-                <!-- Home -->
-                <a href="{% url 'dashboard:dashboard' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-
-                <!-- Courses with submenu -->
-                <div class="group">
-                    <a href="javascript:void(0);" id="courses-btn" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                        <i class="fas fa-book"></i>
-                        <span>Courses</span>
-
-                    </a>
-                    <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
-                        <div class="pt-2">
-                            <!-- Dynamically populate course links here -->
-                            {% for course in user_courses %}
-                            <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
-                            {% endfor %}
-                            <a href="{% url 'dashboard:add_course_page' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add Assignment -->
-                <a href="{% url 'dashboard:add_assignment' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-600">
-                    <i class="fas fa-tasks"></i>
-                    <span>Add Assignment</span>
-                </a>
-
-                <!-- Forum -->  
-                <a href="{% url 'forum:courseList' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-comments"></i>
-                    <span>Forum</span>
-                </a>
-
-                <!-- Planner -->
-                <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Planner</span>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Profile Sticky to -->
-        <div class="pb-4 flex flex-row">
-            <div>
-                <a href="{% url 'user:viewProfile' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </div>
-            <div>
-                <a href="{% url 'logout' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </div>
-    </div>
     <!-- main content -->
     <div class="lg:ml-52 flex flex-col items-center w-full px-4 md:px-10 py-10">
         <div class="dashboard-container w-full max-w-4xl">
