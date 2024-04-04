@@ -1,0 +1,44 @@
+{% load widget_tweaks %}
+
+{% load static %}
+<div class="p-5 flex flex-col justify-center items-center ">
+    <form method="POST" class="mt-6 bg-slate-100 rounded-md p-5 m-10 w-full">
+        {% csrf_token %}
+
+        <div class="flex space-x-3 w-full">
+            <div class="mb-4 w-full">
+                <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
+                {{ form.course|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+            </div>
+
+            <div class="mb-4 w-1/2">
+                <label for="id_title" class="block text-sm font-medium text-gray-700">Title</label>
+                {{ form.title|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+            </div>
+        </div>
+
+        <div class="mb-4 flex flex-col w-full">
+            <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
+            {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+        </div>
+
+        <div class="mb-4 w-full">
+            <label for="id_title" class="block text-sm font-medium text-gray-700">Group Members</label>
+            {{ form.additional_username|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+        </div>
+
+        <div class="mb-4 w-full">
+            <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
+            <span class="flex flex-row space-x-2 w-full">
+                {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
+            </span>
+        </div>
+
+        <div class="mb-4 w-full">
+            <label for="id_priority" class="block text-sm font-medium text-gray-700">Priority (1-5)</label>
+            {{ form.priority|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl" }}
+        </div>
+
+        <button type="submit" class="w-full mt-6 bg-purple-400 text-center text-purple-900 py-2 px-4 rounded hover:bg-purple-500 focus:outline-none focus:bg-purple-500 transition duration-300">Submit</button>
+    </form>
+</div>
