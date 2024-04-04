@@ -161,6 +161,11 @@
                                 <span class="text-md font-bold text-purple-400">{{ assignment.title }}</span>
                                 <p class="text-sm text-gray-600 pt-2">Due: {{ assignment.due_date|date:"F jS, Y" }}</p>
                                 <p class="text-sm text-gray-600">Priority: {{ assignment.priority }}</p>
+                                {% if assignment.additional_username %}
+                                    <p class="text-sm text-gray-600 pt-2">Group Members: {{ assignment.additional_username }}, {{ assignment.owner }} </p>
+                                {% else %}
+                                    <p></p>
+                                {% endif %}
                             </div>
                         </a>
                         {% endfor %}

@@ -24,7 +24,8 @@ def login_view(request):
         if request.user.is_authenticated:
             return redirect('homepage')
         form = AuthenticationForm()
-        return render(request, 'home/login.html', {'form': form})
+    
+    return render(request, 'home/login.html', {'form': form})
 
 def signup_view(request):
     if request.method == 'POST':
