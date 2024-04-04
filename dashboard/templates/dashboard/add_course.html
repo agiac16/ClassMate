@@ -104,8 +104,19 @@
             <h2 class="text-3xl font-bold mb-6 text-center">Add Course</h2>
     
             <!-- Search Field -->
-            <div id="search-field" class="mb-4">
-                <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control block w-full px-4 py-3 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
+            <div id="search-field" class="mb-4 flex flex-row">
+                <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control mt-2 flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
+                
+                <!-- Department Dropdown -->
+                <select id="department-filter" class="form-control w-1/3 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2">
+                    <option value="">All Departments</option>
+                    {% for department in departments %}
+                    <option value="{{ department }}">{{ department }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Credit Hours Field -->
+                <input type="number" id="credit-hours-filter" placeholder="Credits" class="form-control w-32 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2" autocomplete="off">
             </div>
     
             <!-- Search Results -->
@@ -114,15 +125,23 @@
     </div>
 
     <script>
+        
+        document.getElementById('course-search').addEventListener('input', updateSearchResults);
+        document.getElementById('credit-hours-filter').addEventListener('input', updateSearchResults);
+        document.getElementById('department-filter').addEventListener('change', updateSearchResults);
+
     // Function to perform the AJAX call and update the search results
     function updateSearchResults() {
         const searchQuery = document.getElementById('course-search').value;
+        const departmentFilter = document.getElementById('department-filter').value; // Get the value of the department filter
+        const creditHoursFilter = document.getElementById('credit-hours-filter').value; // Get the value of the credit hours filter
         const resultsContainer = document.getElementById('search-results');
 
+
         // Construct the query string
-        const queryString = `query=${encodeURIComponent(searchQuery)}`;
+        const queryString = `query=${encodeURIComponent(searchQuery)}&department=${encodeURIComponent(departmentFilter)}&credit_hours=${encodeURIComponent(creditHoursFilter)}`;
     
-        fetch("{% url 'dashboard:search_courses' %}?query=" + encodeURIComponent(searchQuery))
+        fetch("{% url 'dashboard:search_courses' %}?" + queryString)
             .then(response => response.json())
             .then(data => {
                 resultsContainer.innerHTML = ''; // Clear previous results

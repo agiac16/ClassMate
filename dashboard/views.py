@@ -128,12 +128,18 @@ def search_courses(request):
         print("Request GET parameters:", request.GET)
         
         search_query = request.GET.get('query', '')
+        department_filter = request.GET.get('department_filter', '')
+        credit_hours_filter = request.GET.get('credit_hours', '')
+
+
         print("Search query:", search_query)
         
         courses = Course.objects.filter(
             Q(course_name__icontains=search_query) |
             Q(crn__icontains=search_query) |
-            Q(course_code__icontains=search_query)
+            Q(course_code__icontains=search_query),
+            department__icontains=department_filter,  # Filter by department
+            credit_hours__icontains=credit_hours_filter,  # Filter by credit hours
         ).values('id', 'course_name', 'crn', 'department', 'credit_hours')[:10]
         
         print("Courses queryset:", courses)
@@ -146,9 +152,16 @@ def search_courses(request):
 
 @login_required
 def add_course_page(request):
+    departments = Course.objects.values_list('department', flat=True).distinct()
     student = get_object_or_404(Student, account=request.user)
     user_courses = Course.objects.filter(enrolled_students=student)
-    return render(request, 'dashboard/add_course.html', {'user_courses': user_courses})
+    
+    context = { 
+        'departments': departments,
+        'user_courses': user_courses
+    }
+
+    return render(request, 'dashboard/add_course.html', context)
 
 
 
