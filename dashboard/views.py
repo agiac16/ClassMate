@@ -118,6 +118,13 @@ def delete_assignment(request):
 
     return redirect('dashboard:dashboard')
 
+from django.http import JsonResponse
+from django.urls import reverse
+from django.shortcuts import redirect
+from users.models import Student
+from courses.models import Course
+import csv
+
 @login_required
 def bulk_import(request):
     if request.method == 'POST' and request.FILES.get('file'):
@@ -141,15 +148,13 @@ def bulk_import(request):
                 
                 # Continue processing the file
                 for row in csv_reader:
-                    # Skip the first column (id)
-                    row = row[1:]
-                    
                     # Create a dictionary with headers as keys and row values as values
-                    course_data = dict(zip(headers[1:], row))
+                    course_data = dict(zip(headers, row))
                     print("Course data:", course_data)
                     
                     # Create a new course if all required fields are present
                     if all(course_data.get(header) for header in required_headers):
+                        # Create the course object
                         new_course = Course.objects.create(
                             course_name=course_data['course_name'],
                             course_code=course_data['course_code'],
@@ -159,6 +164,13 @@ def bulk_import(request):
                             description=course_data['description']
                             # Add any other fields you want to populate
                         )
+                        print("New Course created:", new_course)
+                        
+                        # Enroll the current user in the course
+                        student = get_object_or_404(Student, account=request.user)
+                        new_course.enrolled_students.add(student)
+                        print("Enrolled student in the course:", student)
+                        
                         # Print out the newly added course with all fields
                         print(f"New Course Added: {new_course}")
                         print(f"Course Name: {new_course.course_name}")
