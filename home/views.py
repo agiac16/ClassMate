@@ -21,8 +21,10 @@ def login_view(request):
             login(request, user)
             return redirect('dashboard:dashboard')  # Redirect to the dashboard
     else:
+        if request.user.is_authenticated:
+            return redirect('homepage')
         form = AuthenticationForm()
-    return render(request, 'home/login.html', {'form': form})
+        return render(request, 'home/login.html', {'form': form})
 
 def signup_view(request):
     if request.method == 'POST':
@@ -41,13 +43,11 @@ def signup_view(request):
     else:
         if request.user.is_authenticated:
             return redirect('homepage')
-        else:
-            form = StudentSignUpForm()
-            return render(request, 'home/signup.html', {'form': form})
+        form = StudentSignUpForm()
+        return render(request, 'home/signup.html', {'form': form})
 
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request) # Logout the user
         return redirect('login') # Redirect to login
-    else:
-        return redirect('homepage')
+    return redirect('homepage')
