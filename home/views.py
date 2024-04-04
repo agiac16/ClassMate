@@ -6,6 +6,7 @@ from users.models import Student
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from schedule.models import Calendar
 
 
 def homepage(request):
@@ -38,13 +39,16 @@ def signup_view(request):
         form = StudentSignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            Student.objects.create(
+            student = Student.objects.create(
                 account=user,
                 full_name=form.cleaned_data.get('full_name'),
                 enrollment_year=form.cleaned_data.get('enrollment_year'),
                 major=form.cleaned_data.get('major'),
                 expected_graduation_year=form.cleaned_data.get('expected_graduation_year')
             )
+            calendar = Calendar.objects.create(slug=f"{user.username}-calendar")
+            student.calendar = calendar
+            student.save()
             login(request, user)
             return redirect('dashboard:dashboard')
     else:

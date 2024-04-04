@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'friends',
     'users',
     'home',
-    'planner',
     'dashboard',
     'widget_tweaks',
     'djangobower',

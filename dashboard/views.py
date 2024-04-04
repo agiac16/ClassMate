@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.db.models import Q
 import traceback
+from schedule.utils import create_course_events
 
 
 @login_required
@@ -112,6 +113,7 @@ def add_course(request, course_id):
     if request.method == 'POST':
         # Add the course to the student's enrolled courses
         student.enrolled_courses.add(course)
+        create_course_events(student)
         return JsonResponse({'success': True})
 
     return JsonResponse({'success': False}, status=400)

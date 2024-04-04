@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import schedule.urls
 
 urlpatterns = [
     path('', include('home.urls')), #homepage
@@ -32,6 +33,5 @@ urlpatterns = [
 
     path('dashboard/', include('dashboard.urls')),
     path('users/', include('users.urls')),
-    path('planner/', include('planner.urls')),
-
+    path('scheduler/', include('schedule.urls')),
 ]

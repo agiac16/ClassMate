@@ -16,7 +16,8 @@ class Course(models.Model):
     end_time = models.TimeField(null=True, blank=True)
     start_time_2 = models.TimeField(null=True, blank=True)
     end_time_2 = models.TimeField(null=True, blank=True)
-    rule = models.ForeignKey(Rule, on_delete=models.SET_NULL, null=True, blank=True)
+    days = models.CharField(max_length=10, blank=True, null=True)
+    days_2 = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
         return self.course_name 
