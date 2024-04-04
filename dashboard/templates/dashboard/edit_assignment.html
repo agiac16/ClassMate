@@ -128,6 +128,11 @@ show assignment and allow add subtasks.. rather a view and then edit page -->
                 {{ form.description|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
             </div>
 
+            <div class="mb-4 w-full">
+                <label for="id_title" class="block text-sm font-medium text-gray-700">Group Members</label>
+                {{ form.additional_username|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+            </div>
+            
             <div class="mb-4 flex-1">
                 <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
                 <span class="flex flex-row space flex-1 space-x-2">

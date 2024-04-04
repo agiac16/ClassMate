@@ -13,6 +13,8 @@ class Assignment(models.Model):
     due_date = models.DateField()
     priority = models.IntegerField()
     estimated_completion_time = models.DurationField(default=datetime.timedelta)
+    additional_username = models.ForeignKey(Student, max_length=255, on_delete=models.CASCADE, null=True, blank=True)
+
 
     def __str__(self):
         return self.title

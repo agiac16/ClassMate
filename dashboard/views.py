@@ -22,7 +22,7 @@ def dashboard(request):
     today = timezone.now().date()
     next_thirty_days = [today + timedelta(days=i) for i in range(0, 30)]
     upcoming_assignments = Assignment.objects.filter(
-        student=student,  # Adjusted to reference the student
+        Q(student=student) | Q(additional_username=student),
         due_date__range=(today, next_thirty_days[-1])
     ).order_by('due_date')
 
@@ -74,15 +74,23 @@ def course_dashboard(request, course_id):
 @login_required
 def add_assignment(request):
     student = get_object_or_404(Student, account=request.user)
-    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
+    user_courses = Course.objects.filter(enrolled_students=student)
 
     if request.method == 'POST':
         form = AssignmentForm(request.POST, user=request.user)
         if form.is_valid():
             assignment = form.save(commit=False)
-            assignment.student = student
-            assignment.owner = student  # Assign the current student as the owner
+            assignment.owner = student
             assignment.save()
+            assignment.students.add(student)  
+
+            # Add additional student if username is provided
+            additional_username = form.cleaned_data.get('additional_student')
+            if additional_username:
+                additional_student = Student.objects.filter(username=additional_username)
+                if additional_student:
+                    assignment.students.add(additional_student)
+
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(user=request.user)
@@ -104,6 +112,14 @@ def edit_assignment(request, assignment_id):
         
         if form.is_valid():
             form.save()
+
+            # Add additional student if username is provided
+            additional_username = form.cleaned_data.get('additional_student')
+            if additional_username:
+                additional_student = Student.objects.filter(username=additional_username).first()
+                if additional_student:
+                    assignment.students.add(additional_student)
+
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(instance=assignment, user=request.user)

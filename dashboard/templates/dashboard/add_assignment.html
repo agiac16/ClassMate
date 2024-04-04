@@ -124,6 +124,11 @@
                 </div>
 
                 <div class="mb-4 w-full">
+                    <label for="id_title" class="block text-sm font-medium text-gray-700">Group Members</label>
+                    {{ form.additional_username|add_class:"mt-2 mb-2 py-4 px-6 bg-white rounded-xl w-full" }}
+                </div>
+
+                <div class="mb-4 w-full">
                     <label for="id_due_date" class="block text-sm font-medium text-gray-700">Due</label>
                     <span class="flex flex-row space w-full">
                         {{ form.due_date|add_class:"w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker" }}
