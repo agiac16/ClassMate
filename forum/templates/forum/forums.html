@@ -240,13 +240,14 @@ function submitReply(postId) {
 
 
 
-function loadRepliesForPost(postId) {
+function loadRepliesForPost(postId, showAll = false) {
     fetch(`/forum/post/${postId}/replies/`)
         .then(response => response.json())
         .then(data => {
             const repliesContainer = document.getElementById(`replies-container-${postId}`);
             let repliesHtml = '';
-            data.replies.forEach((reply, index) => {
+            const replies = showAll ? data.replies : data.replies.slice(-1);
+            replies.forEach((reply, index) => {
                 repliesHtml += `
                 <div class="post">
                     <div class="post-content">${reply.content}</div>
@@ -258,6 +259,8 @@ function loadRepliesForPost(postId) {
 
             const viewRepliesButton = document.getElementById(`view-replies-button-${postId}`);
             viewRepliesButton.style.display = 'block'; // Always display the button
+            viewRepliesButton.textContent = showAll ? 'Hide Replies' : 'View All Replies'; // Change the button text based on the current state
+            viewRepliesButton.onclick = () => loadRepliesForPost(postId, !showAll); // Switch to the other state when the button is clicked
         })
         .catch(error => {
             console.error('Error loading replies:', error);
