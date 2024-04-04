@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -28,6 +27,16 @@
 
         .reply-form {
             margin-bottom: 10px;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .centered {
+            display: block; /* Display as block for margin auto to work */
+            margin: 10px auto; /* Margin auto for horizontal centering */
+            width: fit-content; /* Shrink to fit content */
         }
 
 
@@ -65,6 +74,11 @@
             border-radius: 4px;
             border: 1px solid #e2e8f0;
         }
+
+        .reply-container {
+    margin-bottom: 10px; /* Adjust the margin as needed for separation */
+}
+
 
 
         .dropdown {
@@ -146,47 +160,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-       function loadCoursePosts(courseId) {
-    // Clear existing posts
+      function loadCoursePosts(courseId) {
     document.getElementById("posts-container").innerHTML = '';
 
-    // Make an AJAX request to the server
     fetch(`/forum/course/${courseId}/posts/`)
-        .then(response => response.json())
-        .then(data => {
-            // Populate the posts container with the received posts
-            let postsHtml = '';
-            data.posts.forEach(post => {
-                postsHtml += `
-                    <div class="post" data-post-id="${post.id}">
-                        <div class="post-title">${post.title}</div>
-                        <p>${post.content}</p>
-                        <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
-
-                        <!-- Replies Section -->
-                        <div class="replies-section">
-                            <div class="reply-form">
-                                <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
-                                <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="replies-container" id="replies-container-${post.id}">
-                                <!-- Individual replies will be loaded here -->
-                            </div>
+    .then(response => response.json())
+    .then(data => {
+        let postsHtml = '';
+        data.posts.forEach(post => {
+            postsHtml += `
+                <div class="post" data-post-id="${post.id}">
+                    <div class="post-title">${post.title}</div>
+                    <p>${post.content}</p>
+                    <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
+                    <div class="replies-section" id="replies-section-${post.id}">
+                        <div class="reply-form clearfix">
+                            <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
+                            <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
                         </div>
-                    </div>`;
-            });
-            document.getElementById("posts-container").innerHTML = postsHtml;
 
-            // After rendering the posts, load replies for each one
-            data.posts.forEach(post => {
-                loadRepliesForPost(post.id); // Load replies for each post
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching posts:', error);
+                        <button onclick="togglePreviousReplies(${post.id})" id="view-replies-button-${post.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
+
+                        <div class="replies-container" id="replies-container-${post.id}">
+                            <!-- Replies will be loaded here by loadRepliesForPost function -->
+                        </div>
+                    </div>
+                </div>`;
         });
+        document.getElementById("posts-container").innerHTML = postsHtml;
+        data.posts.forEach(post => {
+            loadRepliesForPost(post.id); // Load replies for each post
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching posts:', error);
+    });
 }
+
 
 function submitReply(postId) {
     const replyInput = document.getElementById(`reply-input-${postId}`);
@@ -216,7 +226,6 @@ function submitReply(postId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            //alert('Reply submitted successfully!');
             replyInput.value = '';
             loadRepliesForPost(postId);  // Refresh the list of replies for the post
         } else {
@@ -229,25 +238,59 @@ function submitReply(postId) {
     });
 }
 
+
+
 function loadRepliesForPost(postId) {
     fetch(`/forum/post/${postId}/replies/`)
-    .then(response => response.json())
-    .then(data => {
-        const repliesContainer = document.getElementById(`replies-container-${postId}`);
-        let repliesHtml = '';
-        data.replies.forEach(reply => {
-            repliesHtml += `
+        .then(response => response.json())
+        .then(data => {
+            const repliesContainer = document.getElementById(`replies-container-${postId}`);
+            let repliesHtml = '';
+            data.replies.forEach((reply, index) => {
+                repliesHtml += `
                 <div class="post">
                     <div class="post-content">${reply.content}</div>
                     <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
-                </div>`;
+                </div>
+                `;
+            });
+            repliesContainer.innerHTML = repliesHtml;
+
+            const viewRepliesButton = document.getElementById(`view-replies-button-${postId}`);
+            viewRepliesButton.style.display = 'block'; // Always display the button
+        })
+        .catch(error => {
+            console.error('Error loading replies:', error);
         });
-        repliesContainer.innerHTML = repliesHtml;
-    })
-    .catch(error => {
-        console.error('Error loading replies:', error);
-    });
 }
+
+
+
+
+
+
+
+function togglePreviousReplies(postId) {
+    const replies = document.querySelectorAll(`#replies-container-${postId} .post`);
+    const button = document.getElementById(`view-replies-button-${postId}`);
+    let areAnyRepliesHidden = false;
+
+    // Start loop from 0 and end at the second-to-last reply to skip the latest reply
+    for (let i = 0; i < replies.length - 1; i++) {
+        if (replies[i].style.display === 'none') {
+            replies[i].style.display = 'block';
+            areAnyRepliesHidden = true;
+        } else {
+            replies[i].style.display = 'none';
+        }
+    }
+
+    // Update the button text based on whether any replies are hidden
+    button.textContent = areAnyRepliesHidden ? 'Hide Previous Replies' : 'View Previous Replies';
+}
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -267,47 +310,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // AJAX form submission
         $(document).ready(function() {
-            $('#create-post-form').on('submit', function(e) {
+    $('#create-post-form').on('submit', function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
 
         $.ajax({
             type: 'POST',
-            url: '{% url "forum:create_post" %}', // Make sure this URL is correctly pointing to your view for creating a post
+            url: '{% url "forum:create_post" %}',
             data: formData,
             headers: {
                 'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(response) {
                 if (response.success) {
-                    //alert('Post created successfully!');
-                    const newPost = response.post; // Assuming the server returns the created post
+                    const newPost = response.post;
 
-                    // Build the new post's HTML and prepend it to the posts container
                     let newPostHtml = `
                         <div class="post" data-post-id="${newPost.id}">
                             <div class="post-title">${newPost.title}</div>
                             <p>${newPost.content}</p>
                             <div class="post-details">Posted by ${newPost.posted_by__account__username} on ${newPost.timestamp}</div>
 
-                            <!-- Replies Section -->
                             <div class="replies-section">
                                 <div class="reply-form">
                                     <textarea class="reply-input" id="reply-input-${newPost.id}" placeholder="Write a reply..."></textarea>
                                     <button onclick="submitReply(${newPost.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
                                     <div class="clearfix"></div>
                                 </div>
+                                <button onclick="togglePreviousReplies(${newPost.id})" id="view-replies-button-${newPost.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
                                 <div class="replies-container" id="replies-container-${newPost.id}">
                                     <!-- Individual replies will be loaded here -->
                                 </div>
                             </div>
                         </div>`;
-                    
-                    $('#posts-container').prepend(newPostHtml); // Add the new post at the beginning of the container
-                    // Clear the input fields
+
+                    $('#posts-container').prepend(newPostHtml);
                     $('#post-title').val('');
                     $('#post-content').val('');
-
                 } else {
                     alert('Error creating post: ' + JSON.stringify(response.errors));
                 }
@@ -317,15 +356,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-
 
     $('#courses').on('change', function() {
         var selectedCourseId = $(this).val();
-        console.log("Selected Course ID: ", selectedCourseId); // Check the selected course ID
-        $('#selected-course-id').val(selectedCourseId); // Update the hidden input field
+        console.log("Selected Course ID: ", selectedCourseId);
+        $('#selected-course-id').val(selectedCourseId);
     });
-});
+})
 
     </script>
 </head>
