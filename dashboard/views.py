@@ -40,6 +40,7 @@ def dashboard(request):
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,
         'notifications': notifications,
+        'today': today,  # Add this line to include today in the context
     }
     return render(request, 'dashboard/dashboard.html', context)
 

@@ -5,5 +5,5 @@ app_name = 'planner'
 
 urlpatterns = [
     path('weekly/', views.weeklyPlanner, name='weekly'),
-    path('monthly/', views.monthlyPlanner, name='monthly'),
+    path('planner/<int:year>/<int:month>/', views.generate_daily_planner, name='monthly_planner'),
 ]
