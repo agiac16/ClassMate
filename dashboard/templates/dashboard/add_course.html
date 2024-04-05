@@ -35,7 +35,7 @@
     
             <!-- Search Field -->
             <div id="search-field" class="mb-4 flex flex-row">
-                <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control mt-2 flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
+                <input type="text" id="course-search" placeholder="Search by Course Name or Course Code" class="form-control mt-2 flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
                 
                 <!-- Department Dropdown -->
                 <select id="department-filter" class="form-control w-1/3 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2">
@@ -45,8 +45,9 @@
                     {% endfor %}
                 </select>
 
-                <!-- Credit Hours Field -->
-                <input type="number" id="credit-hours-filter" placeholder="Credits" class="form-control w-32 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2" autocomplete="off">
+                <!-- CRN Field -->
+                <input type="number" id="crn-filter" placeholder="Filter by CRN" class="form-control w-32 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2" autocomplete="off">
+
             </div>
     
             <!-- Search Results -->
@@ -57,19 +58,18 @@
     <script>
         
         document.getElementById('course-search').addEventListener('input', updateSearchResults);
-        document.getElementById('credit-hours-filter').addEventListener('input', updateSearchResults);
+        document.getElementById('crn-filter').addEventListener('input', updateSearchResults);
         document.getElementById('department-filter').addEventListener('change', updateSearchResults);
 
     // Function to perform the AJAX call and update the search results
     function updateSearchResults() {
         const searchQuery = document.getElementById('course-search').value;
         const departmentFilter = document.getElementById('department-filter').value; // Get the value of the department filter
-        const creditHoursFilter = document.getElementById('credit-hours-filter').value; // Get the value of the credit hours filter
+        const crnFilter = document.getElementById('crn-filter').value; // Get the value of the CRN filter
         const resultsContainer = document.getElementById('search-results');
 
-
         // Construct the query string
-        const queryString = `query=${encodeURIComponent(searchQuery)}&department=${encodeURIComponent(departmentFilter)}&credit_hours=${encodeURIComponent(creditHoursFilter)}`;
+        const queryString = `query=${encodeURIComponent(searchQuery)}&department=${encodeURIComponent(departmentFilter)}&crn=${encodeURIComponent(crnFilter)}`;
     
         fetch("{% url 'dashboard:search_courses' %}?" + queryString)
             .then(response => response.json())
@@ -84,7 +84,7 @@
                             <div>CRN: ${course.crn}</div>
                             <div>Course Code: ${course.course_code}</div>
                             <div>Department: ${course.department}</div>
-                            <div>Credit Hours: ${course.credit_hours}</div>
+                            <div>CRN: ${course.crn}</div>
                             <button class="mt-2 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer" onclick="addCourse(${course.id})">Add Course</button>
                         `;
                         resultsContainer.appendChild(courseElement);

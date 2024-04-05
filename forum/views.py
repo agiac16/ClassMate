@@ -21,8 +21,7 @@ def get_replies(request, post_id):
     ).order_by('timestamp')  # Ensure replies are ordered by timestamp
     return JsonResponse({'replies': list(replies)})
 
-
-
+ 
 def create_post(request):
     if request.method == 'POST':
         form = ForumPostForm(request.POST)

@@ -22,9 +22,10 @@ def dashboard(request):
     today = timezone.now().date()
     next_thirty_days = [today + timedelta(days=i) for i in range(0, 30)]
     upcoming_assignments = Assignment.objects.filter(
-        Q(student=student) | Q(additional_username=student),
+        Q(students=student) | Q(owner=student),  # Include assignments where the student is the owner
         due_date__range=(today, next_thirty_days[-1])
     ).order_by('due_date')
+
 
     assignments_by_day = []
     for day in next_thirty_days:
@@ -33,13 +34,9 @@ def dashboard(request):
 
     user_courses = Course.objects.filter(enrolled_students=student)  # Adjusted to reference the student
 
-    # Add this line to define notifications
-    notifications = Notification.objects.filter(recipient=request.user).order_by('-timestamp')
-
     context = {
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,
-        'notifications': notifications,
     }
     return render(request, 'dashboard/dashboard.html', context)
 
@@ -53,7 +50,7 @@ def course_dashboard(request, course_id):
     course = get_object_or_404(Course, id=course_id, enrolled_students=student)
     
     upcoming_assignments = Assignment.objects.filter(
-        student=student,
+        students=student,
         course=course,  # Filter by the specific course
         due_date__range=(today, next_thirty_days[-1])
     ).order_by('due_date')
@@ -82,14 +79,17 @@ def add_assignment(request):
             assignment = form.save(commit=False)
             assignment.owner = student
             assignment.save()
-            assignment.students.add(student)  
 
-            # Add additional student if username is provided
-            additional_username = form.cleaned_data.get('additional_student')
-            if additional_username:
-                additional_student = Student.objects.filter(username=additional_username)
-                if additional_student:
-                    assignment.students.add(additional_student)
+            # Get the students for the entered usernames and add them to the assignment
+            student_usernames = form.cleaned_data.get('student_username')
+            if student_usernames:
+                student_usernames = [username.strip() for username in student_usernames.split(',')]
+                for username in student_usernames:
+                    try:
+                        additional_student = Student.objects.get(account__username=username)
+                        assignment.students.add(additional_student)
+                    except Student.DoesNotExist:
+                        messages.error(request, f'No student found with the username {username}')
 
             return redirect(reverse('dashboard:dashboard'))
     else:
@@ -111,14 +111,18 @@ def edit_assignment(request, assignment_id):
         form = AssignmentForm(request.POST, instance=assignment, user=request.user)
         
         if form.is_valid():
-            form.save()
+            assignment = form.save(commit=False)
+            assignment.save()
 
-            # Add additional student if username is provided
-            additional_username = form.cleaned_data.get('additional_student')
-            if additional_username:
-                additional_student = Student.objects.filter(username=additional_username).first()
-                if additional_student:
-                    assignment.students.add(additional_student)
+            # Get the student for the entered username and add it to the assignment
+            student_username = form.cleaned_data.get('student_username')
+            assignment.students.clear()  # Clear existing students
+            if student_username:
+                try:
+                    additional_student = Student.objects.get(account__username=student_username)
+                    assignment.students.add(additional_student)  # Add the new student
+                except Student.DoesNotExist:
+                    messages.error(request, 'No student found with this username')
 
             return redirect(reverse('dashboard:dashboard'))
     else:
@@ -145,8 +149,7 @@ def search_courses(request):
         
         search_query = request.GET.get('query', '')
         department_filter = request.GET.get('department_filter', '')
-        credit_hours_filter = request.GET.get('credit_hours', '')
-
+        crn_filter = request.GET.get('crn', '')
 
         print("Search query:", search_query)
         
@@ -155,7 +158,7 @@ def search_courses(request):
             Q(crn__icontains=search_query) |
             Q(course_code__icontains=search_query),
             department__icontains=department_filter,  # Filter by department
-            credit_hours__icontains=credit_hours_filter,  # Filter by credit hours
+            crn__icontains=crn_filter,  # Filter by credit hours
         ).values('id', 'course_name', 'crn', 'department', 'credit_hours')[:10]
         
         print("Courses queryset:", courses)
