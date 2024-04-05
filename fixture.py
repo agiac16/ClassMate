@@ -39,8 +39,7 @@ for student in students:
 
         # Create 2 assignments for each course
         for _ in range(2):
-            Assignment.objects.create(
-                student=student,
+            assignment = Assignment.objects.create(
                 owner=student,
                 course=course,
                 title=fake.sentence(),
@@ -49,6 +48,7 @@ for student in students:
                 priority=random.randint(1, 5),
                 estimated_completion_time=timedelta(hours=random.randint(1, 5))
             )
+            assignment.students.add(student)
 
     
 # # Create and save friends
