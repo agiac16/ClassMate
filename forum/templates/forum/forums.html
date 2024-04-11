@@ -13,6 +13,30 @@
 
         }
 
+        /* Add styles for the edit button container */
+.edit-button-container {
+    text-align: right; /* Align edit and reply buttons to the right */
+    margin-top: 10px; /* Add some space above the buttons */
+}
+
+/* Add styles for the edit post form */
+.edit-post-form {
+    display: none; /* Hide by default */
+    width: calc(100% - 20px); /* match the width of the reply form, adjust the subtraction value based on padding/margin */
+    margin: auto; /* to center the form if necessary */
+}
+
+.edit-post-input, .reply-input {
+    width: 100%; /* ensures the inputs take the full width of their container */
+    box-sizing: border-box; /* includes padding and border in the element's total width and height */
+    padding: 8px 10px; /* same padding for visual consistency */
+    margin-bottom: 10px; /* space between the input and the button */
+}
+
+
+
+        
+
         .centered-dropdown {
             display: flex;
             justify-content: center;
@@ -170,24 +194,25 @@ function loadCoursePosts(courseId) {
         let postsHtml = '';
         data.posts.forEach(post => {
             postsHtml += `
-                <div class="post" data-post-id="${post.id}">
-                    <div class="post-title">${post.title}</div>
-                    <p>${post.content}</p>
-                    <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
-                    <div class="edit-post-form hidden" id="edit-post-form-${post.id}">
-                        <textarea class="edit-post-input" id="edit-post-input-${post.id}">${post.content}</textarea>
-                        <button onclick="submitPostEdit(${post.id})" class="bg-green-400 text-white font-bold py-1 px-3 rounded hover:bg-green-500 transition duration-300">Save</button>
-                    </div>
-                    <button onclick="toggleEditPostForm(${post.id})" class="bg-blue-400 text-white font-bold py-1 px-3 rounded hover:bg-blue-500 transition duration-300">Edit</button>
-                    <div class="reply-form clearfix">
-                        <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
-                        <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
-                    </div>
-                    <button onclick="togglePreviousReplies(${post.id})" id="view-replies-button-${post.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
-                    <div class="replies-container" id="replies-container-${post.id}">
-                        <!-- Replies will be loaded here by loadRepliesForPost function -->
-                    </div>
-                </div>`;
+            <div class="post" data-post-id="${post.id}">
+                <div class="post-title">${post.title}</div>
+                <p>${post.content}</p>
+                <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
+                <div class="edit-post-form" id="edit-post-form-${post.id}" style="display: none;">
+                    <textarea class="edit-post-input" id="edit-post-input-${post.id}">${post.content}</textarea>
+                    <button onclick="submitPostEdit(${post.id})" class="bg-green-400 text-white font-bold py-1 px-3 rounded hover:bg-green-500 transition duration-300">Save</button>
+                    <button onclick="cancelEdit(${post.id})" class="bg-red-400 text-white font-bold py-1 px-3 rounded hover:bg-red-500 transition duration-300">Cancel</button>
+                </div>
+                <div class="edit-button-container">
+                    <button onclick="toggleEditPostForm(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                    <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
+                    <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Reply</button>
+                </div>
+                <button onclick="togglePreviousReplies(${post.id})" id="view-replies-button-${post.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">View Previous Replies</button>
+                <div class="replies-container" id="replies-container-${post.id}">
+                    <!-- Replies will be loaded here by loadRepliesForPost function -->
+                </div>
+            </div>`;
         });
         document.getElementById("posts-container").innerHTML = postsHtml;
         data.posts.forEach(post => {
@@ -198,6 +223,16 @@ function loadCoursePosts(courseId) {
         console.error('Error fetching posts:', error);
     });
 }
+
+function cancelEdit(postId) {
+    const editForm = document.getElementById(`edit-post-form-${postId}`);
+    editForm.style.display = "none";
+    // Optionally reset the edit input to the original post content if needed
+    const originalPostContent = document.querySelector(`[data-post-id="${postId}"] p`).textContent;
+    const editInput = document.getElementById(`edit-post-input-${postId}`);
+    editInput.value = originalPostContent;
+}
+
 
 
 
@@ -278,9 +313,15 @@ function loadRepliesForPost(postId, showAll = false) {
 }
 
 function toggleEditPostForm(postId) {
+    console.log("Toggling edit form for post ID:", postId); // For debugging
     const editForm = document.getElementById(`edit-post-form-${postId}`);
-    editForm.classList.toggle('hidden');
+    if (editForm.style.display === "none" || !editForm.style.display) {
+        editForm.style.display = "block";
+    } else {
+        editForm.style.display = "none";
+    }
 }
+
 
 function submitPostEdit(postId) {
     const editInput = document.getElementById(`edit-post-input-${postId}`);
@@ -416,38 +457,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(response) {
-                if (response.success) {
-                    const newPost = response.post;
+    if (response.success) {
+        const newPost = response.post;
 
-                    let newPostHtml = `
-                        <div class="post" data-post-id="${newPost.id}">
-                            <div class="post-title">${newPost.title}</div>
-                            <p>${newPost.content}</p>
-                            <div class="post-details">Posted by ${newPost.posted_by__account__username} on ${newPost.timestamp}</div>
+        let newPostHtml = `
+        <div class="post" data-post-id="${newPost.id}">
+            <div class="post-title">${newPost.title}</div>
+            <p>${newPost.content}</p>
+            <div class="post-details">Posted by ${newPost.posted_by__account__username} on ${newPost.timestamp}</div>
+            
+            <div class="edit-post-form" id="edit-post-form-${newPost.id}" style="display: none;">
+                <textarea class="edit-post-input" id="edit-post-input-${newPost.id}" rows="3">${newPost.content}</textarea>
+                <button onclick="submitPostEdit(${newPost.id})" class="bg-green-500 text-white font-bold py-1 px-3 rounded hover:bg-green-600 transition duration-300">Save</button>
+                <button onclick="cancelEdit(${newPost.id})" class="bg-red-500 text-white font-bold py-1 px-3 rounded hover:bg-red-600 transition duration-300">Cancel</button>
+            </div>
+            
+            <div class="edit-button-container">
+                    <button onclick="toggleEditPostForm(${newPost.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                    <textarea class="reply-input" id="reply-input-${newPost.id}" placeholder="Write a reply..."></textarea>
+                    <button onclick="submitReply(${newPost.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Reply</button>
+                </div>
+            <button onclick="togglePreviousReplies(${newPost.id})" id="view-replies-button-${newPost.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">View Previous Replies</button>
+            <div class="replies-container" id="replies-container-${newPost.id}">
+                <!-- Individual replies will be loaded here -->
+            </div>
+        </div>`;
 
-                            <div class="replies-section">
-                                <div class="reply-form">
-                                    <textarea class="reply-input" id="reply-input-${newPost.id}" placeholder="Write a reply..."></textarea>
-                                    <button onclick="submitReply(${newPost.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <button onclick="togglePreviousReplies(${newPost.id})" id="view-replies-button-${newPost.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
-                                <div class="replies-container" id="replies-container-${newPost.id}">
-                                    <!-- Individual replies will be loaded here -->
-                                </div>
-                            </div>
-                        </div>`;
+        $('#posts-container').prepend(newPostHtml);
+        $('#post-title').val('');
+        $('#post-content').val('');
+    } else {
+        alert('Error creating post: ' + JSON.stringify(response.errors));
+    }
+},
+error: function(xhr, errmsg, err) {
+    alert('Error creating post: ' + errmsg);
+}
 
-                    $('#posts-container').prepend(newPostHtml);
-                    $('#post-title').val('');
-                    $('#post-content').val('');
-                } else {
-                    alert('Error creating post: ' + JSON.stringify(response.errors));
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                alert('Error creating post: ' + errmsg);
-            }
         });
     });
 
