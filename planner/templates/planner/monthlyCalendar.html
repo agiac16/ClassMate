@@ -1,37 +1,33 @@
-{% extends "base/base_sidebar.html" %}
+{% comment %} {% extends "base/base_sidebar.html" %} {% endcomment %}
 
+<head>
+    <title>Calendar View</title>
+</head>
+<body>
+    <div id='calendar'></div>
 
-{% load i18n static %}
-{% comment %} {% load scheduletags %} {% endcomment %}
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
 
-{% block head_title %}{% trans "Fullcalendar" %}{% endblock %}
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                  },
+                events: [
+                    {
+                    title: 'All Day Event',
+                    start: '2024-04-11'
+                  },
+                ]
+            });
 
-{% block tab_id %}id="home_tab"{% endblock %}
-
-{% block extra_head %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
-{% endblock %}
-
-{% block body %}
-<div id="calendar"></div>
-<script type='text/javascript'>
-$(document).ready(function() {
-
-    // page is now ready, initialize the calendar...
-    $('#calendar').fullCalendar({
-        // put your options and callbacks here
-        //header: {
-        //    left: 'prev,next today',
-        //    center: 'title',
-        //    right: 'month,agendaWeek,agendaDay,listWeek'
-        //},
-        events: '/schedule/api/occurrences?calendar_slug=example',
-        //defaultView: 'agendaWeek'
-    })
-
-});
-</script>
-
-{% endblock %}
+            calendar.render();
+        });
+    </script>
+</body>
+</html>
