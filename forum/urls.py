@@ -11,6 +11,9 @@ urlpatterns = [
     path('post/<int:post_id>/create_reply/', views.create_reply, name='create_reply'),
     path('post/<int:post_id>/replies/', views.get_replies, name='get_replies'),
 
+    path('post/<int:post_id>/edit/', views.edit_post, name='edit_post'),
+    path('reply/<int:reply_id>/edit/', views.edit_reply, name='edit_reply'),
+
    
 ]
 

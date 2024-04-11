@@ -161,7 +161,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
-      function loadCoursePosts(courseId) {
+function loadCoursePosts(courseId) {
     document.getElementById("posts-container").innerHTML = '';
 
     fetch(`/forum/course/${courseId}/posts/`)
@@ -174,17 +174,18 @@
                     <div class="post-title">${post.title}</div>
                     <p>${post.content}</p>
                     <div class="post-details">Posted by ${post.posted_by__account__username} on ${post.timestamp}</div>
-                    <div class="replies-section" id="replies-section-${post.id}">
-                        <div class="reply-form clearfix">
-                            <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
-                            <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
-                        </div>
-
-                        <button onclick="togglePreviousReplies(${post.id})" id="view-replies-button-${post.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
-
-                        <div class="replies-container" id="replies-container-${post.id}">
-                            <!-- Replies will be loaded here by loadRepliesForPost function -->
-                        </div>
+                    <div class="edit-post-form hidden" id="edit-post-form-${post.id}">
+                        <textarea class="edit-post-input" id="edit-post-input-${post.id}">${post.content}</textarea>
+                        <button onclick="submitPostEdit(${post.id})" class="bg-green-400 text-white font-bold py-1 px-3 rounded hover:bg-green-500 transition duration-300">Save</button>
+                    </div>
+                    <button onclick="toggleEditPostForm(${post.id})" class="bg-blue-400 text-white font-bold py-1 px-3 rounded hover:bg-blue-500 transition duration-300">Edit</button>
+                    <div class="reply-form clearfix">
+                        <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
+                        <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-right">Reply</button>
+                    </div>
+                    <button onclick="togglePreviousReplies(${post.id})" id="view-replies-button-${post.id}" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300 float-center">View Previous Replies</button>
+                    <div class="replies-container" id="replies-container-${post.id}">
+                        <!-- Replies will be loaded here by loadRepliesForPost function -->
                     </div>
                 </div>`;
         });
@@ -197,6 +198,9 @@
         console.error('Error fetching posts:', error);
     });
 }
+
+
+
 
 
 function submitReply(postId) {
@@ -252,6 +256,11 @@ function loadRepliesForPost(postId, showAll = false) {
                 repliesHtml += `
                 <div class="post">
                     <div class="post-content">${reply.content}</div>
+                    <div class="edit-reply-form hidden" id="edit-reply-form-${reply.id}">
+            <textarea class="edit-reply-input" id="edit-reply-input-${reply.id}">${reply.content}</textarea>
+            <button onclick="submitReplyEdit(${reply.id})" class="bg-green-400 text-white font-bold py-1 px-3 rounded hover:bg-green-500 transition duration-300">Save</button>
+        </div>
+        <button onclick="toggleEditReplyForm(${reply.id})" class="bg-blue-400 text-white font-bold py-1 px-3 rounded hover:bg-blue-500 transition duration-300">Edit</button>
                     <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
                 </div>
                 `;
@@ -267,6 +276,87 @@ function loadRepliesForPost(postId, showAll = false) {
             console.error('Error loading replies:', error);
         });
 }
+
+function toggleEditPostForm(postId) {
+    const editForm = document.getElementById(`edit-post-form-${postId}`);
+    editForm.classList.toggle('hidden');
+}
+
+function submitPostEdit(postId) {
+    const editInput = document.getElementById(`edit-post-input-${postId}`);
+    const content = editInput.value.trim();
+    if (!content) {
+        alert('Please enter some text to submit an edit.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+
+    fetch(`/forum/post/${postId}/edit/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const postContent = document.querySelector(`[data-post-id="${postId}"] p`);
+            postContent.textContent = content;
+            toggleEditPostForm(postId);
+        } else {
+            alert('Error editing post: ' + JSON.stringify(data.errors));
+        }
+    })
+    .catch(error => {
+        console.error('Error editing post:', error);
+        alert('There was an error editing your post. Please try again.');
+    });
+}
+
+function toggleEditReplyForm(replyId) {
+    const editForm = document.getElementById(`edit-reply-form-${replyId}`);
+    editForm.classList.toggle('hidden');
+}
+
+function submitReplyEdit(replyId) {
+    const editInput = document.getElementById(`edit-reply-input-${replyId}`);
+    const content = editInput.value.trim();
+    if (!content) {
+        alert('Please enter some text to submit an edit.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+
+    fetch(`/forum/reply/${replyId}/edit/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const replyContent = document.querySelector(`[data-reply-id="${replyId}"] .reply-content`);
+            replyContent.textContent = content;
+            toggleEditReplyForm(replyId);
+        } else {
+            alert('Error editing reply: ' + JSON.stringify(data.errors));
+        }
+    })
+    .catch(error => {
+        console.error('Error editing reply:', error);
+        alert('There was an error editing your reply. Please try again.');
+    });
+}
+
 
 
 

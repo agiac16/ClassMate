@@ -67,3 +67,35 @@ def create_reply(request, post_id):
     return JsonResponse({'success': False, 'errors': 'Invalid request'})
 
 
+from django.views.decorators.http import require_POST
+
+@require_POST
+def edit_post(request, post_id):
+    post = get_object_or_404(ForumPost, id=post_id)
+    if post.posted_by != request.user.student:
+        return JsonResponse({'success': False, 'errors': 'You do not have permission to edit this post.'})
+
+    content = request.POST.get('content')
+    if content:
+        post.content = content
+        post.save()
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'errors': 'Content cannot be empty'})
+
+@require_POST
+def edit_reply(request, reply_id):
+    reply = get_object_or_404(ForumThread, id=reply_id)
+    if reply.posted_by != request.user.student:
+        return JsonResponse({'success': False, 'errors': 'You do not have permission to edit this reply.'})
+
+    content = request.POST.get('content')
+    if content:
+        reply.content = content
+        reply.save()
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'errors': 'Content cannot be empty'})
+
+
+
