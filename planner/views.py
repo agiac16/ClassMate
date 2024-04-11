@@ -9,8 +9,9 @@ from django.db.models import F, Sum
 
 def generate_daily_planner(request, year, month):
     student = get_object_or_404(Student, account=request.user)
-    start_date = timezone.datetime(year, month, 1).date()
-    end_date = (start_date + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+    today = timezone.now().date()
+    start_date = timezone.datetime(year, month, today.day).date()
+    end_date = start_date + timedelta(days=30)
 
     # Get the student's enrolled courses
     courses = Course.objects.filter(enrolled_students=student)
@@ -30,20 +31,20 @@ def generate_daily_planner(request, year, month):
 
         # Create time slots for courses
         for course in courses:
-            if course.days and date.strftime('%a') in course.days:
+            if should_occur_on_day(course, date):
                 TimeSlot.objects.create(
                     planner=planner,
                     start_time=course.start_time,
                     end_time=course.end_time,
                     course=course
                 )
-            if course.days_2 and date.strftime('%a') in course.days_2:
-                TimeSlot.objects.create(
-                    planner=planner,
-                    start_time=course.start_time_2,
-                    end_time=course.end_time_2,
-                    course=course
-                )
+                if course.start_time_2 and course.end_time_2:
+                    TimeSlot.objects.create(
+                        planner=planner,
+                        start_time=course.start_time_2,
+                        end_time=course.end_time_2,
+                        course=course
+                    )
 
         # Create time slots for additional activities
         for activity in activities.filter(start_time__date=date):
@@ -54,70 +55,45 @@ def generate_daily_planner(request, year, month):
                 activity=activity
             )
 
-        # Calculate the total estimated completion time for all assignments due on the same day
-        total_estimated_time = assignments.filter(due_date=date).aggregate(total_time=Sum('estimated_completion_time'))['total_time']
+        # Create time slots for assignments
+        assignments_due = assignments.filter(due_date__gte=date).order_by('due_date', 'priority')
+        available_slots = list(TimeSlot.objects.filter(planner=planner, assignment__isnull=True).order_by('start_time'))
 
-        # Calculate the available time slots for the day
-        available_slots = []
-        current_time = timezone.datetime.combine(date, timezone.datetime.min.time())
-        end_of_day = timezone.datetime.combine(date, timezone.datetime.max.time())
-
-        max_slot_length = timedelta(hours=1)  # Define the maximum slot length
-        max_timeslots = 3  # Define the maximum number of time slots per assignment
-
-        while current_time < end_of_day:
-            # Check if the current time slot overlaps with any existing time slots
-            overlapping_slots = TimeSlot.objects.filter(
-                planner=planner,
-                start_time__lte=current_time + max_slot_length,
-                end_time__gt=current_time
-            )
-
-            if not overlapping_slots.exists():
-                available_slots.append(current_time)
-
-            current_time += max_slot_length
-
-        # Sort assignments by priority and due date
-        assignments = assignments.filter(due_date=date).order_by('-priority', 'due_date')
-
-        for assignment in assignments:
+        for assignment in assignments_due:
             remaining_time = assignment.estimated_completion_time
-            timeslots_used = 0
+            allocated_slots = []
 
-            while remaining_time > timedelta() and (max_timeslots == 0 or timeslots_used < max_timeslots):
-                if not available_slots:
-                    break
-
-                slot_length = min(remaining_time, max_slot_length)
-                start_time = available_slots.pop()
-                end_time = start_time + slot_length
-
+            while remaining_time > timedelta() and available_slots:
+                slot = available_slots.pop(0)
+                slot_duration = min(slot.end_time - slot.start_time, remaining_time)
                 TimeSlot.objects.create(
                     planner=planner,
-                    start_time=start_time,
-                    end_time=end_time,
+                    start_time=slot.start_time,
+                    end_time=slot.start_time + slot_duration,
                     assignment=assignment
                 )
+                remaining_time -= slot_duration
+                allocated_slots.append(slot)
 
-                remaining_time -= slot_length
-                timeslots_used += 1
-
-            # Update the assignment's estimated completion time
-            assignment.estimated_completion_time = remaining_time
-            assignment.save()
-
-        # Distribute the remaining available slots evenly for flexible time
-        if available_slots:
-            flexible_slot_duration = (end_of_day - current_time) / len(available_slots)
-
-            for slot_start in available_slots:
-                TimeSlot.objects.create(
-                    planner=planner,
-                    start_time=slot_start,
-                    end_time=slot_start + flexible_slot_duration
-                )
+            # Spread out the allocated slots evenly
+            if len(allocated_slots) > 1:
+                total_duration = sum((slot.end_time - slot.start_time) for slot in allocated_slots)
+                avg_duration = total_duration / len(allocated_slots)
+                start_time = allocated_slots[0].start_time
+                for slot in allocated_slots:
+                    slot.start_time = start_time
+                    slot.end_time = start_time + avg_duration
+                    slot.save()
+                    start_time += avg_duration
 
     # Render the monthly planner template with the generated daily planners
     daily_planners = DailyPlanner.objects.filter(student=student, date__gte=start_date, date__lte=end_date).order_by('date')
     return render(request, 'planner/monthly_planner.html', {'daily_planners': daily_planners, 'year': year, 'month': month})
+
+def should_occur_on_day(course, date):
+    day_code = date.strftime('%a')[0].upper()
+    if course.days and day_code in course.days:
+        return True
+    if course.days_2 and day_code in course.days_2:
+        return True
+    return False

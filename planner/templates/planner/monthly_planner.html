@@ -1,6 +1,4 @@
 <!-- planner/monthly_planner.html -->
-<h1>Monthly Planner for {{ month }}/{{ year }}</h1>
-
 {% for planner in daily_planners %}
     <h2>{{ planner.date }}</h2>
     <table>
@@ -13,7 +11,7 @@
         <tbody>
             {% for slot in planner.timeslot_set.all %}
             <tr>
-                <td>{{ slot.start_time }} - {{ slot.end_time }}</td>
+                <td>{{ slot.start_time|date:"g:i a" }} - {{ slot.end_time|date:"g:i a" }}</td>
                 <td>
                     {% if slot.course %}
                         Course: {{ slot.course.course_name }}
@@ -21,10 +19,12 @@
                         Assignment: {{ slot.assignment.title }}
                     {% elif slot.activity %}
                         Activity: {{ slot.activity.title }}
-                    {% else %}
-                        Free time
                     {% endif %}
                 </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No activities scheduled</td>
             </tr>
             {% endfor %}
         </tbody>

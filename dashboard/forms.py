@@ -9,13 +9,14 @@ from django.shortcuts import get_object_or_404
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
-        fields = ['course', 'title', 'description', 'due_date', 'priority']
+        fields = ['course', 'title', 'description', 'due_date', 'priority', 'estimated_completion_time']
         widgets = {
             'course': forms.Select(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
             'title': forms.TextInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl'}),
             'description': Textarea(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'rows': 3}),
             'due_date': SelectDateWidget(attrs={'class': 'w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl date-picker'}),
             'priority': forms.NumberInput(attrs={'class': 'w-full mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'type': 'range', 'min': 1, 'max': 5, 'step': 1}),
+            'estimated_completion_time': forms.TextInput(attrs={'class': 'mt-2 mb-2 py-4 px-6 bg-white rounded-xl', 'placeholder': 'HH:MM:SS'}),
         }
 
     def __init__(self, *args, **kwargs):

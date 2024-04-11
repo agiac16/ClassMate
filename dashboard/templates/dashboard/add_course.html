@@ -75,7 +75,7 @@
                 </a>
 
                 <!-- Planner -->
-                <a href="{% url 'planner:monthly' %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
+                <a href="{% url 'planner:monthly_planner' year=today.year month=today.month %}" class="flex items-center space-x-2 px-4 py-3 rounded-md hover:bg-zinc-700">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Planner</span>
                 </a>
@@ -102,23 +102,31 @@
     <div class="lg:ml-52 flex flex-col items-center w-full px-4 md:px-10 py-10">
         <div class="dashboard-container w-full max-w-4xl">
             <h2 class="text-3xl font-bold mb-6 text-center">Add Course</h2>
-    
-            <!-- Search Field -->
-            <div id="search-field" class="mb-4 flex flex-row">
-                <input type="text" id="course-search" placeholder="Search by Course Name, CRN or Course Code" class="form-control mt-2 flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
-                
-                <!-- Department Dropdown -->
-                <select id="department-filter" class="form-control w-1/3 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2">
-                    <option value="">All Departments</option>
-                    {% for department in departments %}
-                    <option value="{{ department }}">{{ department }}</option>
-                    {% endfor %}
-                </select>
 
-                <!-- Credit Hours Field -->
-                <input type="number" id="credit-hours-filter" placeholder="Credits" class="form-control w-32 h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-2 ml-2" autocomplete="off">
+            <!-- Search Fields -->
+            <div id="search-fields" class="mb-4 flex flex-col space-y-4">
+                <!-- Course Name Field -->
+                <div class="flex items-center">
+                    <input type="checkbox" id="course-name-toggle" class="mr-2">
+                    <label for="course-name-toggle" class="mr-2">Course Name:</label>
+                    <input type="text" id="course-name-search" placeholder="Search by Course Name" class="form-control flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off" disabled>
+                </div>
+
+                <!-- CRN Field -->
+                <div class="flex items-center">
+                    <input type="checkbox" id="crn-toggle" class="mr-2">
+                    <label for="crn-toggle" class="mr-2">CRN:</label>
+                    <input type="text" id="crn-search" placeholder="Search by CRN" class="form-control flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off" disabled>
+                </div>
+
+                <!-- Professor Field -->
+                <div class="flex items-center">
+                    <input type="checkbox" id="professor-toggle" class="mr-2">
+                    <label for="professor-toggle" class="mr-2">Professor:</label>
+                    <input type="text" id="professor-search" placeholder="Search by Professor" class="form-control flex-grow h-10 px-4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off" disabled>
+                </div>
             </div>
-    
+
             <!-- Search Results -->
             <div id="search-results" class="mb-4 w-full"></div>
         </div>
@@ -126,21 +134,58 @@
 
     <script>
         
-        document.getElementById('course-search').addEventListener('input', updateSearchResults);
-        document.getElementById('credit-hours-filter').addEventListener('input', updateSearchResults);
-        document.getElementById('department-filter').addEventListener('change', updateSearchResults);
+// Event listeners for search input checkboxes
+document.getElementById('course-name-toggle').addEventListener('change', toggleSearchField);
+document.getElementById('crn-toggle').addEventListener('change', toggleSearchField);
+document.getElementById('professor-toggle').addEventListener('change', toggleSearchField);
 
-    // Function to perform the AJAX call and update the search results
-    function updateSearchResults() {
-        const searchQuery = document.getElementById('course-search').value;
-        const departmentFilter = document.getElementById('department-filter').value; // Get the value of the department filter
-        const creditHoursFilter = document.getElementById('credit-hours-filter').value; // Get the value of the credit hours filter
-        const resultsContainer = document.getElementById('search-results');
+function toggleSearchField(event) {
+    const searchFields = document.querySelectorAll('#search-fields input[type="text"]');
+    const checkboxes = document.querySelectorAll('#search-fields input[type="checkbox"]');
 
+    checkboxes.forEach(checkbox => {
+        // Uncheck all checkboxes except the current one
+        if (checkbox !== event.target) {
+            checkbox.checked = false;
+        }
+    });
 
-        // Construct the query string
-        const queryString = `query=${encodeURIComponent(searchQuery)}&department=${encodeURIComponent(departmentFilter)}&credit_hours=${encodeURIComponent(creditHoursFilter)}`;
-    
+    searchFields.forEach(field => {
+        // Enable/disable search fields based on their corresponding checkbox state
+        const checkbox = field.previousElementSibling.previousElementSibling;
+        field.disabled = !checkbox.checked;
+        if (!checkbox.checked) {
+            field.value = '';
+        }
+    });
+
+    // Focus on the enabled search field
+    const searchField = event.target.nextElementSibling.nextElementSibling;
+    if (event.target.checked) {
+        searchField.focus();
+    }
+
+    updateSearchResults();
+}
+
+// Event listeners for search inputs
+document.getElementById('course-name-search').addEventListener('input', updateSearchResults);
+document.getElementById('crn-search').addEventListener('input', updateSearchResults);
+document.getElementById('professor-search').addEventListener('input', updateSearchResults);
+
+// Function to perform the AJAX call and update the search results
+function updateSearchResults() {
+    const courseNameQuery = document.getElementById('course-name-search').value;
+    const crnQuery = document.getElementById('crn-search').value;
+    const professorQuery = document.getElementById('professor-search').value;
+    const resultsContainer = document.getElementById('search-results');
+
+    // Construct the query string
+    const queryString = `course_name=${encodeURIComponent(courseNameQuery)}&crn=${encodeURIComponent(crnQuery)}&professor=${encodeURIComponent(professorQuery)}`;
+
+    // Debounce the AJAX call to avoid excessive requests
+    clearTimeout(window.searchDebounce);
+    window.searchDebounce = setTimeout(() => {
         fetch("{% url 'dashboard:search_courses' %}?" + queryString)
             .then(response => response.json())
             .then(data => {
@@ -154,7 +199,7 @@
                             <div>CRN: ${course.crn}</div>
                             <div>Course Code: ${course.course_code}</div>
                             <div>Department: ${course.department}</div>
-                            <div>Credit Hours: ${course.credit_hours}</div>
+                            <div>Professor: ${course.professor}</div>
                             <button class="mt-2 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer" onclick="addCourse(${course.id})">Add Course</button>
                         `;
                         resultsContainer.appendChild(courseElement);
@@ -167,7 +212,8 @@
                 console.error('Error fetching courses:', error);
                 resultsContainer.innerHTML = '<div class="text-red-500">An error occurred while searching.</div>';
             });
-    }
+    }, 300); // Adjust the debounce delay as needed (in milliseconds)
+}
     
     function addCourse(courseId) {
     const csrftoken = document.querySelector('meta[name="csrf-token"]').content;

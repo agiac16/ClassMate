@@ -69,13 +69,15 @@ def course_dashboard(request, course_id):
     context = {
         'assignments_by_day': assignments_by_day,
         'user_courses': user_courses,
+        'today': today,
     }
     return render(request, 'dashboard/dashboard.html', context)
 
 @login_required
 def add_assignment(request):
     student = get_object_or_404(Student, account=request.user)
-    user_courses = Course.objects.filter(enrolled_students=student) #so the courses can be viewed in nav
+    user_courses = Course.objects.filter(enrolled_students=student)  # so the courses can be viewed in nav
+    today = timezone.now().date()  # Get the current date
 
     if request.method == 'POST':
         form = AssignmentForm(request.POST, user=request.user)
@@ -83,12 +85,19 @@ def add_assignment(request):
             assignment = form.save(commit=False)
             assignment.student = student
             assignment.owner = student  # Assign the current student as the owner
+            assignment.estimated_completion_time = form.cleaned_data['estimated_completion_time']  # Add this line
             assignment.save()
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(user=request.user)
-    
-    return render(request, 'dashboard/add_assignment.html', {'form': form, 'user_courses': user_courses})
+
+    context = {
+        'form': form,
+        'user_courses': user_courses,
+        'today': today,  # Add the current date to the context
+    }
+
+    return render(request, 'dashboard/add_assignment.html', context)
 
 @login_required
 def edit_assignment(request, assignment_id):
@@ -127,24 +136,25 @@ def search_courses(request):
     try:
         print("Request method:", request.method)
         print("Request GET parameters:", request.GET)
-        
-        search_query = request.GET.get('query', '')
+        course_name_query = request.GET.get('course_name', '')
+        crn_query = request.GET.get('crn', '')
+        professor_query = request.GET.get('professor', '')
         department_filter = request.GET.get('department_filter', '')
         credit_hours_filter = request.GET.get('credit_hours', '')
 
+        print("Course Name query:", course_name_query)
+        print("CRN query:", crn_query)
+        print("Professor query:", professor_query)
 
-        print("Search query:", search_query)
-        
         courses = Course.objects.filter(
-            Q(course_name__icontains=search_query) |
-            Q(crn__icontains=search_query) |
-            Q(course_code__icontains=search_query),
-            department__icontains=department_filter,  # Filter by department
-            credit_hours__icontains=credit_hours_filter,  # Filter by credit hours
-        ).values('id', 'course_name', 'crn', 'department', 'credit_hours')[:10]
-        
+            Q(course_name__icontains=course_name_query) & 
+            Q(crn__icontains=crn_query) &
+            Q(professor__icontains=professor_query),
+            department__icontains=department_filter,
+            credit_hours__icontains=credit_hours_filter,
+        ).values('id', 'course_name', 'crn', 'department', 'credit_hours', 'professor')[:10]
+
         print("Courses queryset:", courses)
-        
         return JsonResponse(list(courses), safe=False)
     except Exception as e:
         print("Error occurred:")
@@ -153,13 +163,15 @@ def search_courses(request):
 
 @login_required
 def add_course_page(request):
+    today = timezone.now().date()
     departments = Course.objects.values_list('department', flat=True).distinct()
     student = get_object_or_404(Student, account=request.user)
     user_courses = Course.objects.filter(enrolled_students=student)
     
     context = { 
         'departments': departments,
-        'user_courses': user_courses
+        'user_courses': user_courses,
+        'today': today,
     }
 
     return render(request, 'dashboard/add_course.html', context)
