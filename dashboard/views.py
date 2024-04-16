@@ -203,3 +203,9 @@ def delete_assignment(request, assignment_id):
 def notifications_view(request):
     notifications = Notification.objects.filter(recipient=request.user)
     return render(request, 'dashboard.html', {'notifications': notifications})
+
+@login_required
+def view_students(request, crn):
+    course = get_object_or_404(Course, crn=crn)
+    students = course.enrolled_students.all()
+    return render(request, 'dashboard/view_students.html', {'students': students, 'course': course})

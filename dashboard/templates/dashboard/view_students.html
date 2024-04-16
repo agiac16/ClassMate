@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <h2>Course Information</h2>
+        <div>
+            <p><strong>Name:</strong> {{ course.course_name }}</p>
+            <p><strong>Professor:</strong> {{ course.professor }}</p>
+            <p><strong>Department:</strong> {{ course.department }}</p>
+            <p><strong>Credit Hours:</strong> {{ course.credit_hours }}</p>
+            <p><strong>CRN:</strong> {{ course.crn }}</p>
+            <form action="{% url 'dashboard:add_course' course.id %}" method="post">
+                {% csrf_token %}
+                <button class="bg-yellow-200" type="submit">Add Course</button>
+            </form>
+        </div>
+
+        <h2>Students</h2>
+        <div>
+            {% for student in students %}
+                <div>
+                    <p>{{ student.full_name }}</p>
+                </div>
+            {% empty %}
+                <p>No students are registered for this course.</p>
+            {% endfor %}
+        </div>
+    </body>
+    </html>
