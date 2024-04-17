@@ -52,3 +52,4 @@ def logout_view(request):
         logout(request) # Logout the user
         return redirect('login') # Redirect to login
     return redirect('homepage')
+
