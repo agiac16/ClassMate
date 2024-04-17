@@ -142,6 +142,20 @@ def add_course(request, course_id):
 
     return JsonResponse({'success': False}, status=400)
 
+@login_required
+def add_course_detail_page(request, course_id):
+    student = get_object_or_404(Student, account=request.user)
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == 'POST':
+        student.enrolled_courses.add(course)
+
+        return redirect('dashboard:dashboard')
+    
+    return redirect(request.path)
+
+
+
 def search_courses(request):
     try:
         print("Request method:", request.method)

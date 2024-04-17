@@ -31,7 +31,7 @@
                   <p class="border-b border-gray-200 py-2"><strong>Credit Hours:</strong> {{ course.credit_hours }}</p>
                   <p class="py-2"><strong>CRN:</strong> {{ course.crn }}</p>
                 </div>
-                <form action="{% url 'dashboard:add_course' course.id %}" method="post" class="px-6 py-4">
+                <form action="{% url 'dashboard:add_course_detail_page' course.id %}" method="post" class="px-6 py-4">
                   {% csrf_token %}
                   <button type="submit" class="bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer">Add Course</button>
                 </form>
