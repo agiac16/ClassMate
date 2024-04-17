@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'home',
     'planner',
     'dashboard',
+    'notification_messages',
     'widget_tweaks',
     'djangobower',
     'schedule',
@@ -143,6 +145,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     "home/templates/home/static",
+    "notification_messages/templates/notification_messages/static",
 ]
 
 STATICFILES_FINDERS = (
@@ -156,3 +159,16 @@ STATICFILES_FINDERS = (
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Sets the minimum message level that will be recorded by the messages framework
+# https://docs.djangoproject.com/en/4.2/ref/settings/#message-level
+MESSAGE_LEVEL = messages.DEBUG
+
+# This sets the mapping of message level to message tag, which is typically rendered as a CSS class in HTML.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#message-tags
+MESSAGE_TAGS = {
+    messages.DEBUG: "bg-gray-500 text-sm text-white",
+    messages.INFO: "bg-purple-500 text-sm text-white",
+    messages.SUCCESS: "bg-green-500 text-sm text-white",
+    messages.WARNING: "bg-yellow-500 text-sm text-white",
+    messages.ERROR: "bg-red-500 text-sm text-white",
+}

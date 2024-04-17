@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from django.shortcuts import redirect
+from django.contrib import messages
 from users.models import Student
 from .forms import StudentSignUpForm, AuthenticationForm
 
@@ -19,6 +19,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, "Login Successful!")
             return redirect('dashboard:dashboard')  # Redirect to the dashboard
     else:
         if request.user.is_authenticated:
@@ -40,6 +41,7 @@ def signup_view(request):
                 expected_graduation_year=form.cleaned_data.get('expected_graduation_year')
             )
             login(request, user)
+            messages.success(request, "Signup Successful!")
             return redirect('dashboard:dashboard')
     else:
         if request.user.is_authenticated:
@@ -50,5 +52,6 @@ def signup_view(request):
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request) # Logout the user
+        messages.success(request, "Logout Successful!")
         return redirect('login') # Redirect to login
     return redirect('homepage')

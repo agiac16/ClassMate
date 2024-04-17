@@ -1,0 +1,26 @@
+{% if messages %}
+  
+<!-- Toast Message used for Notifications-->
+<div class="fixed top-5 right-5 p-3">
+{% for message in messages %}
+<div x-data="{dismissed: false}" x-show="!dismissed"
+  x-init="setTimeout(() => dismissed=true, 5000)">
+  <div class="max-w-xs rounded-xl shadow-lg {{ message.tags }}" role="alert">
+    <div class="flex p-4">
+      {{ message.message }}
+      <div class="ms-auto">
+        <button @click="dismissed=true" type="button" class="inline-flex flex-shrink-0 justify-center items-center size-5 rounded-lg text-white hover:text-white opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100"> 
+          <span class="sr-only">Close</span>
+          <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% endif %}
