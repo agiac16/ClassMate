@@ -145,7 +145,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     "home/templates/home/static",
-    "notification_messages/templates/notification_messages/static",
+    #"notification_messages/templates/notification_messages/static",
 ]
 
 STATICFILES_FINDERS = (

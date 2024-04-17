@@ -1,14 +1,20 @@
 {% if messages %}
   
-<!-- Toast Message used for Notifications-->
+<!-- Toast Message used for Notifications from Django's Message Framework -->
+
+<!-- Position of the toast message -->
 <div class="fixed top-5 right-5 p-3">
 {% for message in messages %}
+<!-- Alpine JS functionality to close and timeout message after 5 seconds -->
 <div x-data="{dismissed: false}" x-show="!dismissed"
   x-init="setTimeout(() => dismissed=true, 5000)">
+  <!-- Message Tags, used for styling each message type as seen on ClassMate settings.py -->
   <div class="max-w-xs rounded-xl shadow-lg {{ message.tags }}" role="alert">
     <div class="flex p-4">
-      {{ message.message }}
+      <!-- Message String Content -->
+      {{ message }}
       <div class="ms-auto">
+        <!-- Close Button using Alpine JS-->
         <button @click="dismissed=true" type="button" class="inline-flex flex-shrink-0 justify-center items-center size-5 rounded-lg text-white hover:text-white opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100"> 
           <span class="sr-only">Close</span>
           <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
