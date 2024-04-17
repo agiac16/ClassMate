@@ -137,6 +137,9 @@ def add_course(request, course_id):
 
     if request.method == 'POST':
         # Add the course to the student's enrolled courses
+        if student.enrolled_courses.filter(id=course_id).exists():
+            return JsonResponse({'success': False, 'message': 'Student is already enrolled in this course'}, status=400)
+
         student.enrolled_courses.add(course)
         return JsonResponse({'success': True})
 
