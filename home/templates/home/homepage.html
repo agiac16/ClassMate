@@ -28,22 +28,22 @@
     <!-- General To-Do List Section -->
     <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40" id="info">
         <div class="flex-1 p-4">
-            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">General To-Do List</p>
-            <p class="text-gray-600">Get tasks out of your head and visualize them. With course-specific and a general task list, you can view all your tasks with ease.</p>
+            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">View Your Assignments</p>
+            <p class="text-gray-600">Get an overhead look of all your assignments. You can sort them by class, add details to them, and edit them as needed!</p>
         </div>
         <div class="flex-1 p-4 flex justify-center">
-            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+            <img src="{% static 'assignments.png' %}" alt="" class="max-w-xs transform transition-transform hover:scale-110 drop-shadow-lg duration-500 md:max-w-sm lg:max-w-md">
         </div>
     </div>
 
     <!-- Daily Planner Section -->
     <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40 mt-10 md:mt-20">
         <div class="flex-1 p-4">
-            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Plan Out Your Work and Life</p>
-            <p class="text-gray-600">A daily planner! Add all of your assignments and anything else in your life to stay on top.</p>
+            <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Work With Others</p>
+            <p class="text-gray-600">ClassMate offers the ability to work with your group members! Simply create an assignment and add your group members username. This will appear on both yours and their accounts!</p>
         </div>
         <div class="flex-1 p-4 flex justify-center">
-            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+            <img src="{% static 'group.png' %}" alt="" class="max-w-xs transform transition-transform hover:scale-110 drop-shadow-lg duration-500 md:max-w-sm lg:max-w-md">
         </div>
     </div>
 
@@ -54,7 +54,7 @@
             <p class="text-gray-600">Join classes and connect with everyone else who is taking it. Use the forums to chat with others and get help!</p>
         </div>
         <div class="flex-1 p-4 flex justify-center">
-            <img src="{% static 'testImage.png' %}" alt="" class="max-w-xs md:max-w-sm lg:max-w-md">
+            <img src="{% static 'forums.png' %}" alt="" class="max-w-xs transform transition-transform hover:scale-110 drop-shadow-lg duration-500 md:max-w-sm lg:max-w-md">
         </div>
     </div>
         
@@ -70,8 +70,8 @@
         <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="/" class="hover:underline">ClassMate</a>. All Rights Reserved.
         </span>
         <div class="flex flex-col sm:flex-row max-w-6xl mx-auto px-4 items-center justify-center text-center">
-            <a href="#footer" class="text-gray-400 mb-4 sm:mb-0 sm:mr-24 scroll-smooth">FAQs</a>
-            <a href="#footer" class="text-gray-400 scroll-smooth">Contact Us</a>
+            <a href="{% url 'faq' %}" class="text-gray-400 mb-4 sm:mb-0 sm:mr-24">FAQs</a>
+            <a href="{% url 'contact' %}" class="text-gray-400">Contact Us</a>
         </div>
         <div class="flex mt-4 sm:justify-center sm:mt-0">
             <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-purple-400">
@@ -121,19 +121,6 @@
         });
     });
 
-    document.querySelectorAll('footer').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // Show the modal
-            document.getElementById('modal').classList.remove('hidden');
-        });
-    });
-
-    document.getElementById('close-modal').addEventListener('click', function() {
-        // Hide the modal
-        document.getElementById('modal').classList.add('hidden');
-    });
 </script>
 
 {% endblock content %}

@@ -86,6 +86,7 @@
                             <div>Department: ${course.department}</div>
                             <div>CRN: ${course.crn}</div>
                             <button class="mt-2 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer" onclick="addCourse(${course.id})">Add Course</button>
+                            <button class="mt-2 bg-purple-400 text-white font-bold py-2 px-4 rounded hover:bg-purple-500 transition duration-300 cursor-pointer" onclick="viewStudents(${course.crn})">View Details</button>
                         `;
                         resultsContainer.appendChild(courseElement);
                     });
@@ -100,40 +101,49 @@
     }
     
     function addCourse(courseId) {
-    const csrftoken = document.querySelector('meta[name="csrf-token"]').content;
+        const csrftoken = document.querySelector('meta[name="csrf-token"]').content;
 
-    fetch(`/dashboard/add-course/${courseId}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            // Include any necessary request body data here
-        }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Course added successfully!');
-            // Redirect to the dashboard or refresh the page
-            // Note: You cannot use Django template tags in external JS. 
-            // If this JS is in an external file, you'll need to set the URL differently.
-            window.location.href = "/dashboard/"; // Adjust if needed for your URL structure
-        } else {
-            alert('Failed to add course. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error adding course:', error);
-        alert('An error occurred while adding the course.');
-    });
-}
+        fetch(`/dashboard/add-course/${courseId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                // Include any necessary request body data here
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // If the response status is not ok, throw the response
+                throw response;
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Course added successfully!');
+                // Redirect to the dashboard or refresh the page
+                window.location.href = "/dashboard/"; // Adjust if needed for your URL structure
+            } else {
+                alert('Failed to add course. Please try again.');
+            }
+        })
+        .catch(response => {
+            // If the response is a Response object, get the JSON data from it
+            if (response instanceof Response) {
+                response.json().then(data => {
+                    console.error('Error adding course:', data.message);
+                    alert(data.message);
+                });
+            } else {
+                // If the response is not a Response object, it's an unexpected error
+                console.error('Unexpected error adding course:', response);
+                alert('An unexpected error occurred while adding the course.');
+            }
+        });
+    }
     
         // Event listener for search input
         document.getElementById('course-search').addEventListener('input', updateSearchResults);   
@@ -148,6 +158,10 @@
                 sidebar.classList.remove('translate-y-0');
             }
         });
+
+        function viewStudents(courseId) {
+            window.location.href = `/dashboard/view-students/${courseId}/`;
+        }
     </script>
 </body>
 </html>

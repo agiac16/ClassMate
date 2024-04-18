@@ -49,7 +49,7 @@ def deleteCourse(request, pk):
     student = get_object_or_404(Student, account=request.user)
 
     # Delete all assignments associated with the course for the student
-    Assignment.objects.filter(course=course, student=student).delete()
+    Assignment.objects.filter(course=course, students=student).delete()
 
     course.enrolled_students.remove(student)
 

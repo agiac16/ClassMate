@@ -55,3 +55,4 @@ def logout_view(request):
         messages.success(request, "Logout Successful!")
         return redirect('login') # Redirect to login
     return redirect('homepage')
+

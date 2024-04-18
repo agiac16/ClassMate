@@ -137,10 +137,27 @@ def add_course(request, course_id):
 
     if request.method == 'POST':
         # Add the course to the student's enrolled courses
+        if student.enrolled_courses.filter(id=course_id).exists():
+            return JsonResponse({'success': False, 'message': 'Student is already enrolled in this course'}, status=400)
+
         student.enrolled_courses.add(course)
         return JsonResponse({'success': True})
 
     return JsonResponse({'success': False}, status=400)
+
+@login_required
+def add_course_detail_page(request, course_id):
+    student = get_object_or_404(Student, account=request.user)
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == 'POST':
+        student.enrolled_courses.add(course)
+
+        return redirect('dashboard:dashboard')
+    
+    return redirect(request.path)
+
+
 
 def search_courses(request):
     try:
@@ -203,3 +220,9 @@ def delete_assignment(request, assignment_id):
 def notifications_view(request):
     notifications = Notification.objects.filter(recipient=request.user)
     return render(request, 'dashboard.html', {'notifications': notifications})
+
+@login_required
+def view_students(request, crn):
+    course = get_object_or_404(Course, crn=crn)
+    students = course.enrolled_students.all()
+    return render(request, 'dashboard/view_students.html', {'students': students, 'course': course})
