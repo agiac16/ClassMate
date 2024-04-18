@@ -10,7 +10,25 @@
     <div class="flex flex-col md:flex-row mx-4 md:mx-10 lg:mx-20 xl:mx-40" id="info">
         <div class="flex-1 p-4">
             <p class="font-bold text-3xl md:text-4xl text-gray-900 mb-2">Frequently Asked Questions</p>
-            <p class="text-gray-600">
+            <p class="text-gray-600">The friendly team at classmate would be happy to answer any 
+                of your specefic quesitons over on our <a href="{% url 'contact' %}" style="text-decoration: underline;">contact page</a>, 
+                but you can find some of the most frequently asked questions below!</p>
+            <br>
+            <p class="font-bold text-3xl md:text-3xl text-gray-800 mb-2">Who is Classmate for?</p>
+            <p class="text-gray-600">Classmate is for students.  Specefically, Classmate is for Rowan students who want to
+                stay on top of their assignments, collaborate with their classmates, and make the most of their education.
+            </p>
+            <br>
+            <p class="font-bold text-3xl md:text-3xl text-gray-800 mb-2">Does it cost anything?</p>
+            <p class="text-gray-600">Classmate is a free to use product, forever.</p>
+            <br>
+            <p class="font-bold text-3xl md:text-3xl text-gray-800 mb-2">How do I connect with my Classmates? </p>
+            <p class="text-gray-600">Connecting on Classmate is easy,
+            </p>
+            <br>
+            <p class="font-bold text-3xl md:text-3xl text-gray-800 mb-2">My friends at Rowan love Classmate, <br>
+                when will Classmate come to my school? </p>
+            <p class="text-gray-600">Classmate is currently focused on providing the best experience for Rowan students.
             </p>
         </div>
         <div class="flex-1 p-4 flex justify-center">
@@ -81,6 +99,25 @@
                 behavior: 'smooth'
             });
         });
+    });
+
+    // Get the question and answer elements
+    var question = document.getElementById("faq-question");
+    var answer = document.getElementById("faq-answer");
+
+    // Toggle the visibility of the answer when the question is clicked
+    question.addEventListener("click", function() {
+        answer.classList.toggle("hidden");
+    });
+
+    // Show the answer when the question is hovered over
+    question.addEventListener("mouseover", function() {
+        answer.classList.remove("hidden");
+    });
+
+    // Hide the answer when the mouse leaves the question area
+    question.addEventListener("mouseout", function() {
+        answer.classList.add("hidden");
     });
 
 </script>
