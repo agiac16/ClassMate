@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import datetime, time, timedelta
 from django.db.models import Sum
 from datetime import date
+from django.http import JsonResponse
 
 class PlannerAlgorithm:
     def __init__(self, student, start_date, end_date):
@@ -47,7 +48,7 @@ class PlannerAlgorithm:
             prev_assignment = None
 
             for date, timeslots in sorted(self.dates_with_slots.items(), key=lambda x: x[0]):
-                if date > assignment.due_date or remaining_time <= timedelta():
+                if date.date() > assignment.due_date or remaining_time <= timedelta():                    
                     break
 
                 free_slots = self.calculate_free_time_slots(date, timeslots)
@@ -124,10 +125,43 @@ class PlannerAlgorithm:
 
 def generate_monthly_planner(request, year, month):
     student = get_object_or_404(Student, account=request.user)
-    start_date = timezone.datetime(year, month, 1).date()
-    end_date = (start_date + timedelta(days=44)).replace(day=1) - timedelta(days=1)
+    current_datetime = timezone.now()
+    start_date = current_datetime.replace(minute=current_datetime.minute // 15 * 15, second=0, microsecond=0)
+    end_date = (start_date + timedelta(days=30)).replace(hour=23, minute=59, second=59, microsecond=999999)
 
     planner_algorithm = PlannerAlgorithm(student, start_date, end_date)
     planner = planner_algorithm.generate_planner()
 
     return render(request, 'planner/monthly_planner.html', {'planner': planner, 'dates_with_slots': planner_algorithm.dates_with_slots})
+
+def complete_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    assignment.estimated_completion_time = timedelta()
+    assignment.save()
+
+    student = assignment.student
+    start_date = assignment.planner.start_date
+    end_date = assignment.planner.end_date
+
+    planner_algorithm = PlannerAlgorithm(student, start_date, end_date)
+    planner_algorithm.allocate_assignment_slots()
+
+    return JsonResponse({'success': True})
+
+def cancel_timeslot(request, timeslot_id):
+    timeslot = get_object_or_404(TimeSlot, id=timeslot_id)
+    assignment = timeslot.assignment
+    timeslot.delete()
+
+    if assignment:
+        assignment.estimated_completion_time += timeslot.end_time - timeslot.start_time
+        assignment.save()
+
+        student = assignment.student
+        start_date = assignment.planner.start_date
+        end_date = assignment.planner.end_date
+
+        planner_algorithm = PlannerAlgorithm(student, start_date, end_date)
+        planner_algorithm.allocate_assignment_slots()
+
+    return JsonResponse({'success': True})

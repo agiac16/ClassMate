@@ -1,37 +1,72 @@
 {% load planner_tags %}
-
 <!-- planner/monthly_planner.html -->
 <h2>{{ planner.start_date }} to {{ planner.end_date }}</h2>
-
+<button id="add-activity-btn">Add Activity</button>
 {% for date in planner.get_date_range %}
-    <h3>{{ date }}</h3>
-    {% get_timeslots planner date as day_slots %}
-    <table>
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Activity</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for slot in day_slots %}
-            <tr>
-                <td>{{ slot.start_time|date:"g:i a" }} - {{ slot.end_time|date:"g:i a" }}</td>
-                <td>
-                    {% if slot.course %}
-                        Course: {{ slot.course.course_name }}
-                    {% elif slot.assignment %}
-                        Assignment: {{ slot.assignment.title }}
-                    {% elif slot.activity %}
-                        Activity: {{ slot.activity.title }}
-                    {% endif %}
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2">No activities scheduled for this date</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h3>{{ date }}</h3>
+{% get_timeslots planner date as day_slots %}
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Activity</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for slot in day_slots %}
+{% if slot.course or slot.assignment or slot.activity %}
+<tr>
+<td>{{ slot.start_time|date:"g:i a" }} - {{ slot.end_time|date:"g:i a" }}</td>
+<td>
+{% if slot.course %}
+Course: {{ slot.course.course_name }}
+{% elif slot.assignment %}
+Assignment: {{ slot.assignment.title }}
+{% elif slot.activity %}
+Activity: {{ slot.activity.title }}
+{% endif %}
+</td>
+<td>
+{% if slot.assignment %}
+<button class="complete-assignment" data-assignment-id="{{ slot.assignment.id }}">✓</button>
+{% endif %}
+<button class="cancel-timeslot" data-timeslot-id="{{ slot.id }}">✗</button>
+</td>
+</tr>
+{% endif %}
+{% empty %}
+<tr>
+<td colspan="3">No activities scheduled for this date</td>
+</tr>
 {% endfor %}
+</tbody>
+</table>
+{% endfor %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('.complete-assignment').click(function() {
+    var assignmentId = $(this).data('assignment-id');
+    $.ajax({
+      url: '/planner/complete-assignment/' + assignmentId + '/',
+      method: 'POST',
+      success: function(response) {
+        location.reload();
+      }
+    });
+  });
+
+  $('.cancel-timeslot').click(function() {
+    var timeslotId = $(this).data('timeslot-id');
+    $.ajax({
+      url: '/planner/cancel-timeslot/' + timeslotId + '/',
+      method: 'POST',
+      success: function(response) {
+        location.reload();
+      }
+    });
+  });
+});
+</script>
