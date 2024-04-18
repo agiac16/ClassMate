@@ -1,6 +1,11 @@
+{% load planner_tags %}
+
 <!-- planner/monthly_planner.html -->
-{% for planner in daily_planners %}
-    <h2>{{ planner.date }}</h2>
+<h2>{{ planner.start_date }} to {{ planner.end_date }}</h2>
+
+{% for date in planner.get_date_range %}
+    <h3>{{ date }}</h3>
+    {% get_timeslots planner date as day_slots %}
     <table>
         <thead>
             <tr>
@@ -9,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for slot in planner.timeslot_set.all %}
+            {% for slot in day_slots %}
             <tr>
                 <td>{{ slot.start_time|date:"g:i a" }} - {{ slot.end_time|date:"g:i a" }}</td>
                 <td>
@@ -24,7 +29,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="2">No activities scheduled</td>
+                <td colspan="2">No activities scheduled for this date</td>
             </tr>
             {% endfor %}
         </tbody>
