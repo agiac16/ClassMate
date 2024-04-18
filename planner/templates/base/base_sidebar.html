@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
         <!-- Sidebar -->
         <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
+            {% block sidebar %}
             <div>
                 <div class="p-4 flex justify-center items-center">
                     <a href="{% url 'homepage' %}">
@@ -62,7 +64,7 @@
                     </a>
                 </div>
             </div>
-            
+                        
         <!-- Profile Sticky to -->
         <div class="pb-4 flex flex-row">
             <div>
@@ -78,10 +80,11 @@
                 </a>
             </div>
         </div>
-            <!-- CSRF token added to header for htmx requests -->
-            <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-                {% block content %}
-                {% endblock %}
-        </div>
+            {%endblock%}
+
+    <!-- Main content area -->
+    <div class="main-content ml-52">
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>
