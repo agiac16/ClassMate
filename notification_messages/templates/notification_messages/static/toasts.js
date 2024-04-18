@@ -2,9 +2,9 @@
  * Toasts Javascript
  * 
  * Future functionality
- * - A function to get the message contents and tags from an 
- *   html or javascript to form a json
- * - A function to add messages to the Django message framework from a json
- *   (will require communication with the Django backend)
+ * - A function to create messages from a JSON using a message template html, containing content and tags 
+ *   from 'middleware.py' in 'notifications_messages' AND from javascript
+ * - A function that lets you close a message (instead of using Alpine JS, could use jQuery)
+ * - A function that fades out a message (instead of using Alpine JS, could use jQuery)
  * 
  * */ 
