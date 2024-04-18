@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} Contact {% endblock %}
+{% block title %} Contact {% endblock title %}
 {% block extra_scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{% endblock %}
+{% endblock extra_scripts %}
 
 {% block content %}      
     <!-- Contact Section -->
@@ -30,6 +30,7 @@
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
         </div>
+    </div>
     <hr class="my-6 border-gray-100 sm:mx-auto dark:border-gray-400 lg:my-8" />
     <div class="sm:flex sm:items-center sm:justify-between">
         <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="/" class="hover:underline">ClassMate</a>. All Rights Reserved.
@@ -89,4 +90,4 @@
 
 </script>
 
-{% endblock %}
+{% endblock content %}
