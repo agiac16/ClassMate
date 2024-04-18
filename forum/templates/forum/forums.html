@@ -260,8 +260,20 @@
                     replies.forEach((reply, index) => {
                         repliesHtml += `
                         <div class="post">
-                            <div class="post-content">${reply.content}</div>
+                            
+                            <div class="reply" id="reply-${reply.id}">
+                            <div class="reply-content">${reply.content}</div>
                             <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
+                            <div class="edit-reply-form" id="edit-reply-form-${reply.id}" style="display: none;">
+                                <textarea class="edit-reply-input" id="edit-reply-input-${reply.id}" rows="3">${reply.content}</textarea>
+                                <button onclick="submitReplyEdit(${reply.id})" class="bg-green-500 text-white font-bold py-1 px-3 rounded hover:bg-green-600 transition duration-300">Save</button>
+                                <button onclick="cancelEditReply(${reply.id})" class="bg-red-500 text-white font-bold py-1 px-3 rounded hover:bg-red-600 transition duration-300">Cancel</button>
+                            </div>
+                            <div class="edit-button-container">
+                                <button onclick="toggleEditReplyForm(${reply.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                            </div>
+</div>
+
                         </div>
                         `;
                     });
@@ -321,6 +333,59 @@
                     alert('There was an error editing your post. Please try again.');
                 });
         }
+
+        function toggleEditReplyForm(replyId) {
+    const editForm = document.getElementById(`edit-reply-form-${replyId}`);
+    if (editForm.style.display === "none" || !editForm.style.display) {
+        editForm.style.display = "block";
+    } else {
+        editForm.style.display = "none";
+    }
+}
+
+function submitReplyEdit(replyId) {
+    const editInput = document.getElementById(`edit-reply-input-${replyId}`);
+    const content = editInput.value.trim();
+    if (!content) {
+        alert('Please enter some text to submit an edit.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+
+    fetch(`/forum/reply/${replyId}/edit/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const replyContent = document.querySelector(`#reply-${replyId} .reply-content`);
+            replyContent.textContent = content;
+            toggleEditReplyForm(replyId);
+        } else {
+            alert('Error editing reply: ' + JSON.stringify(data.errors));
+        }
+    })
+    .catch(error => {
+        console.error('Error editing reply:', error);
+        alert('There was an error editing your reply. Please try again.');
+    });
+}
+
+function cancelEditReply(replyId) {
+    const editForm = document.getElementById(`edit-reply-form-${replyId}`);
+    editForm.style.display = "none";
+    const originalReplyContent = document.querySelector(`#reply-${replyId} .reply-content`).textContent;
+    const editInput = document.getElementById(`edit-reply-input-${replyId}`);
+    editInput.value = originalReplyContent;
+}
+
 
         function togglePreviousReplies(postId) {
             const replies = document.querySelectorAll(`#replies-container-${postId} .post`);
