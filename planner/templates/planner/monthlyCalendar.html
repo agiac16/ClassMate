@@ -39,7 +39,6 @@
             max-width: 100%;
             width: 800px; /* Adjust width as needed */
             height: 100%;
-            border: 2px solid red; /* Temporary border for debugging */
             padding: 20px;
           }
         </style>
@@ -50,26 +49,31 @@
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
         <script>
           // Define an array to store FullCalendar events
-          {% comment %} var fullCalendarEvents = []
-          
-          // Loop through assignments_by_day data from Django
-          for (var assignments in assignments_by_day) {
-            for (var assignment in assignments) {
+          var fullCalendarEvents = []
+          // Parse assignments_by_day_json back into a JavaScript object
+          var assignments_by_day = JSON.parse('{{ assignments_by_day_json|escapejs }}');
+          console.log('Assignments by day JSON:', '{{ assignments_by_day_json|escapejs }}');
+
+          // Loop through assignments_by_day data from JSON
+          for (var date in assignments_by_day) {
+            for (var i = 0; i < assignments_by_day[date].length; i++) {
+              var assignment = assignments_by_day[date][i];
+
               // Extract relevant information from assignment
-              var title = '{{ assignment.title }}'
-              var start = '{{ assignment.due_date }}' // Use the due_date or start_date field from your model
-              var end = '{{ assignment.due_date }}' // Use the due_date or end_date field from your model
-          
+              var title = assignment.title;
+              var start = assignment.due_date; // Use the due_date field from your JSON data
+              var end = assignment.due_date; // Use the due_date field from your JSON data
+
               // Create an event object and push it to the events array
               var event = {
                 title: title,
                 start: start,
                 end: end
                 // You can add more properties here if needed
-              }
-              fullCalendarEvents.push(event)
+              };
+              fullCalendarEvents.push(event);
             }
-          } {% endcomment %}
+          }
           // Use fullCalendarEvents array as events data for FullCalendar
           document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar')
@@ -82,10 +86,7 @@
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
               // Use the array of events here
-              events: {
-                title: 'All Day Event',
-                start: '2024-04-11'
-              }
+              events: fullCalendarEvents
             })
           
             calendar.render()
