@@ -65,8 +65,8 @@ def monthlyPlanner(request):
         end_date_str = '2024-05-03'    # Replace with your actual end date  
 
         # Combine date and time strings
-        start_datetime_str = f'{start_date_str} {start_time_str}'
-        end_datetime_str = f'{end_date_str} {end_time_str}'
+        # start_datetime_str = f'{start_date_str} {start_time_str}'
+        # end_datetime_str = f'{end_date_str} {end_time_str}'
 
         studentUserCourses[course.crn].append({
             'title': course.course_name,
