@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.serializers.json import DjangoJSONEncoder
 from assignments.models import Assignment
 from django.db.models import Q
 from users.models import Student
+from courses.models import Course, Rule
+from django.utils import timezone
 import json
 
-def weeklyPlanner(request): 
-    return render(request, 'planner/weeklyCalendar.html', )
- 
+
 def monthlyPlanner(request): 
     student = get_object_or_404(Student, account=request.user)
 
@@ -47,7 +48,41 @@ def monthlyPlanner(request):
 
     assignments_by_day_json = json.dumps(sorted_assignments_by_day)
 
+    # Create a dictionary to store assignments organized by day
+    studentUserCourses = {}
+    user_courses = Course.objects.filter(enrolled_students=student)
+    for course in user_courses:
+        # Initialize an empty list if the key doesn't exist
+        if course.crn not in studentUserCourses:
+            studentUserCourses[course.crn] = []
+
+        # Convert time objects to string representation
+        start_time_str = course.start_time.strftime('%H:%M:%S')
+        end_time_str = course.end_time.strftime('%H:%M:%S')
+
+        # default to spring 2024 start and end dates
+        start_date_str = '2024-01-10'  # Replace with your actual start date
+        end_date_str = '2024-05-03'    # Replace with your actual end date  
+
+        # Combine date and time strings
+        start_datetime_str = f'{start_date_str} {start_time_str}'
+        end_datetime_str = f'{end_date_str} {end_time_str}'
+
+        studentUserCourses[course.crn].append({
+            'title': course.course_name,
+            'start': start_date_str,
+            'end': end_date_str,
+            'start_time':start_time_str,
+            'end_time': end_time_str,
+            'rule_freq': course.rule.frequency,
+            'rule_name':course.rule.name,
+            'byweekday':course.rule.params,
+        })  
+    # user_courses = Course.objects.filter(enrolled_students=student)
+    user_courses_json = json.dumps(studentUserCourses)
+
     context = {
-        'assignments_by_day_json': assignments_by_day_json
+        'assignments_by_day_json': assignments_by_day_json,
+        'user_courses': user_courses_json
     }
     return render(request, 'planner/monthlyCalendar.html', context)

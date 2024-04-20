@@ -40,7 +40,9 @@
                 <div class="pt-2">
                   <!-- Dynamically populate course links here -->
                   {% for course in user_courses %}
-                    <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
+                    {%if course.id%}
+                      <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
+                    {% endif %}
                   {% endfor %}
                   {% comment %} <a href="{% url 'dashboard:add_course' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a> {% endcomment %}
                 </div>
