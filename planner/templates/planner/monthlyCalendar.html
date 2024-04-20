@@ -1,29 +1,98 @@
-{% extends "base.html" %}
+{% extends 'base/base_sidebar.html' %}
+{% load static %}
 
-{% load i18n static %}
-
-{% block head_title %}{% trans "Fullcalendar" %}{% endblock %}
-
-{% block tab_id %}id="home_tab"{% endblock %}
-
-{% block extra_head %}
-<link rel='stylesheet' type='text/css' href="{% static 'fullcalendar/dist/fullcalendar.css' %}" />
-<script type='text/javascript' src="{% static 'moment/moment.js' %}"></script>
-<script type='text/javascript' src="{% static 'fullcalendar/dist/fullcalendar.js' %}"></script>
+{% block title %}
+  Calendar View
 {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org"></script>
+  </head>
+  <body class="flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
+      <!-- Sidebar content -->
+    </div>
 
-{% block body %}
-<div id="calendar"></div>
-<script type='text/javascript'>
-$(document).ready(function() {
+    <!-- Main content area -->
+    <div class="main-content ml-52 flex-1 overflow-hidden">
+      {% block content %}
+        <style>
+          /* Calendar styles */
+          #calendar-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+            overflow-y: scroll; /* Enable vertical scrolling if needed */
+          }
+          
+          #calendar {
+            max-width: 100%;
+            width: 800px; /* Adjust width as needed */
+            height: 100%;
+            padding: 20px;
+          }
+        </style>
+        <div id="calendar-container">
+          <div id="calendar"></div>
+        </div>
 
-    // page is now ready, initialize the calendar...
-    $('#calendar').fullCalendar({
-        // put your options and callbacks here
-        events: '/schedule/api/occurrences?calendar_slug=example'
-    })
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+        <script>
+          // Define an array to store FullCalendar events
+          var fullCalendarEvents = []
+          // Parse assignments_by_day_json back into a JavaScript object
+          var assignments_by_day = JSON.parse('{{ assignments_by_day_json|escapejs }}');
+          console.log('Assignments by day JSON:', '{{ assignments_by_day_json|escapejs }}');
 
-});
-</script>
+          // Loop through assignments_by_day data from JSON
+          for (var date in assignments_by_day) {
+            for (var i = 0; i < assignments_by_day[date].length; i++) {
+              var assignment = assignments_by_day[date][i];
 
-{% endblock %}
+              // Extract relevant information from assignment
+              var title = assignment.title;
+              var start = assignment.due_date; // Use the due_date field from your JSON data
+              var end = assignment.due_date; // Use the due_date field from your JSON data
+
+              // Create an event object and push it to the events array
+              var event = {
+                title: title,
+                start: start,
+                end: end
+                // You can add more properties here if needed
+              };
+              fullCalendarEvents.push(event);
+            }
+          }
+          // Use fullCalendarEvents array as events data for FullCalendar
+          document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar')
+          
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              initialView: 'dayGridMonth',
+              headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              },
+              // Use the array of events here
+              events: fullCalendarEvents
+            })
+          
+            calendar.render()
+          })
+        </script>
+      {% endblock %}
+    </div>
+  </body>
+</html>
