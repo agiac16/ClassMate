@@ -48,6 +48,26 @@
 
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
         <script>
+          // Function to map days of week to their corresponding indices
+          function getDayIndices(dayList) {
+            var daysOfWeek = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+            var indices = [];
+            dayList.split(',').forEach(function(day) {
+              var abbreviation;
+              if (day.toUpperCase().startsWith('BYWEEKDAY=')) {
+                abbreviation = day.split('=')[1].trim().toUpperCase();
+              } else {
+                abbreviation = day.trim().toUpperCase();
+              }
+              var index = daysOfWeek.indexOf(abbreviation);
+              if (index !== -1) {
+                indices.push(index);
+              } else {
+                console.error("Invalid day abbreviation:", abbreviation);
+              }
+            });
+            return indices;
+          }
           // Define an array to store FullCalendar events
           var assignmentEvents = []
           var courseEventsCal = []
@@ -91,7 +111,7 @@
                   start: eventData.start_time,
                   end: eventData.end_time,
                   color: 'green', // Assigning the random color to the event
-                  daysOfWeek: [ '4' ], // these recurrent events move separately
+                  daysOfWeek: getDayIndices(eventData.byweekday), // these recurrent events move separately
                 }
                 console.log(event);
                 courseEventsCal.push(event)
