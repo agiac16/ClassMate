@@ -277,43 +277,49 @@
         }
 
         function loadRepliesForPost(postId, showAll = false) {
-            fetch(`/forum/post/${postId}/replies/`)
-                .then(response => response.json())
-                .then(data => {
-                    const repliesContainer = document.getElementById(`replies-container-${postId}`);
-                    let repliesHtml = '';
-                    const replies = showAll ? data.replies : data.replies.slice(-1);
-                    replies.forEach((reply, index) => {
-                        repliesHtml += `
-                        <div class="post">
-                            
-                            <div class="reply" id="reply-${reply.id}">
-                            <div class="reply-content">${reply.content}</div>
-                            <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
-                            <div class="edit-reply-form" id="edit-reply-form-${reply.id}" style="display: none;">
-                                <textarea class="edit-reply-input" id="edit-reply-input-${reply.id}" rows="3">${reply.content}</textarea>
-                                <button onclick="submitReplyEdit(${reply.id})" class="bg-green-500 text-white font-bold py-1 px-3 rounded hover:bg-green-600 transition duration-300">Save</button>
-                                <button onclick="cancelEditReply(${reply.id})" class="bg-red-500 text-white font-bold py-1 px-3 rounded hover:bg-red-600 transition duration-300">Cancel</button>
-                            </div>
-                            <div class="edit-button-container">
-                                <button onclick="toggleEditReplyForm(${reply.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
-                            </div>
-</div>
+    fetch(`/forum/post/${postId}/replies/`)
+        .then(response => response.json())
+        .then(data => {
+            const repliesContainer = document.getElementById(`replies-container-${postId}`);
+            let repliesHtml = '';
+            const replies = showAll ? data.replies : data.replies.slice(-1); // Shows only the last reply by default, or all replies if showAll is true
 
+            replies.forEach(reply => {
+                // Check if the current user is the owner of the reply and render the edit button accordingly
+                const isOwner = data.current_user === reply.posted_by__account__username;
+                const editButtonHtml = isOwner ? `
+                    <div class="edit-button-container">
+                        <button onclick="toggleEditReplyForm(${reply.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                    </div>` : '';
+
+                repliesHtml += `
+                <div class="reply-container" id="reply-container-${reply.id}">
+                    <div class="reply" id="reply-${reply.id}">
+                        <div class="reply-content">${reply.content}</div>
+                        <div class="post-details">Replied by ${reply.posted_by__account__username} on ${reply.timestamp}</div>
+                        ${editButtonHtml}
+                        <div class="edit-reply-form" id="edit-reply-form-${reply.id}" style="display: none;">
+                            <textarea class="edit-reply-input" id="edit-reply-input-${reply.id}" rows="3">${reply.content}</textarea>
+                            <button onclick="submitReplyEdit(${reply.id})" class="bg-green-500 text-white font-bold py-1 px-3 rounded hover:bg-green-600 transition duration-300">Save</button>
+                            <button onclick="cancelEditReply(${reply.id})" class="bg-red-500 text-white font-bold py-1 px-3 rounded hover:bg-red-600 transition duration-300">Cancel</button>
                         </div>
-                        `;
-                    });
-                    repliesContainer.innerHTML = repliesHtml;
+                    </div>
+                </div>`;
+            });
 
-                    const viewRepliesButton = document.getElementById(`view-replies-button-${postId}`);
-                    viewRepliesButton.style.display = 'block'; // Always display the button
-                    viewRepliesButton.textContent = showAll ? 'Hide Replies' : 'View All Replies'; // Change the button text based on the current state
-                    viewRepliesButton.onclick = () => loadRepliesForPost(postId, !showAll); // Switch to the other state when the button is clicked
-                })
-                .catch(error => {
-                    console.error('Error loading replies:', error);
-                });
-        }
+            repliesContainer.innerHTML = repliesHtml;
+            const viewRepliesButton = document.getElementById(`view-replies-button-${postId}`);
+            if(viewRepliesButton) {
+                viewRepliesButton.style.display = 'block'; // Always display the button
+                viewRepliesButton.textContent = showAll ? 'Hide Replies' : 'View All Replies'; // Change the button text based on the current state
+                viewRepliesButton.onclick = () => loadRepliesForPost(postId, !showAll); // Switch to the other state when the button is clicked
+            }
+        })
+        .catch(error => {
+            console.error('Error loading replies:', error);
+        });
+}
+
 
         function toggleEditPostForm(postId) {
             console.log("Toggling edit form for post ID:", postId); // For debugging
