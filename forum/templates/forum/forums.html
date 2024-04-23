@@ -188,8 +188,16 @@
                 .then(response => response.json())
                 .then(data => {
                     let postsHtml = '';
-                    data.posts.forEach(post => {
-                        postsHtml += `
+            data.posts.forEach(post => {
+                let editButtonHtml = '';
+                if (data.current_user === post.posted_by__account__username) {
+                    editButtonHtml = `
+                        <div class="edit-button-container">
+                            <button onclick="toggleEditPostForm(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                        </div>`;
+                }
+
+                postsHtml += `
                         <div class="post" data-post-id="${post.id}">
                             <div class="post-title">${post.title}</div>
                             <p>${post.content}</p>
@@ -200,7 +208,7 @@
                                 <button onclick="cancelEdit(${post.id})" class="bg-red-400 text-white font-bold py-1 px-3 rounded hover:bg-red-500 transition duration-300">Cancel</button>
                             </div>
                             <div class="edit-button-container">
-                                <button onclick="toggleEditPostForm(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Edit</button>
+                                ${editButtonHtml}
                                 <textarea class="reply-input" id="reply-input-${post.id}" placeholder="Write a reply..."></textarea>
                                 <button onclick="submitReply(${post.id})" class="bg-purple-400 text-white font-bold py-1 px-3 rounded hover:bg-purple-500 transition duration-300">Reply</button>
                             </div>
