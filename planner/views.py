@@ -5,6 +5,8 @@ from django.db.models import Q
 from users.models import Student
 from courses.models import Course, Rule
 from django.utils import timezone
+import datetime
+import pytz
 import json
 
 
@@ -64,19 +66,21 @@ def monthlyPlanner(request):
         start_date_str = '2024-01-10'  # Replace with your actual start date
         end_date_str = '2024-05-03'    # Replace with your actual end date  
 
-        # Combine date and time strings
-        # start_datetime_str = f'{start_date_str} {start_time_str}'
-        # end_datetime_str = f'{end_date_str} {end_time_str}'
+        # Combine date and time strings into ISO8601 format with timezone UTC-05:00
+        start_datetime = datetime.datetime.strptime(f'{start_date_str} {start_time_str}', '%Y-%m-%d %H:%M:%S') - datetime.timedelta(hours=5)
+        end_datetime = datetime.datetime.strptime(f'{end_date_str} {end_time_str}', '%Y-%m-%d %H:%M:%S') - datetime.timedelta(hours=5)
 
         studentUserCourses[course.crn].append({
             'title': course.course_name,
             'start': start_date_str,
             'end': end_date_str,
-            'start_time':start_time_str,
-            'end_time': end_time_str,
+            'start_datetime':start_datetime.strftime('%Y-%m-%dT%H:%M:%S-05:00'),
+            'end_datetime': end_datetime.strftime('%Y-%m-%dT%H:%M:%S-05:00'),
             'rule_freq': course.rule.frequency,
             'rule_name':course.rule.name,
             'byweekday':course.rule.params,
+            'starttime':start_time_str,
+            'endtime':end_time_str,
         })  
     # user_courses = Course.objects.filter(enrolled_students=student)
     user_courses_json = json.dumps(studentUserCourses)

@@ -108,10 +108,14 @@
                   title: eventData.title,
                   startRecur: eventData.start,
                   endRecur: eventData.end,
-                  start: eventData.start_time,
-                  end: eventData.end_time,
+                  start: eventData.start_datetime,
+                  end: eventData.end_datetime,
+                  startTime: eventData.starttime,
+                  endTime: eventData.endtime,
                   color: 'green', // Assigning the random color to the event
                   daysOfWeek: getDayIndices(eventData.byweekday), // these recurrent events move separately
+                  allDay: false,
+                  slotDuration: '01:15',
                 }
                 console.log(event);
                 courseEventsCal.push(event)
