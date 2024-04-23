@@ -41,9 +41,33 @@
             height: 100%;
             padding: 100%%;
           }
+
+          .btn {
+            background-color: #7f5af0; /* background color */
+            color: white;
+            padding: 10px 40px; /* Padding for top/bottom 10px and left/right 20px */
+            border: none; /* Remove default border */
+            cursor: pointer; /* Add cursor pointer on hover */
+            margin-right: 10px; /* Add some spacing between buttons */
+          }
+        
+          .btn:hover {
+            background-color: #805ad5; /* Darker green on hover */
+          }
+
+          /* Center buttons horizontally */
+          .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px; /* Adjust margin as needed */
+          }
         </style>
         <div id="calendar-container">
           <div id="calendar"></div>
+          <div class="btn-container">
+            <button id="toggleAssignmentsBtn" class="btn rounded-md">Hide Assignments</button>
+            <button id="toggleCoursesBtn" class="btn rounded-md">Hide Courses</button>
+          </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
@@ -68,62 +92,70 @@
             });
             return indices;
           }
-          // Define an array to store FullCalendar events
-          var assignmentEvents = []
-          var courseEventsCal = []
-          // Parse assignments_by_day_json back into a JavaScript object
-          var assignments_by_day = JSON.parse('{{ assignments_by_day_json|escapejs }}')
-          console.log('Assignments by day JSON:', '{{ assignments_by_day_json|escapejs }}')
           
-          var user_courses = JSON.parse('{{ user_courses|escapejs }}')
-          console.log('User Courses JSON:', '{{ user_courses|escapejs }}')
-          
+          // Your JSON data
+          var assignments_by_day_json = '{{ assignments_by_day_json|escapejs }}';
+          var user_courses_json = '{{ user_courses|escapejs }}';
+
+          // Parse assignments_by_day and user_courses data from JSON
+          var assignments_by_day = JSON.parse(assignments_by_day_json);
+          var user_courses = JSON.parse(user_courses_json);
+
+          // Define arrays to store FullCalendar events
+          var assignmentEvents = [];
+          var courseEventsCal = [];
+
           // Loop through assignments_by_day data from JSON
           for (var date in assignments_by_day) {
             for (var i = 0; i < assignments_by_day[date].length; i++) {
-              var assignment = assignments_by_day[date][i]
-          
+              var assignment = assignments_by_day[date][i];
               // Extract relevant information from assignment
-              var title = assignment.title
-              var start = assignment.due_date // Use the due_date field from your JSON data
-              var end = assignment.due_date // Use the due_date field from your JSON data
-          
+              var title = assignment.title;
+              var start = assignment.due_date;
+              var end = assignment.due_date;
               // Create an event object and push it to the events array
               var event = {
                 title: title,
                 start: start,
-                end: end
-                // You can add more properties here if needed
-              }
-              assignmentEvents.push(event)
+                end: end,
+                groupId: "assignmentsGroup",
+              };
+              assignmentEvents.push(event);
             }
           }
           
-          //Courses
+          // Loop through user_courses data from JSON
           for (var courseId in user_courses) {
             if (user_courses.hasOwnProperty(courseId)) {
-              var courseEvents = user_courses[courseId]
+              var courseEvents = user_courses[courseId];
               courseEvents.forEach(function (eventData) {
                 var event = {
                   title: eventData.title,
                   startRecur: eventData.start,
                   endRecur: eventData.end,
-                  start: eventData.start_time,
-                  end: eventData.end_time,
-                  color: 'green', // Assigning the random color to the event
-                  daysOfWeek: getDayIndices(eventData.byweekday), // these recurrent events move separately
-                }
-                console.log(event);
-                courseEventsCal.push(event)
-              })
+                  start: eventData.start_datetime,
+                  end: eventData.end_datetime,
+                  startTime: eventData.starttime,
+                  endTime: eventData.endtime,
+                  color: 'green',
+                  daysOfWeek: getDayIndices(eventData.byweekday),
+                  allDay: false,
+                  groupId: "coursesGroup",
+                };
+                courseEventsCal.push(event);
+              });
             }
           }
-          var allEvents = assignmentEvents.concat(courseEventsCal)
-          
+
           // Use assignmentEvents array as events data for FullCalendar
           document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar')
-          
+            var calendarEl = document.getElementById('calendar');
+            var toggleAssignBtn = document.getElementById('toggleAssignmentsBtn');
+            var toggleCourseBtn = document.getElementById('toggleCoursesBtn');
+
+            var assignmentsVisible = true;
+            var coursesVisible = true;
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
               initialView: 'dayGridMonth',
               headerToolbar: {
@@ -131,12 +163,66 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-              // Use the array of events here
-              events: allEvents
-            })
+              events: assignmentEvents.concat(courseEventsCal)
+            });
           
-            calendar.render()
-          })
+            calendar.render();
+
+            // Hide Assignments by default
+            toggleAssignBtn.textContent = 'Show Assignments';
+            calendar.getEvents().forEach(function (event) {
+              if (event.groupId === 'assignmentsGroup') {
+                event.remove();
+              }
+            });
+            assignmentsVisible = false;
+
+            // Hide Courses by default
+            toggleCourseBtn.textContent = 'Show Courses';
+            calendar.getEvents().forEach(function (event) {
+              if (event.groupId === 'coursesGroup') {
+                event.remove();
+              }
+            });
+            coursesVisible = false;
+
+            // Button click event listeners
+            toggleAssignBtn.addEventListener('click', function () {
+              if (assignmentsVisible) {
+                calendar.getEvents().forEach(function (event) {
+                  if (event.groupId === 'assignmentsGroup') {
+                    event.remove();
+                  }
+                });
+                toggleAssignBtn.textContent = 'Show Assignments';
+              } else {
+                assignmentEvents.forEach(function (event) {
+                  event.groupId = 'assignmentsGroup';
+                  calendar.addEvent(event);
+                });
+                toggleAssignBtn.textContent = 'Hide Assignments';
+              }
+              assignmentsVisible = !assignmentsVisible;
+            });
+
+            toggleCourseBtn.addEventListener('click', function () {
+              if (coursesVisible) {
+                calendar.getEvents().forEach(function (event) {
+                  if (event.groupId === 'coursesGroup') {
+                    event.remove();
+                  }
+                });
+                toggleCourseBtn.textContent = 'Show Courses';
+              } else {
+                courseEventsCal.forEach(function (event) {
+                  event.groupId = 'coursesGroup';
+                  calendar.addEvent(event);
+                });
+                toggleCourseBtn.textContent = 'Hide Courses';
+              }
+              coursesVisible = !coursesVisible;
+            });
+          });
         </script>
       {% endblock %}
     </div>
