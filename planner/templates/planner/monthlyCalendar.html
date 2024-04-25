@@ -21,25 +21,24 @@
     </div>
 
     <!-- Main content area -->
-    <div class="main-content ml-52 flex-1 overflow-hidden">
+    <div class="main-content flex-1 overflow-hidden">
       {% block content %}
         <style>
           /* Calendar styles */
           #calendar-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 20px;
-            overflow-y: scroll; /* Enable vertical scrolling if needed */
-          }
-          
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              padding: 20px;
+              overflow-y: scroll; /* Enable vertical scrolling if needed */
+              margin-left: 130px;
+          }          
           #calendar {
             max-width: 100%;
             width: 800px; /* Adjust width as needed */
             height: 100%;
-            padding: 100%%;
           }
 
           .btn {
@@ -60,6 +59,23 @@
             display: flex;
             justify-content: center;
             margin-top: 10px; /* Adjust margin as needed */
+          }
+
+          /* Change the color of the month, week, and day buttons */
+          .fc-button-group .fc-button {
+              background-color: #795ce7;
+              border-color: #795ce7;
+          }
+
+          /* Change the color of the forward and back arrows */
+          .fc-prev-button, .fc-next-button {
+              background-color: #795ce7;
+              border-color: #795ce7;
+          }
+
+          /* Change the color of the button text */
+          .fc-button {
+              color: #795ce7;
           }
         </style>
         <div id="calendar-container">
@@ -119,6 +135,7 @@
                 start: start,
                 end: end,
                 groupId: "assignmentsGroup",
+                color: '#795ce7',
               };
               assignmentEvents.push(event);
             }
@@ -137,7 +154,7 @@
                   end: eventData.end_datetime,
                   startTime: eventData.starttime,
                   endTime: eventData.endtime,
-                  color: 'green',
+                  color: '#795ce7',
                   daysOfWeek: getDayIndices(eventData.byweekday),
                   allDay: false,
                   groupId: "coursesGroup",
@@ -154,7 +171,7 @@
             var toggleCourseBtn = document.getElementById('toggleCoursesBtn');
 
             var assignmentsVisible = true;
-            var coursesVisible = true;
+            var coursesVisible = true;     
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
               initialView: 'dayGridMonth',

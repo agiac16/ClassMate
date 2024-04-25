@@ -1,4 +1,5 @@
 from pyexpat.errors import messages
+from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from django.views.decorators.http import require_POST
@@ -123,7 +124,8 @@ def edit_assignment(request, assignment_id):
                     assignment.students.add(additional_student)  # Add the new student
                 except Student.DoesNotExist:
                     messages.error(request, 'No student found with this username')
-
+            
+            messages.success(request, "Assignment Edited!")
             return redirect(reverse('dashboard:dashboard'))
     else:
         form = AssignmentForm(instance=assignment, user=request.user)
@@ -139,9 +141,10 @@ def add_course(request, course_id):
         # Add the course to the student's enrolled courses
         if student.enrolled_courses.filter(id=course_id).exists():
             return JsonResponse({'success': False, 'message': 'Student is already enrolled in this course'}, status=400)
-
+        
         student.enrolled_courses.add(course)
         return JsonResponse({'success': True})
+        messages.success(request, "Course Added!")
 
     return JsonResponse({'success': False}, status=400)
 
@@ -213,6 +216,8 @@ def delete_assignment(request, assignment_id):
             return redirect('dashboard:dashboard')
 
         assignment.delete()
+        messages.success(request, "Course Added!")
+
 
     return redirect('dashboard:dashboard')
 
