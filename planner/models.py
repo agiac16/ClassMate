@@ -24,6 +24,8 @@ class TimeSlot(models.Model):
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     assignment = models.ForeignKey(Assignment, on_delete=models.SET_NULL, null=True, blank=True)
     activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    canceled = models.BooleanField(default=False)  # Add this field
 
     def __str__(self):
         return f"{self.date}: {self.start_time} - {self.end_time}"

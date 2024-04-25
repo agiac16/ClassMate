@@ -2,6 +2,7 @@
 <!-- planner/monthly_planner.html -->
 <h2>{{ planner.start_date }} to {{ planner.end_date }}</h2>
 <button id="add-activity-btn">Add Activity</button>
+<button id="generate-planner-btn">Generate Planner</button>
 {% for date in planner.get_date_range %}
 <h3>{{ date }}</h3>
 {% get_timeslots planner date as day_slots %}
@@ -29,9 +30,13 @@ Activity: {{ slot.activity.title }}
 </td>
 <td>
 {% if slot.assignment %}
-<button class="complete-assignment" data-assignment-id="{{ slot.assignment.id }}">✓</button>
+<button class="complete-assignment" data-assignment-id="{{ slot.assignment.id }}" data-timeslot-id="{{ slot.id }}" {% if slot.completed %}disabled{% endif %}>
+{% if slot.completed %}✓{% else %}☐{% endif %}
+</button>
 {% endif %}
-<button class="cancel-timeslot" data-timeslot-id="{{ slot.id }}">✗</button>
+<button class="cancel-timeslot" data-timeslot-id="{{ slot.id }}" {% if slot.canceled %}disabled{% endif %}>
+{% if slot.canceled %}✗{% else %}✕{% endif %}
+</button>
 </td>
 </tr>
 {% endif %}
@@ -47,21 +52,66 @@ Activity: {{ slot.activity.title }}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
+  // Helper function to get the CSRF token from the cookie
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  // Get the CSRF token
+  const csrftoken = getCookie('csrftoken');
+
+  // Add the CSRF token to the request headers
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+
   $('.complete-assignment').click(function() {
     var assignmentId = $(this).data('assignment-id');
+    var timeslotId = $(this).data('timeslot-id');
+    var button = $(this);
+
     $.ajax({
-      url: '/planner/complete-assignment/' + assignmentId + '/',
+      url: '/planner/complete-assignment/' + assignmentId + '/' + timeslotId + '/',
       method: 'POST',
       success: function(response) {
-        location.reload();
+        button.prop('disabled', true);
+        button.text('✓');
       }
     });
   });
 
   $('.cancel-timeslot').click(function() {
     var timeslotId = $(this).data('timeslot-id');
+    var button = $(this);
+
     $.ajax({
       url: '/planner/cancel-timeslot/' + timeslotId + '/',
+      method: 'POST',
+      success: function(response) {
+        button.prop('disabled', true);
+        button.text('✗');
+      }
+    });
+  });
+
+  $('#generate-planner-btn').click(function() {
+    $.ajax({
+      url: '/planner/generate-planner/',
       method: 'POST',
       success: function(response) {
         location.reload();
