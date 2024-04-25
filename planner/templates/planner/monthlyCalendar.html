@@ -42,7 +42,7 @@
           }
 
           .btn {
-            background-color: #7f5af0; /* background color */
+            background-color: #b787f5; /* background color */
             color: white;
             padding: 10px 40px; /* Padding for top/bottom 10px and left/right 20px */
             border: none; /* Remove default border */
@@ -51,7 +51,7 @@
           }
         
           .btn:hover {
-            background-color: #805ad5; /* Darker green on hover */
+            background-color: #a855f7; 
           }
 
           /* Center buttons horizontally */
@@ -63,19 +63,20 @@
 
           /* Change the color of the month, week, and day buttons */
           .fc-button-group .fc-button {
-              background-color: #795ce7;
-              border-color: #795ce7;
+              background-color: #b787f5;
+              border-color: #b787f5;
+
           }
 
           /* Change the color of the forward and back arrows */
           .fc-prev-button, .fc-next-button {
-              background-color: #795ce7;
-              border-color: #795ce7;
+              background-color: #b787f5;
+              border-color: #b787f5;
           }
 
           /* Change the color of the button text */
           .fc-button {
-              color: #795ce7;
+              color: #b787f5;
           }
         </style>
         <div id="calendar-container">
@@ -135,7 +136,7 @@
                 start: start,
                 end: end,
                 groupId: "assignmentsGroup",
-                color: '#795ce7',
+                color: '#b787f5',
               };
               assignmentEvents.push(event);
             }
@@ -154,7 +155,7 @@
                   end: eventData.end_datetime,
                   startTime: eventData.starttime,
                   endTime: eventData.endtime,
-                  color: '#795ce7',
+                  color: '#b787f5',
                   daysOfWeek: getDayIndices(eventData.byweekday),
                   allDay: false,
                   groupId: "coursesGroup",
