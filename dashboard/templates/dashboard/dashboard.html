@@ -46,7 +46,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/ws.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.8/dist/cdn.min.js"></script>
-
 </head>
 <body class="flex flex-col md:flex-row bg-slate-50">
     
@@ -60,18 +59,6 @@
     {% include 'partials/sidebar.html' %}
 
     <main class="flex-1 overflow-auto md:m-10 lg:ml-60 sm:px-10 md:px-10">    
-
-    <!-- Notification System... not in use yet
-        {% for notification in notifications %}
-            <div class="notification pb-20">
-                <p>{{ notification.description }}</p>
-                <p>{{ notification.timestamp }}</p>
-            </div>
-        {% empty %}
-            <p>No notifications.</p>
-        {% endfor %}
-    -->
-    
     <!-- Notfication Messages -->
     {% include "notification_messages/partials/toasts.html" %}
         

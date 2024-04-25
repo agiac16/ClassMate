@@ -11,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
   <body class="flex flex-col md:flex-row">
     <!-- Sidebar -->
@@ -21,38 +22,52 @@
     </div>
 
     <!-- Main content area -->
-    <div class="main-content ml-52 flex-1 overflow-hidden">
+    <div class="main-content flex-1 overflow-hidden">
       {% block content %}
         <style>
           /* Calendar styles */
           #calendar-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            padding: 20px;
-            overflow-y: scroll; /* Enable vertical scrolling if needed */
-          }
-          
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              padding: 20px;
+              overflow-y: scroll; /* Enable vertical scrolling if needed */
+          }          
           #calendar {
             max-width: 100%;
             width: 800px; /* Adjust width as needed */
             height: 100%;
-            padding: 100%%;
           }
 
           .btn {
-            background-color: #7f5af0; /* background color */
+            background-color: #b787f5; /* background color */
             color: white;
             padding: 10px 40px; /* Padding for top/bottom 10px and left/right 20px */
             border: none; /* Remove default border */
             cursor: pointer; /* Add cursor pointer on hover */
             margin-right: 10px; /* Add some spacing between buttons */
           }
-        
+
+          .fc-button-primary {
+              background-color: #b787f5 !important;
+              border-color: #b787f5 !important;
+          }
+
+          .fc-button-group .fc-button:hover {
+              background-color: #a855f7;
+              border-color: #a855f7;
+          }
+
+          .fc-button-custom-active {
+            background-color: #a855f7 !important;
+            border-color: #a855f7 !important; 
+        }
+
+
           .btn:hover {
-            background-color: #805ad5; /* Darker green on hover */
+            background-color: #a855f7; 
           }
 
           /* Center buttons horizontally */
@@ -61,8 +76,26 @@
             justify-content: center;
             margin-top: 10px; /* Adjust margin as needed */
           }
+
+          /* Change the color of the month, week, and day buttons */
+          .fc-button-group .fc-button {
+              background-color: #b787f5;
+              border-color: #b787f5;
+
+          }
+
+          /* Change the color of the forward and back arrows */
+          .fc-prev-button, .fc-next-button {
+              background-color: #b787f5;
+              border-color: #b787f5;
+          }
+
+          /* Change the color of the button text */
+          .fc-button {
+              color: #b787f5;
+          }
         </style>
-        <div id="calendar-container">
+        <div id="calendar-container" class="ml-60">
           <div id="calendar"></div>
           <div class="btn-container">
             <button id="toggleAssignmentsBtn" class="btn rounded-md">Hide Assignments</button>
@@ -119,6 +152,7 @@
                 start: start,
                 end: end,
                 groupId: "assignmentsGroup",
+                color: '#b787f5',
               };
               assignmentEvents.push(event);
             }
@@ -137,7 +171,7 @@
                   end: eventData.end_datetime,
                   startTime: eventData.starttime,
                   endTime: eventData.endtime,
-                  color: 'green',
+                  color: '#b787f5',
                   daysOfWeek: getDayIndices(eventData.byweekday),
                   allDay: false,
                   groupId: "coursesGroup",
@@ -154,7 +188,7 @@
             var toggleCourseBtn = document.getElementById('toggleCoursesBtn');
 
             var assignmentsVisible = true;
-            var coursesVisible = true;
+            var coursesVisible = true;     
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
               initialView: 'dayGridMonth',
@@ -163,7 +197,7 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-              events: assignmentEvents.concat(courseEventsCal)
+              events: assignmentEvents.concat(courseEventsCal),
             });
           
             calendar.render();
@@ -176,6 +210,22 @@
               }
             });
             assignmentsVisible = false;
+
+            // Get the buttons
+        var buttons = document.querySelectorAll('.fc-button');
+
+// Add a click event listener to each button
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        // Remove the custom active class from all buttons
+        buttons.forEach(function (btn) {
+            btn.classList.remove('fc-button-custom-active');
+        });
+
+        // Add the custom active class to the clicked button
+        this.classList.add('fc-button-custom-active');
+    });
+});
 
             // Hide Courses by default
             toggleCourseBtn.textContent = 'Show Courses';
