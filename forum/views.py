@@ -10,7 +10,8 @@ from django.views.decorators.http import require_POST
 def courseList(request):
     student = get_object_or_404(Student, account=request.user)
     courses = Course.objects.filter(enrolled_students=student)
-    return render(request, 'forum/forums.html', {'courses': courses, 'current_user': request.user.username})
+    user_courses = Course.objects.filter(enrolled_students=request.user.student)  # Assuming a Student model is related to User
+    return render(request, 'forum/forums.html', {'courses': courses, 'current_user': request.user.username, 'user_courses': user_courses})
 
 @login_required
 def get_course_posts(request, course_id):
