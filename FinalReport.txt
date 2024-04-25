@@ -1,0 +1,35 @@
+Known Bugs/Issues:
+Class Mate has no known bugs or issues.
+
+Stated Goals & Features:
+Below is a list of the stated goals and features, all of which are accomplished in the current version of Class Mate.
+
+Project Goals
+An intuitive and easy to use design – Users will be able to navigate the site easily and enjoy all of their interactions
+Front end should promote collaboration with options to share your class
+Provide a service for students to manage their education with the ability to add their own tasks, individually or for a group, and view any assignments that are due
+
+Product Features
+Classes: Users can create classes, supplying any relevant details.  Users will also have the ability to join classes they are a part of in real life. 
+Task Creation: Users can create individual tasks, specifying any relevant details including  task title, due date, and priority level.  Users will also have the ability to create group tasks and assign themselves or group mates to said task. Tasks will include a priority rating, assigned by the user. 
+Chat Feature: Users will be able to directly chat with other users.  File sharing: Users will be able to upload relevant documentation or their completed assignments to the specific task or the classroom itself. 
+Calendar Integration: Users will be able to view task due dates, if given, within a calendar interface. 
+User Profiles: Users are able to create profiles.
+Task Management: Users will be able to delete their own tasks as well as modify them later.  Tasks can be extended to include subtasks.
+Login/Registration: Users will be able to login using our registration service.  Per Django, all passwords will be stored with PBKDF2 and hashed with SHA256, a standard recommended by NIST. 
+Time Management Algorithm: Users will be able to generate a weekly schedule based on the priority and estimated time to complete assignments.
+Notifications: Users will be notified according to their stated preferences.
+
+Stretch Goal Progress:
+Below is a list of our stretch goals.
+Integration with Rowan computer science curriculum – Course titles and information will be shown in a list view, with sections for “completed”, “in-progress” and “remaining”
+Integration with Rowan computer science actual class schedules
+    Section tally text scraping tool for easy schedule integration
+    Script to automatically load new semester course offerings
+Social feature for class registration – The ability for users to comment on classes and see what their friends are taking, as well as what others have said about the class
+
+Goal one was not completed to specification.  The Rowan CS curriculum is imported, but a full “section-tally like” planner is not present.
+
+Goal two is complete.  The new courses need to be loaded into the script each semester, but the script will then automatically import the classes.
+
+Goal three is not complete.  Social features exist in the core of the program to collaborate on assignments, but chat does not exist prior to course registration.
