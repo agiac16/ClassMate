@@ -1,14 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
         body {
             display: flex;
             margin: 0;
-            font-family: Arial, sans-serif;
                     }
+
+        .font-arial {
+            font-family: Arial, sans-serif;
+        }
         
         .dashboard-container {
             margin-left: 208px;
@@ -45,6 +50,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/ws.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.8/dist/cdn.min.js"></script>
 </head>
 <body class="flex flex-col md:flex-row bg-slate-50">
@@ -62,7 +68,7 @@
     <!-- Notfication Messages -->
     {% include "notification_messages/partials/toasts.html" %}
         
-        <div>
+        <div class="font-arial">
             {% for date, assignments in assignments_by_day %}
             <div class="mb-8">
                 <div class="flex flex-col">
@@ -116,7 +122,7 @@
                 sidebar.classList.add('-translate-y-full');
                 sidebar.classList.remove('translate-y-0');
             }
-        });
+    });
     </script>
 
 </body>

@@ -271,6 +271,23 @@ buttons.forEach(function (button) {
               coursesVisible = !coursesVisible;
             });
           });
+
+          document.getElementById('courses-btn').onclick = function() {
+            var submenu = document.getElementById('courses-submenu');
+            submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
+          };
+
+          // Toggle Sidebar/Topbar for Smaller Screens
+          document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('-translate-y-full')) {
+              sidebar.classList.remove('-translate-y-full');
+              sidebar.classList.add('translate-y-0');
+            } else {
+              sidebar.classList.add('-translate-y-full');
+              sidebar.classList.remove('translate-y-0');
+            }
+          });
         </script>
       {% endblock %}
     </div>
