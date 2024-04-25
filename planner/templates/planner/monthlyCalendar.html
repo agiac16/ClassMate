@@ -11,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
   <body class="flex flex-col md:flex-row">
     <!-- Sidebar -->
@@ -33,7 +34,6 @@
               height: 100%;
               padding: 20px;
               overflow-y: scroll; /* Enable vertical scrolling if needed */
-              margin-left: 130px;
           }          
           #calendar {
             max-width: 100%;
@@ -49,7 +49,23 @@
             cursor: pointer; /* Add cursor pointer on hover */
             margin-right: 10px; /* Add some spacing between buttons */
           }
-        
+
+          .fc-button-primary {
+              background-color: #b787f5 !important;
+              border-color: #b787f5 !important;
+          }
+
+          .fc-button-group .fc-button:hover {
+              background-color: #a855f7;
+              border-color: #a855f7;
+          }
+
+          .fc-button-custom-active {
+            background-color: #a855f7 !important;
+            border-color: #a855f7 !important; 
+        }
+
+
           .btn:hover {
             background-color: #a855f7; 
           }
@@ -79,7 +95,7 @@
               color: #b787f5;
           }
         </style>
-        <div id="calendar-container">
+        <div id="calendar-container" class="ml-60">
           <div id="calendar"></div>
           <div class="btn-container">
             <button id="toggleAssignmentsBtn" class="btn rounded-md">Hide Assignments</button>
@@ -181,7 +197,7 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-              events: assignmentEvents.concat(courseEventsCal)
+              events: assignmentEvents.concat(courseEventsCal),
             });
           
             calendar.render();
@@ -194,6 +210,22 @@
               }
             });
             assignmentsVisible = false;
+
+            // Get the buttons
+        var buttons = document.querySelectorAll('.fc-button');
+
+// Add a click event listener to each button
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        // Remove the custom active class from all buttons
+        buttons.forEach(function (btn) {
+            btn.classList.remove('fc-button-custom-active');
+        });
+
+        // Add the custom active class to the clicked button
+        this.classList.add('fc-button-custom-active');
+    });
+});
 
             // Hide Courses by default
             toggleCourseBtn.textContent = 'Show Courses';
