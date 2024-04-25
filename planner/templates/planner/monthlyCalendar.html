@@ -1,9 +1,4 @@
-{% extends 'base/base_sidebar.html' %}
 {% load static %}
-
-{% block title %}
-  Calendar View
-{% endblock %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,10 +11,13 @@
 
   </head>
   <body class="flex flex-col md:flex-row">
-    <!-- Sidebar -->
-    <div class="sidebar fixed inset-y-0 left-0 bg-zinc-800 text-white w-52 flex flex-col justify-between z-50">
-      <!-- Sidebar content -->
-    </div>
+    <!-- toggle for mobile -->
+    <button id="sidebarToggle" class="text-white bg-zinc-800 p-4 z-50 relative md:hidden">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- sidebar/mobile top nav -->
+    {% include 'partialsPlanner/sidebar.html' %}
 
     <!-- Main content area -->
     <div class="main-content flex-1 overflow-hidden">
@@ -95,8 +93,8 @@
               color: #b787f5;
           }
         </style>
-        <div id="calendar-container" class="ml-60">
-          <div id="calendar"></div>
+        <div id="calendar-container" class="flex flex-col justify-center items-center h-full p-5 overflow-y-scroll ml-60 md:ml-0 lg:ml-60">         
+          <div id="calendar" class="w-full max-w-screen-md h-full"></div>
           <div class="btn-container">
             <button id="toggleAssignmentsBtn" class="btn rounded-md">Hide Assignments</button>
             <button id="toggleCoursesBtn" class="btn rounded-md">Hide Courses</button>

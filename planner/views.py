@@ -87,6 +87,7 @@ def monthlyPlanner(request):
 
     context = {
         'assignments_by_day_json': assignments_by_day_json,
-        'user_courses': user_courses_json
+        'user_courses': user_courses_json,
+        'userCoursesSidebar': user_courses,
     }
     return render(request, 'planner/monthlyCalendar.html', context)

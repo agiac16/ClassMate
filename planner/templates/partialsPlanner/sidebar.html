@@ -28,9 +28,10 @@
                 <div id="courses-submenu" class="hidden group-hover:block bg-zinc-700">
                     <div class="pt-2">
                         <!-- Dynamically populate course links here -->
-                        {% for course in user_courses %}
+                        {% for course in userCoursesSidebar %}
                         <a href="{% url 'dashboard:course_dashboard' course.id %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">{{ course.course_name }}</a>
                         {% endfor %}
+
                         <a href="{% url 'dashboard:add_course_page' %}" class="block px-4 py-2 text-sm hover:bg-zinc-600">Add Course</a>
                     </div>
                 </div>
